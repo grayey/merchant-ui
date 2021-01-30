@@ -1,0 +1,18 @@
+<div *ngIf="visible$ | async" class="footer" fxLayout="row">
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px" fxFlex="grow">
+    <a href="https://themeforest.net/item/fury-angular-2-material-design-admin-template/19325966?ref=visurel"
+       class="action" color="accent" fxFlex="none" id="get-fury" mat-raised-button>
+      <mat-icon class="icon">shopping_cart</mat-icon>
+      Buy Fury (Angular 11+)
+    </a>
+
+    <div class="name" fxHide fxShow.gt-sm>
+      Fury - Angular 11+ Material Design Admin Template - Save 100s of hours designing and coding
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button (click)="hide()" mat-icon-button type="button">
+      <mat-icon class="close">close</mat-icon>
+    </button>
+  </div>
+</div>

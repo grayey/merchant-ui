@@ -1,0 +1,67 @@
+<div mat-dialog-title>Customer</div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <div class="person">
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+        <mat-form-field fxFlex>
+          <mat-label>Username</mat-label>
+          <input type="text" formControlName="username" matInput />
+        </mat-form-field>
+
+        <mat-form-field fxFlex *ngIf="mode === 'create'">
+          <mat-label>Password</mat-label>
+          <input type="text" formControlName="password" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field fxFlex>
+        <mat-label>Full Name</mat-label>
+        <input type="text" formControlName="fullName" matInput />
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field fxFlex>
+        <mat-label>User Role</mat-label>
+        <mat-select formControlName="userRoleId">
+          <mat-option *ngFor="let role of userRoles" [value]="role.id">
+            {{ role.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field fxFlex>
+        <mat-label>User Type</mat-label>
+        <mat-select formControlName="userTypeId">
+          <mat-option *ngFor="let type of userTypes" [value]="type.id">
+            {{ type.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field fxFlex>
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="activeStatus">
+          <mat-option *ngFor="let status of userStatuses" [value]="status">
+            {{ status }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid">
+      CREATE USER
+    </button>
+    <button *ngIf="isUpdateMode()" mat-button [disabled]="!form.valid">
+      UPDATE USER
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,14 @@
+@import "var";
+
+.source {
+  margin-bottom: $spacing/2;
+  margin-left: -$spacing;
+  margin-right: -$spacing;
+}
+
+.result {
+
+  .description {
+    margin: 0 0 $spacing/3 0;
+  }
+}

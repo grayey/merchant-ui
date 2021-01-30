@@ -1,0 +1,14 @@
+@import "var";
+@import "~quill/dist/quill.snow.css";
+@import "~quill/dist/quill.snow.css";
+
+.editor {
+  height: 100%;
+  width: 100%;
+}
+
+.quill {
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  overflow: hidden;
+}

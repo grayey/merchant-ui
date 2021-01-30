@@ -1,0 +1,21 @@
+<div class="padding" fxLayout="column">
+
+  <fury-breadcrumbs current="Level 5 - Wow such deep!"
+                    [crumbs]="['Level 1', 'Level 2', 'Level 3', 'Level 4']"></fury-breadcrumbs>
+
+  <fury-card>
+    <fury-card-header>
+      <fury-card-header-heading>Level 5</fury-card-header-heading>
+      <fury-card-header-subheading>Not as deep as you can go.</fury-card-header-subheading>
+    </fury-card-header>
+
+    <fury-card-content>
+      <div>
+        You went so deep, wow! But this is not even as deep as you can go, Fury supports UNLIMITED Levels in the Menu.
+        <br>
+        <br>Now go ahead and explore the other great pages of Fury. Have you seen the
+        <strong><a class="text" [routerLink]="['/apps/inbox']">awesome Inbox Component</a></strong>?
+      </div>
+    </fury-card-content>
+  </fury-card>
+</div>
