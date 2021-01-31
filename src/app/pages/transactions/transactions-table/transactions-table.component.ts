@@ -18,15 +18,15 @@ import { CustomerCreateUpdateComponent } from "./customer-create-update/customer
 import { Customer } from "./customer-create-update/customer.model";
 import { fadeInRightAnimation } from "../../../../@fury/animations/fade-in-right.animation";
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
-import { AppService } from "src/app/app.service";
+import { AppService } from "src/app/services/app.service";
 
 @Component({
-  selector: "fury-all-in-one-table",
-  templateUrl: "./all-in-one-table.component.html",
-  styleUrls: ["./all-in-one-table.component.scss"],
+  selector: "transactions-table",
+  templateUrl: "./transactions-table.component.html",
+  styleUrls: ["./transactions-table.component.scss"],
   animations: [fadeInRightAnimation, fadeInUpAnimation],
 })
-export class AllInOneTableComponent
+export class TransactionsTableComponent
   implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Simulating a service with HTTP that returns Observables
@@ -36,14 +36,14 @@ export class AllInOneTableComponent
   data$: Observable<Customer[]> = this.subject$.asObservable();
   customers: Customer[];
   transactions = [];
+  dataLenght: number = 10;
 
   @Input()
   columns: ListColumn[] = [
     // { name: "Checkbox", property: "checkbox", visible: false },
     // { name: "Image", property: "image", visible: true },
     // { name: "Name", property: "name", visible: true, isModelProperty: true },
-    
-    
+
     // {
     //   name: "Status",
     //   property: "status",
@@ -121,7 +121,7 @@ export class AllInOneTableComponent
       property: "settlementDate",
       visible: true,
       isModelProperty: true,
-    }
+    },
 
     // { name: "City", property: "city", visible: true, isModelProperty: true },
     // {
@@ -132,6 +132,7 @@ export class AllInOneTableComponent
     // },
     // { name: "Actions", property: "actions", visible: true },
   ] as ListColumn[];
+
   pageSize = 10;
   dataSource: MatTableDataSource<Customer> | null;
 
@@ -171,11 +172,11 @@ export class AllInOneTableComponent
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  private getTransactions(pageEvent?: PageEvent) {
+  getTransactions(pageEvent?: PageEvent) {
     let pageNumber, pageSize;
     if (pageEvent) {
       pageSize = pageEvent.pageSize;
@@ -186,14 +187,15 @@ export class AllInOneTableComponent
     }
 
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
-    this.appService.getTransactions("gh").subscribe(
+    this.appService.getTransactions(pageNumber, pageSize).subscribe(
       (response) => {
         this.transactions = response.data;
         this.dataSource.data = this.transactions;
+        this.dataLenght = response.rows;
       },
       (err) => {
         // this.toastrService.error(
-        //   "An unknown error was encountered. Please try again",
+        //   "An unknown error was encountered.Please try again",
         //   "Unknown Error"
         // );
       },

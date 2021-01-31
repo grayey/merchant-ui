@@ -4,10 +4,10 @@ import { FormsModule } from "@angular/forms";
 import { BreadcrumbsModule } from "../../../../@fury/shared/breadcrumbs/breadcrumbs.module";
 import { ListModule } from "../../../../@fury/shared/list/list.module";
 import { MaterialModule } from "../../../../@fury/shared/material-components.module";
-import { UsersTableRoutingModule } from "./users-table-routing.module";
-import { UsersTableComponent } from "./users-table.component";
+import { TransactionsTableRoutingModule } from "./transactions-table-routing.module";
 import { CustomerCreateUpdateModule } from "./customer-create-update/customer-create-update.module";
 import { FurySharedModule } from "../../../../@fury/fury-shared.module";
+import { TransactionsTableComponent } from "./transactions-table.component";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatTableModule } from "@angular/material/table";
 import { MatInputModule } from "@angular/material/input";
@@ -15,6 +15,7 @@ import { MatInputModule } from "@angular/material/input";
 @NgModule({
   imports: [
     CommonModule,
+    TransactionsTableRoutingModule,
     FormsModule,
     MaterialModule,
     FurySharedModule,
@@ -26,9 +27,8 @@ import { MatInputModule } from "@angular/material/input";
     ListModule,
     CustomerCreateUpdateModule,
     BreadcrumbsModule,
-    UsersTableRoutingModule,
   ],
-  declarations: [UsersTableComponent],
-  exports: [UsersTableComponent],
+  declarations: [TransactionsTableComponent],
+  exports: [TransactionsTableComponent],
 })
-export class UsersTableModule {}
+export class TransactionsTableModule {}

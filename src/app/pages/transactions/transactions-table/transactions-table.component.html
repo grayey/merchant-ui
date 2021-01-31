@@ -1,10 +1,6 @@
 <fury-page-layout mode="card">
   <fury-page-layout-header>
-    <fury-breadcrumbs
-      [@fadeInRight]
-      [crumbs]="['Tables']"
-      current="Transactions"
-    ></fury-breadcrumbs>
+    <fury-breadcrumbs [@fadeInRight] current="Transactions"></fury-breadcrumbs>
   </fury-page-layout-header>
 
   <fury-page-layout-content [@fadeInUp]>
@@ -54,35 +50,45 @@
         </ng-container>
 
         <ng-container matColumnDef="merchant">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Merchant Name</th>
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Merchant Name
+          </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.merchant?.name }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="merchantRequestReference">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Merchant Request Reference</th>
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Merchant Request Reference
+          </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.merchantRequestReference }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="merchantTransactionReference">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Merchant Transaction Reference</th>
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Merchant Transaction Reference
+          </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.merchantTransactionReference }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="transactionReference">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Transaction Reference</th>
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Transaction Reference
+          </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.transactionReference }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="transactionDate">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Transaction Date</th>
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Transaction Date
+          </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.transactionDate }}
           </td>
@@ -103,41 +109,49 @@
         </ng-container>
 
         <ng-container matColumnDef="gatewayTransactionReference">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Gateway Transaction Reference</th>
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Gateway Transaction Reference
+          </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.gatewayTransactionReference }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="gatewayResponseMessage">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Gateway Response Message</th>
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Gateway Response Message
+          </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.gatewayResponseMessage }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="transactionStatus">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Transaction Status</th>
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Transaction Status
+          </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.transactionStatus }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="settlementStatus">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Settlement Status</th>
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Settlement Status
+          </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.settlementStatus }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="settlementDate">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Settlement Date</th>
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Settlement Date
+          </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.settlementDate }}
           </td>
         </ng-container>
-
-        
 
         <!-- fullName Column -->
         <!-- <ng-container *ngFor="let column of columns">
@@ -196,7 +210,18 @@
         ></tr>
       </table>
 
-      <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+      <!-- <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator> -->
+
+      <mat-paginator
+        #paginator
+        class="paginator"
+        [length]="dataLenght"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20, 50, 100, 500, 100]"
+        [showFirstLastButtons]="true"
+        (page)="getTransactions($event)"
+      >
+      </mat-paginator>
     </fury-list>
   </fury-page-layout-content>
 </fury-page-layout>

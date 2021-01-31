@@ -18,7 +18,7 @@ import { CustomerCreateUpdateComponent } from "./customer-create-update/customer
 import { Customer } from "./customer-create-update/customer.model";
 import { fadeInRightAnimation } from "../../../../@fury/animations/fade-in-right.animation";
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
-import { AppService } from "src/app/app.service";
+import { AppService } from "src/app/services/app.service";
 
 @Component({
   selector: "fury-users-table",
@@ -35,6 +35,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit, OnDestroy {
   data$: Observable<Customer[]> = this.subject$.asObservable();
   customers: Customer[];
   users = [];
+  dataLenght: number = 10;
 
   @Input()
   columns: ListColumn[] = [
@@ -98,11 +99,10 @@ export class UsersTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource();
     this.getData().subscribe((customers) => {
       this.subject$.next(customers);
     });
-
-    this.dataSource = new MatTableDataSource();
 
     // this.data$.pipe(filter((data) => !!data)).subscribe((customers) => {
     //   this.customers = customers;
@@ -112,11 +112,11 @@ export class UsersTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    // this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  private getUsers(pageEvent?: PageEvent) {
+  getUsers(pageEvent?: PageEvent) {
     let pageNumber, pageSize;
     if (pageEvent) {
       pageSize = pageEvent.pageSize;
@@ -127,10 +127,11 @@ export class UsersTableComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
-    this.appService.getUsers("gh").subscribe(
+    this.appService.getUsers(pageNumber, pageSize).subscribe(
       (response) => {
         this.users = response.data;
         this.dataSource.data = this.users;
+        this.dataLenght = response.rows;
       },
       (err) => {},
       () => {}

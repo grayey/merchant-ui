@@ -11,9 +11,10 @@ export class AppService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(id): any {
+  getUsers(pageNumber, pageSize): any {
     return this.http.get(
-      this.appBaseUrl + `/api/v1/user?pageNumber=1&pageSize=10`,
+      this.appBaseUrl +
+        `/api/v1/user?pageNumber=${pageNumber}&pageSize=${pageSize}`,
       {
         headers: { "Content-Type": "application/json" },
       }
@@ -38,9 +39,10 @@ export class AppService {
     });
   }
 
-  getTransactions(id): any {
+  getTransactions(pageNumber, pageSize): any {
     return this.http.get(
-      this.appBaseUrl + `/api/v1/transaction?pageNumber=1&pageSize=10`,
+      this.appBaseUrl +
+        `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}`,
       {
         headers: { "Content-Type": "application/json" },
       }
@@ -58,7 +60,11 @@ export class AppService {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     };
-    return this.http.post(this.appBaseUrl + "/oauth/token", params.toString(), config);
+    return this.http.post(
+      this.appBaseUrl + "/oauth/token",
+      params.toString(),
+      config
+    );
   }
 
   createUser(data): Observable<any> {

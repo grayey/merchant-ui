@@ -2,7 +2,9 @@ import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
-import { AppService } from "src/app/app.service";
+import { ToastrService } from "ngx-toastr";
+import { AppService } from "src/app/services/app.service";
+import { AuthService } from "src/app/services/auth.service";
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
 
 @Component({
@@ -22,7 +24,9 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
     private snackbar: MatSnackBar,
-    private appService: AppService
+    private appService: AppService,
+    private authService: AuthService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -33,28 +37,32 @@ export class LoginComponent implements OnInit {
   }
 
   send() {
-    console.log(this.form.value);
-
     this.login(this.form.value);
 
-    this.router.navigate(["/"]);
-    this.snackbar.open(
-      "Lucky you! Looks like you didn't need a password or email address! For a real application we provide validators to prevent this. ;)",
-      "LOL THANKS",
-      {
-        duration: 10000,
-      }
-    );
+    // this.router.navigate(["/"]);
+    // this.snackbar.open(
+    //   "Lucky you! Looks like you didn't need a password or email address! For a real application we provide validators to prevent this. ;)",
+    //   "LOL THANKS",
+    //   {
+    //     duration: 10000,
+    //   }
+    // );
   }
 
   private login(data) {
     const { username, password } = data;
     this.appService.loginUser(username, password).subscribe(
       (response) => {
-        console.log(response);
+        const user = response;
+        this.authService.performLogin(user);
       },
       (err) => {
         console.log("Could not login because of wrong credentials", err);
+        if (err.status == 400) {
+          this.toastr.error("Invalid Username or Password");
+        } else {
+          this.toastr.error("Sorry something went wrong");
+        }
       },
       () => {
         // console.log('save enrolle call completed!');

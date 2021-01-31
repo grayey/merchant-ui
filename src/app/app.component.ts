@@ -7,6 +7,7 @@ import { ActivatedRoute } from "@angular/router";
 import { filter } from "rxjs/operators";
 import { Platform } from "@angular/cdk/platform";
 import { SplashScreenService } from "../@fury/services/splash-screen.service";
+import { AuthService } from "./services/auth.service";
 
 @Component({
   selector: "fury-root",
@@ -21,6 +22,7 @@ export class AppComponent {
     @Inject(DOCUMENT) private document: Document,
     private platform: Platform,
     private route: ActivatedRoute,
+    private authService: AuthService,
     private splashScreenService: SplashScreenService
   ) {
     this.route.queryParamMap
@@ -58,7 +60,7 @@ export class AppComponent {
       },
       {
         name: "Transactions",
-        routeOrFunction: "/tables/all-in-one-table",
+        routeOrFunction: "/transactions",
         icon: "assignment",
         // badge: "22",
         badgeColor: "#2196F3",
@@ -251,5 +253,13 @@ export class AppComponent {
       //   ],
       // },
     ]);
+  }
+
+  ngOnInit() {
+    const user = localStorage.getItem("userData");
+    if (user) {
+      const userData = JSON.parse(user);
+      this.authService.loginUser(userData);
+    }
   }
 }

@@ -1,10 +1,6 @@
 <fury-page-layout mode="card">
   <fury-page-layout-header>
-    <fury-breadcrumbs
-      [@fadeInRight]
-      [crumbs]="['Tables']"
-      current="Users"
-    ></fury-breadcrumbs>
+    <fury-breadcrumbs [@fadeInRight] current="Users"></fury-breadcrumbs>
   </fury-page-layout-header>
 
   <fury-page-layout-content [@fadeInUp]>
@@ -110,7 +106,18 @@
         ></tr>
       </table>
 
-      <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+      <!-- <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator> -->
+      <mat-paginator
+        #paginator
+        class="paginator"
+        [length]="dataLenght"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20, 50, 100, 500, 100]"
+        [showFirstLastButtons]="true"
+        (page)="getUsers($event)"
+      >
+      </mat-paginator>
     </fury-list>
   </fury-page-layout-content>
 </fury-page-layout>

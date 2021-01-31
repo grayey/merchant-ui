@@ -14,7 +14,10 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatSnackBarConfig,
 } from "@angular/material/snack-bar";
-import { AppService } from "./app.service";
+import { AppService } from "./services/app.service";
+import { AuthGuard } from "./services/auth-guard.service";
+import { AuthService } from "./services/auth.service";
+import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
   imports: [
@@ -22,6 +25,7 @@ import { AppService } from "./app.service";
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ToastrModule.forRoot({ preventDuplicates: true }),
 
     // Fury Core Modules
     AppRoutingModule,
@@ -53,6 +57,8 @@ import { AppService } from "./app.service";
       } as MatSnackBarConfig,
     },
     AppService,
+    AuthGuard,
+    AuthService,
   ],
 })
 export class AppModule {}

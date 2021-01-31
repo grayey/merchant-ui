@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { LayoutComponent } from "./layout/layout.component";
+import { AuthGuard } from "./services/auth-guard.service";
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
   {
     path: "",
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: "",
@@ -101,11 +103,11 @@ const routes: Routes = [
           ),
       },
       {
-        path: "tables/all-in-one-table",
+        path: "transactions",
         loadChildren: () =>
           import(
-            "./pages/tables/all-in-one-table/all-in-one-table.module"
-          ).then((m) => m.AllInOneTableModule),
+            "./pages/transactions/transactions-table/transactions-table.module"
+          ).then((m) => m.TransactionsTableModule),
       },
       {
         path: "users-table",
