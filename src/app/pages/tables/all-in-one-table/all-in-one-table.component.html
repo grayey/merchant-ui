@@ -13,7 +13,7 @@
       [columns]="columns"
       (filterChange)="onFilterChange($event)"
     >
-      <div class="actions">
+      <!--<div class="actions">
         <button
           class="create"
           (click)="createCustomer()"
@@ -23,7 +23,7 @@
         >
           <mat-icon>add</mat-icon>
         </button>
-      </div>
+      </div>-->
 
       <table [dataSource]="dataSource" mat-table matSort>
         <!--- Note that these columns can be defined in any order.
@@ -53,17 +53,45 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="bank">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Bank</th>
+        <ng-container matColumnDef="merchant">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Merchant Name</th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
-            {{ row.bank?.name }}
+            {{ row.merchant?.name }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="merchant">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Merchant</th>
+        <ng-container matColumnDef="merchantRequestReference">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Merchant Request Reference</th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
-            {{ row.merchant?.name }}
+            {{ row.merchantRequestReference }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="merchantTransactionReference">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Merchant Transaction Reference</th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            {{ row.merchantTransactionReference }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="transactionReference">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Transaction Reference</th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            {{ row.transactionReference }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="transactionDate">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Transaction Date</th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            {{ row.transactionDate }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="currency">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Currency</th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            {{ row.currency }}
           </td>
         </ng-container>
 
@@ -73,6 +101,43 @@
             {{ row.amount }}
           </td>
         </ng-container>
+
+        <ng-container matColumnDef="gatewayTransactionReference">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Gateway Transaction Reference</th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            {{ row.gatewayTransactionReference }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="gatewayResponseMessage">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Gateway Response Message</th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            {{ row.gatewayResponseMessage }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="transactionStatus">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Transaction Status</th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            {{ row.transactionStatus }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="settlementStatus">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Settlement Status</th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            {{ row.settlementStatus }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="settlementDate">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>Settlement Date</th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            {{ row.settlementDate }}
+          </td>
+        </ng-container>
+
+        
 
         <!-- fullName Column -->
         <!-- <ng-container *ngFor="let column of columns">
@@ -98,14 +163,14 @@
             mat-sort-header
           ></th>
           <td *matCellDef="let row" class="actions-cell" mat-cell>
-            <button
+            <!--<button
               type="button"
               mat-icon-button
               [matMenuTriggerFor]="actionsMenu"
               (click)="$event.stopPropagation()"
             >
               <mat-icon>more_horiz</mat-icon>
-            </button>
+            </button>-->
 
             <mat-menu
               #actionsMenu="matMenu"

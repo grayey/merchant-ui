@@ -45,7 +45,7 @@
   </div>
 
   <fury-scrollbar class="sidenav-items" fxFlex="auto">
-    <div *ngIf="sidenavUserVisible$ | async" class="sidenav-user">
+    <!--<div *ngIf="sidenavUserVisible$ | async" class="sidenav-user">
       <img class="sidenav-user-image" src="assets/img/avatars/default.jpg" />
       <h4 class="sidenav-user-name">{{ appService?.user?.fullName }}</h4>
       <h5 class="sidenav-user-email">d{{ appService?.user?.name }}</h5>
@@ -61,7 +61,7 @@
           <mat-icon>exit_to_app</mat-icon>
         </a>
       </div>
-    </div>
+    </div>-->
 
     <fury-sidenav-item
       *ngFor="let item of items$ | async"

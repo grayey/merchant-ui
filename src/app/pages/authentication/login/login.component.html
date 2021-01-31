@@ -10,9 +10,9 @@
     <div class="padding" fxLayout="column" fxLayoutGap="16px" [formGroup]="form">
       <div fxFlex="auto" fxLayout="column">
         <mat-form-field fxFlex="grow">
-          <mat-label>E-Mail</mat-label>
-          <input matInput required formControlName="email">
-          <mat-error *ngIf="form.get('email').hasError('required')">We need an email address to log you in</mat-error>
+          <mat-label>Username</mat-label>
+          <input matInput required formControlName="username">
+          <mat-error *ngIf="form.get('username').hasError('required')">We need a username to log you in</mat-error>
         </mat-form-field>
         <mat-form-field fxFlex="grow">
           <mat-label>Password</mat-label>
@@ -33,10 +33,10 @@
       <button type="button" color="primary" mat-raised-button (click)="send()">
         SIGN IN
       </button>
-      <p class="secondary-text text-center">
+      <!--<p class="secondary-text text-center">
         Don't have an account?<br/>
         <a [routerLink]="['/register']">Click here to create one</a>
-      </p>
+      </p>-->
     </div>
   </div>
 </div>

@@ -42,19 +42,8 @@ export class AllInOneTableComponent
     // { name: "Checkbox", property: "checkbox", visible: false },
     // { name: "Image", property: "image", visible: true },
     // { name: "Name", property: "name", visible: true, isModelProperty: true },
-    {
-      name: "Bank",
-      property: "bank",
-      visible: true,
-      isModelProperty: true,
-      propertylevel: "name",
-    },
-    {
-      name: "Amount",
-      property: "amount",
-      visible: true,
-      isModelProperty: true,
-    },
+    
+    
     // {
     //   name: "Status",
     //   property: "status",
@@ -67,6 +56,73 @@ export class AllInOneTableComponent
       visible: true,
       isModelProperty: true,
     },
+    {
+      name: "Amount",
+      property: "amount",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Merchant Request Reference",
+      property: "merchantRequestReference",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Merchant Transaction Reference",
+      property: "merchantTransactionReference",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Transaction Reference",
+      property: "transactionReference",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Transaction Date",
+      property: "transactionDate",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Currency",
+      property: "currency",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Gateway Transaction Reference",
+      property: "gatewayTransactionReference",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Gateway Response Message",
+      property: "gatewayResponseMessage",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Transaction Status",
+      property: "transactionStatus",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Settlement Status",
+      property: "settlementStatus",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Settlement Date",
+      property: "settlementDate",
+      visible: true,
+      isModelProperty: true,
+    }
+
     // { name: "City", property: "city", visible: true, isModelProperty: true },
     // {
     //   name: "Phone",

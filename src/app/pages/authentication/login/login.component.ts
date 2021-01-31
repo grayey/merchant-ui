@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: ["", Validators.required],
+      username: ["", Validators.required],
       password: ["", Validators.required],
     });
   }
@@ -50,8 +50,12 @@ export class LoginComponent implements OnInit {
   private login(data) {
     const { username, password } = data;
     this.appService.loginUser(username, password).subscribe(
-      (response) => {},
-      (err) => {},
+      (response) => {
+        console.log(response);
+      },
+      (err) => {
+        console.log("Could not login because of wrong credentials", err);
+      },
       () => {
         // console.log('save enrolle call completed!');
       }

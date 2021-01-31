@@ -58,7 +58,7 @@ export class AppService {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     };
-    return this.http.post(this.appBaseUrl + "/oauth/token", params, config);
+    return this.http.post(this.appBaseUrl + "/oauth/token", params.toString(), config);
   }
 
   createUser(data): Observable<any> {
