@@ -51,13 +51,13 @@ export class AppComponent {
         type: "subheading",
         customClass: "first-subheading",
       },
-      {
-        name: "Dashboard",
-        routeOrFunction: "/",
-        icon: "dashboard",
-        position: 10,
-        pathMatchExact: true,
-      },
+      // {
+      //   name: "Dashboard",
+      //   routeOrFunction: "/",
+      //   icon: "dashboard",
+      //   position: 10,
+      //   pathMatchExact: true,
+      // },
       {
         name: "Transactions",
         routeOrFunction: "/transactions",
