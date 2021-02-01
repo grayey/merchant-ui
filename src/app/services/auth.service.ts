@@ -33,7 +33,7 @@ export class AuthService {
     localStorage.setItem("userData", JSON.stringify(user));
     this.user = user;
     this.isAuthenticated = true;
-    this.router.navigate(["/"]);
+    this.router.navigate(["/transactions"]);
   }
 
   autoLogout(expirationDuration: number) {
