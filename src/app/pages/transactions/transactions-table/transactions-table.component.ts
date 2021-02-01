@@ -62,24 +62,24 @@ export class TransactionsTableComponent
       visible: true,
       isModelProperty: true,
     },
-    {
-      name: "Merchant Request Reference",
-      property: "merchantRequestReference",
-      visible: true,
-      isModelProperty: true,
-    },
+    // {
+    //   name: "Merchant Request Reference",
+    //   property: "merchantRequestReference",
+    //   visible: true,
+    //   isModelProperty: true,
+    // },
     {
       name: "Merchant Transaction Reference",
       property: "merchantTransactionReference",
       visible: true,
       isModelProperty: true,
     },
-    {
-      name: "Transaction Reference",
-      property: "transactionReference",
-      visible: true,
-      isModelProperty: true,
-    },
+    // {
+    //   name: "Transaction Reference",
+    //   property: "transactionReference",
+    //   visible: true,
+    //   isModelProperty: true,
+    // },
     {
       name: "Transaction Date",
       property: "transactionDate",
@@ -92,12 +92,12 @@ export class TransactionsTableComponent
       visible: true,
       isModelProperty: true,
     },
-    {
-      name: "Gateway Transaction Reference",
-      property: "gatewayTransactionReference",
-      visible: true,
-      isModelProperty: true,
-    },
+    // {
+    //   name: "Gateway Transaction Reference",
+    //   property: "gatewayTransactionReference",
+    //   visible: true,
+    //   isModelProperty: true,
+    // },
     {
       name: "Gateway Response Message",
       property: "gatewayResponseMessage",

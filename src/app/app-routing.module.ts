@@ -110,7 +110,7 @@ const routes: Routes = [
           ).then((m) => m.TransactionsTableModule),
       },
       {
-        path: "users-table",
+        path: "users",
         loadChildren: () =>
           import("./pages/users/users-table/users-table.module").then(
             (m) => m.UsersTableModule

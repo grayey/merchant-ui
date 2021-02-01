@@ -68,7 +68,7 @@ export class AppComponent {
       },
       {
         name: "Users",
-        routeOrFunction: "/users-table",
+        routeOrFunction: "/users",
         icon: "assignment",
         // badge: "22",
         badgeColor: "#2196F3",
