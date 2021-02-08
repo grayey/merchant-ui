@@ -2,40 +2,57 @@ import { Injectable } from "@angular/core";
 // import { Http } from "@angular/http";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { AuthService } from "./auth.service";
+
+export interface IBearerToken {
+  access_token: string;
+}
 
 @Injectable()
 export class AppService {
-  appBaseUrl = "http://3.10.80.41:8086";
+  appBaseUrl = "http://localhost:8080";
 
   user = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getUsers(pageNumber, pageSize): any {
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/user?pageNumber=${pageNumber}&pageSize=${pageSize}`,
       {
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          Authorization: this.getToken(),
+          "Content-Type": "application/json" 
+        },
       }
     );
   }
 
   getUserTypes(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/user/types`, {
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        Authorization: this.getToken(),
+        "Content-Type": "application/json" 
+      },
     });
   }
 
   getUserRoles(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/user/roles`, {
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        Authorization: this.getToken(),
+        "Content-Type": "application/json" 
+      },
     });
   }
 
   getUserStatuses(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/user/status`, {
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        Authorization: this.getToken(),
+        "Content-Type": "application/json" 
+      },
     });
   }
 
@@ -44,7 +61,10 @@ export class AppService {
       this.appBaseUrl +
         `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}`,
       {
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          Authorization: this.getToken(),
+          "Content-Type": "application/json" 
+        },
       }
     );
   }
@@ -67,8 +87,24 @@ export class AppService {
     );
   }
 
-  createUser(data): Observable<any> {
+  createUser(data: any): Observable<any> {
     console.log("request");
     return this.http.post(this.appBaseUrl + "/api/v1/user", data);
   }
+
+  private getToken(): string{
+    let bearerToken: IBearerToken = this.initEmptyData();
+    const accessToken = this.authService.user;
+    Object.assign(bearerToken, accessToken);
+    let token = "Bearer " + bearerToken.access_token;
+    return token;
+  }
+
+  private initEmptyData(): IBearerToken {
+    return <IBearerToken>{
+      access_token: ""
+    };
+  }
+
+  
 }

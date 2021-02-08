@@ -12,7 +12,7 @@ export class ToolbarUserComponent implements OnInit {
   constructor(public authService: AuthService) {}
 
   ngOnInit() {
-    console.log(this.authService.user);
+    //console.log(this.authService.user);
   }
 
   logout() {

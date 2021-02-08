@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     // );
   }
 
-  private login(data) {
+  private login(data: any) {
     const { username, password } = data;
     this.appService.loginUser(username, password).subscribe(
       (response) => {
