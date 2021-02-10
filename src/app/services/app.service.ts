@@ -30,6 +30,19 @@ export class AppService {
     );
   }
 
+  getUploads(pageNumber, pageSize): any {
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/upload-request?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
   getUserTypes(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/user/types`, {
       headers: {
@@ -89,8 +102,20 @@ export class AppService {
   }
 
   createUser(data: any): Observable<any> {
-    console.log("request");
     return this.http.post(this.appBaseUrl + "/api/v1/user", data);
+  }
+
+  uploadItem(data: any): Observable<any> {
+    const config = {
+      headers: {
+        Authorization: this.getToken(),
+      },
+    };
+    return this.http.post(
+      this.appBaseUrl + "/api/v1/settlement/upload",
+      data,
+      config
+    );
   }
 
   private getToken(): string {

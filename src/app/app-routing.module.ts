@@ -117,6 +117,27 @@ const routes: Routes = [
           ),
       },
       {
+        path: "uploads",
+        loadChildren: () =>
+          import("./pages/uploads/uploads/uploads-table.module").then(
+            (m) => m.UploadsTableModule
+          ),
+      },
+      {
+        path: "settlements",
+        loadChildren: () =>
+          import(
+            "./pages/settlements/settlements/settlements-table.module"
+          ).then((m) => m.SettlementsTableModule),
+      },
+      {
+        path: "charge-backs",
+        loadChildren: () =>
+          import(
+            "./pages/charge-backs/charge-backs/charge-backs-table.module"
+          ).then((m) => m.ChargeBacksTableModule),
+      },
+      {
         path: "drag-and-drop",
         loadChildren: () =>
           import("./pages/drag-and-drop/drag-and-drop.module").then(

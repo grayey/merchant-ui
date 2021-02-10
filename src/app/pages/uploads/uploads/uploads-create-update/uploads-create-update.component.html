@@ -1,0 +1,31 @@
+<div mat-dialog-title>Upload</div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <!-- <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field fxFlex>
+        <mat-label>Full Name</mat-label>
+        <input type="text" formControlName="fullName" matInput />
+      </mat-form-field>
+    </div> -->
+
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field fxFlex>
+        <mat-label>Upload Type</mat-label>
+        <mat-select formControlName="uploadType">
+          <mat-option *ngFor="let type of uploadTypes" [value]="type.name">
+            {{ type.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <input type="file" (change)="upload($event.target.files)" />
+    Upload Percent: {{ percentDone }}% <br />
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <!-- <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid">
+      CREATE USER
+    </button> -->
+  </mat-dialog-actions>
+</form>

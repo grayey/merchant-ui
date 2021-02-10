@@ -1,35 +1,41 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { ListColumn } from './list-column.model';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+} from "@angular/core";
+import { fromEvent } from "rxjs";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { ListColumn } from "./list-column.model";
 
 @Component({
-  selector: 'fury-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: "fury-list",
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.scss"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ListComponent implements AfterViewInit {
-
   @Input() name: string;
   @Input() columns: ListColumn[];
 
-  @ViewChild('filter') filter: ElementRef;
+  @ViewChild("filter") filter: ElementRef;
   @Output() filterChange = new EventEmitter<string>();
 
   @Input() hideHeader: boolean;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngAfterViewInit() {
     if (!this.hideHeader) {
-      fromEvent(this.filter.nativeElement, 'keyup').pipe(
-        distinctUntilChanged(),
-        debounceTime(150)
-      ).subscribe(() => {
-        this.filterChange.emit(this.filter.nativeElement.value);
-      });
+      fromEvent(this.filter.nativeElement, "keyup")
+        .pipe(distinctUntilChanged(), debounceTime(150))
+        .subscribe(() => {
+          this.filterChange.emit(this.filter.nativeElement.value);
+        });
     }
   }
 
