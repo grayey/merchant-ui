@@ -1,5 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+.logo-img {
+  width: 200px;
+  height: 200px;
+}
+
+.login-header {
+  padding: 0 !important;
+}
+
 @import "./@fury/styles/core";
 @import "./app/app.theme";
 @import "~ngx-toastr/toastr";
+
 // @import "~ngx-toastr/toastr-bs4-alert";

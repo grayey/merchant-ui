@@ -10,7 +10,8 @@ export interface IBearerToken {
 
 @Injectable()
 export class AppService {
-  appBaseUrl = "http://localhost:8080";
+  // appBaseUrl = "http://localhost:8080";
+  appBaseUrl = "http://3.10.80.41:8086";
 
   user = null;
 
@@ -21,9 +22,9 @@ export class AppService {
       this.appBaseUrl +
         `/api/v1/user?pageNumber=${pageNumber}&pageSize=${pageSize}`,
       {
-        headers: { 
+        headers: {
           Authorization: this.getToken(),
-          "Content-Type": "application/json" 
+          "Content-Type": "application/json",
         },
       }
     );
@@ -31,27 +32,27 @@ export class AppService {
 
   getUserTypes(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/user/types`, {
-      headers: { 
+      headers: {
         Authorization: this.getToken(),
-        "Content-Type": "application/json" 
+        "Content-Type": "application/json",
       },
     });
   }
 
   getUserRoles(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/user/roles`, {
-      headers: { 
+      headers: {
         Authorization: this.getToken(),
-        "Content-Type": "application/json" 
+        "Content-Type": "application/json",
       },
     });
   }
 
   getUserStatuses(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/user/status`, {
-      headers: { 
+      headers: {
         Authorization: this.getToken(),
-        "Content-Type": "application/json" 
+        "Content-Type": "application/json",
       },
     });
   }
@@ -61,9 +62,9 @@ export class AppService {
       this.appBaseUrl +
         `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}`,
       {
-        headers: { 
+        headers: {
           Authorization: this.getToken(),
-          "Content-Type": "application/json" 
+          "Content-Type": "application/json",
         },
       }
     );
@@ -92,7 +93,7 @@ export class AppService {
     return this.http.post(this.appBaseUrl + "/api/v1/user", data);
   }
 
-  private getToken(): string{
+  private getToken(): string {
     let bearerToken: IBearerToken = this.initEmptyData();
     const accessToken = this.authService.user;
     Object.assign(bearerToken, accessToken);
@@ -102,9 +103,7 @@ export class AppService {
 
   private initEmptyData(): IBearerToken {
     return <IBearerToken>{
-      access_token: ""
+      access_token: "",
     };
   }
-
-  
 }
