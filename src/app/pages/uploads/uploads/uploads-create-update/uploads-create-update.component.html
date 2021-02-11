@@ -13,14 +13,18 @@
       <mat-form-field fxFlex>
         <mat-label>Upload Type</mat-label>
         <mat-select formControlName="uploadType">
-          <mat-option *ngFor="let type of uploadTypes" [value]="type.name">
-            {{ type.name }}</mat-option
+          <mat-option *ngFor="let type of uploadTypes" [value]="type.key">
+            {{ type.value }}</mat-option
           >
         </mat-select>
       </mat-form-field>
     </div>
 
-    <input type="file" (change)="upload($event.target.files)" />
+    <input
+      [disabled]="!form.value.uploadType"
+      type="file"
+      (change)="upload($event.target.files)"
+    />
     Upload Percent: {{ percentDone }}% <br />
   </mat-dialog-content>
   <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">

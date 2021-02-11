@@ -22,6 +22,12 @@ export class ListComponent implements AfterViewInit {
   @Input() name: string;
   @Input() columns: ListColumn[];
 
+  @Input() showType = false;
+  @Input() showStatus = false;
+  @Input() showFilter = false;
+
+  @Output() filterClick: EventEmitter<any> = new EventEmitter<any>();
+
   @ViewChild("filter") filter: ElementRef;
   @Output() filterChange = new EventEmitter<string>();
 

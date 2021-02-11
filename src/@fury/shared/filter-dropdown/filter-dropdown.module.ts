@@ -1,10 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbDropdownModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
-import { FilterDropdownModule } from "../filter-dropdown/filter-dropdown.module";
 import { MaterialModule } from "../material-components.module";
-import { ListComponent } from "./list.component";
+import { FilterDropdownComponent } from "./filter-dropdown.component";
 
 @NgModule({
   imports: [
@@ -12,9 +12,9 @@ import { ListComponent } from "./list.component";
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    FilterDropdownModule,
+    NgbDropdownModule,
   ],
-  declarations: [ListComponent],
-  exports: [ListComponent],
+  declarations: [FilterDropdownComponent],
+  exports: [FilterDropdownComponent],
 })
-export class ListModule {}
+export class FilterDropdownModule {}

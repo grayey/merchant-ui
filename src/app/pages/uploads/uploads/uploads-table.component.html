@@ -8,6 +8,10 @@
       name="Uploads"
       [columns]="columns"
       (filterChange)="onFilterChange($event)"
+      [showType]="true"
+      [showStatus]="true"
+      [showFilter]="true"
+      (filterClick)="onFilterClick($event)"
     >
       <div class="actions">
         <button
@@ -87,7 +91,7 @@
               yPosition="below"
               xPosition="before"
             >
-              <button (click)="updateCustomer(row)" mat-menu-item>
+              <button mat-menu-item>
                 <span>Modify</span>
               </button>
               <button (click)="deleteCustomer(row)" mat-menu-item>
@@ -99,7 +103,6 @@
 
         <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
         <tr
-          (click)="updateCustomer(row)"
           *matRowDef="let row; columns: visibleColumns"
           class="clickable route-animations-elements"
           mat-row

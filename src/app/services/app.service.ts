@@ -30,10 +30,11 @@ export class AppService {
     );
   }
 
-  getUploads(pageNumber, pageSize): any {
+  getUploads(pageNumber, pageSize, filterData): any {
+    const { type, status } = filterData;
     return this.http.get(
       this.appBaseUrl +
-        `/api/v1/upload-request?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        `/api/v1/upload-request?pageNumber=${pageNumber}&pageSize=${pageSize}&type=${type}&status=${status}`,
       {
         headers: {
           Authorization: this.getToken(),
@@ -41,6 +42,24 @@ export class AppService {
         },
       }
     );
+  }
+
+  getUploadTypes(): any {
+    return this.http.get(this.appBaseUrl + `/api/v1/upload-request/types`, {
+      headers: {
+        Authorization: this.getToken(),
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+  getUploadStatuses(): any {
+    return this.http.get(this.appBaseUrl + `/api/v1/upload-request/status`, {
+      headers: {
+        Authorization: this.getToken(),
+        "Content-Type": "application/json",
+      },
+    });
   }
 
   getUserTypes(): any {
@@ -83,6 +102,32 @@ export class AppService {
     );
   }
 
+  getSettlements(pageNumber, pageSize, filterData): any {
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/settlement?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  getChargeBacks(pageNumber, pageSize, filterData): any {
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/charge-back?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
   loginUser(username: string, password: string): Observable<any> {
     const params = new URLSearchParams();
     params.append("username", username);
@@ -105,7 +150,7 @@ export class AppService {
     return this.http.post(this.appBaseUrl + "/api/v1/user", data);
   }
 
-  uploadItem(data: any): Observable<any> {
+  uploadSettlementItem(data: any): Observable<any> {
     const config = {
       headers: {
         Authorization: this.getToken(),
@@ -113,6 +158,19 @@ export class AppService {
     };
     return this.http.post(
       this.appBaseUrl + "/api/v1/settlement/upload",
+      data,
+      config
+    );
+  }
+
+  uploadChargeBackItem(data: any): Observable<any> {
+    const config = {
+      headers: {
+        Authorization: this.getToken(),
+      },
+    };
+    return this.http.post(
+      this.appBaseUrl + "/api/v1/charge-back/upload",
       data,
       config
     );

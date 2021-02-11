@@ -75,6 +75,7 @@ export class ChargeBacksTableComponent
     { name: "Actions", property: "actions", visible: true },
   ] as ListColumn[];
   pageSize = 10;
+  filterData: any;
   dataSource: MatTableDataSource<Customer> | null;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -100,7 +101,7 @@ export class ChargeBacksTableComponent
     //   this.customers = customers;
     //   this.dataSource.data = customers;
     // });
-    // this.getUsers();
+    this.getChargeBacks();
   }
 
   ngAfterViewInit() {
@@ -108,7 +109,14 @@ export class ChargeBacksTableComponent
     this.dataSource.sort = this.sort;
   }
 
-  getUsers(pageEvent?: PageEvent) {
+  setFilterData() {
+    this.filterData = {
+      type: "",
+      status: "",
+    };
+  }
+
+  getChargeBacks(pageEvent?: PageEvent) {
     let pageNumber, pageSize;
     if (pageEvent) {
       pageSize = pageEvent.pageSize;
@@ -119,15 +127,17 @@ export class ChargeBacksTableComponent
     }
 
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
-    this.appService.getUsers(pageNumber, pageSize).subscribe(
-      (response) => {
-        this.users = response.data;
-        this.dataSource.data = this.users;
-        this.dataLenght = response.rows;
-      },
-      (err) => {},
-      () => {}
-    );
+    this.appService
+      .getChargeBacks(pageNumber, pageSize, this.filterData)
+      .subscribe(
+        (response) => {
+          this.users = response.data;
+          this.dataSource.data = this.users;
+          this.dataLenght = response.rows;
+        },
+        (err) => {},
+        () => {}
+      );
   }
 
   createCustomer() {
@@ -138,7 +148,7 @@ export class ChargeBacksTableComponent
         /**
          * Customer is the updated customer (if the user pressed Save - otherwise it's null)
          */
-        this.getUsers();
+        this.getChargeBacks();
         // if (customer) {
         //   /**
         //    * Here we are updating our local array.
@@ -160,7 +170,7 @@ export class ChargeBacksTableComponent
         /**
          * Customer is the updated customer (if the user pressed Save - otherwise it's null)
          */
-        this.getUsers();
+        this.getChargeBacks();
         // if (customer) {
         //   /**
         //    * Here we are updating our local array.

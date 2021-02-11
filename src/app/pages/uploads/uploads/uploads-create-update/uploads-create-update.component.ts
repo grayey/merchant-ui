@@ -12,16 +12,7 @@ import { Customer } from "./customer.model";
 })
 export class UploadsCreateUpdateComponent implements OnInit {
   static id = 100;
-  uploadTypes = [
-    {
-      id: 2,
-      name: "settlement",
-    },
-    {
-      id: 3,
-      name: "charge-back",
-    },
-  ];
+  uploadTypes = [];
   percentDone: number;
   uploadSuccess: boolean;
 
@@ -36,6 +27,7 @@ export class UploadsCreateUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getUploadTypes();
     if (this.defaults) {
       this.mode = "update";
     } else {
@@ -48,6 +40,16 @@ export class UploadsCreateUpdateComponent implements OnInit {
     });
   }
 
+  getUploadTypes() {
+    this.appService.getUploadTypes().subscribe(
+      (response) => {
+        this.uploadTypes = response.data;
+      },
+      (err) => {},
+      () => {}
+    );
+  }
+
   upload(files: File[]) {
     //pick from one of the 4 styles of file uploads below
     this.uploadAndProgress(files);
@@ -58,8 +60,27 @@ export class UploadsCreateUpdateComponent implements OnInit {
     var formData = new FormData();
     // formData.append()
     Array.from(files).forEach((f) => formData.append("fileName", f));
+    if (this.form.value.uploadType == "SETTLEMENT") {
+      this.uploadSettlement(formData);
+    }
+    if (this.form.value.uploadType == "CHARGE_BACK") {
+      this.uploadChargeBack(formData);
+    }
+  }
 
-    this.appService.uploadItem(formData).subscribe((event) => {
+  uploadSettlement(formData) {
+    this.appService.uploadSettlementItem(formData).subscribe((event) => {
+      this.dialogRef.close();
+      if (event.type === HttpEventType.UploadProgress) {
+        this.percentDone = Math.round((100 * event.loaded) / event.total);
+      } else if (event instanceof HttpResponse) {
+        this.uploadSuccess = true;
+      }
+    });
+  }
+
+  uploadChargeBack(formData) {
+    this.appService.uploadChargeBackItem(formData).subscribe((event) => {
       this.dialogRef.close();
       if (event.type === HttpEventType.UploadProgress) {
         this.percentDone = Math.round((100 * event.loaded) / event.total);

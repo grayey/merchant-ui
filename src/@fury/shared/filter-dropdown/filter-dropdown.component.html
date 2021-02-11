@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block" #myDrop="ngbDropdown">
+      <button
+        class="btn btn-outline-primary"
+        id="dropdownForm1"
+        ngbDropdownToggle
+      >
+        Filter
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+        <form class="px-4 py-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+          <!-- <div class="form-group">
+            <label for="exampleDropdownFormEmail1">Email address</label>
+            <input
+              type="email"
+              class="form-control"
+              id="exampleDropdownFormEmail1"
+              placeholder="email@example.com"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleDropdownFormPassword1">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="exampleDropdownFormPassword1"
+              placeholder="Password"
+            />
+          </div> -->
+          <!-- <div class="form-group">
+            <mat-form-field>
+              <mat-label>Select Type</mat-label>
+              <mat-select formControlName="type">
+                <mat-option *ngFor="let type of types" [value]="type.name">
+                  {{ type.name }}</mat-option
+                >
+                <mat-option>SETTLEMENT</mat-option>
+                <mat-option>56</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> -->
+          <div class="form-group" *ngIf="showType">
+            <label>Type</label>
+            <div class="select-dropdown">
+              <select name="cars" id="types" formControlName="type">
+                <option value="SETTLEMENT">SETTLEMENT</option>
+                <option value="CHARGE_BACKS">CHARGE_BACKS</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="showStatus">
+            <label>Status</label>
+            <div class="select-dropdown">
+              <select name="cars" id="statuses" formControlName="status">
+                <option value="PENDING">PENDING</option>
+                <option value="FAILED">FAILED</option>
+                <option value="SUCCESSFUL">SUCCESSFUL</option>
+                <option value="COMPLETED">COMPLETED</option>
+              </select>
+            </div>
+          </div>
+          <!-- <div class="form-group">
+            <mat-form-field>
+              <mat-label>Select Status</mat-label>
+              <mat-select
+                formControlName="status"
+                (selectionChange)="onSelect($event); myDrop.open()"
+              >
+                <mat-option
+                  *ngFor="let status1 of statuses"
+                  [value]="status1.name"
+                >
+                  {{ status1.name }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div> -->
+
+          <button
+            type="button"
+            (click)="clearFilterFields()"
+            class="btn btn-secondary float_left"
+          >
+            Clear
+          </button>
+          <button type="submit" class="btn btn-primary float_right">
+            Filter
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

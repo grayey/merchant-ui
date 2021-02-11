@@ -9,7 +9,7 @@
       [columns]="columns"
       (filterChange)="onFilterChange($event)"
     >
-      <div class="actions">
+      <!-- <div class="actions">
         <button
           class="create"
           (click)="createCustomer()"
@@ -19,7 +19,7 @@
         >
           <mat-icon>add</mat-icon>
         </button>
-      </div>
+      </div> -->
 
       <table [dataSource]="dataSource" mat-table matSort>
         <!--- Note that these columns can be defined in any order.
@@ -115,7 +115,7 @@
         [pageSize]="10"
         [pageSizeOptions]="[5, 10, 20, 50, 100, 500, 100]"
         [showFirstLastButtons]="true"
-        (page)="getUsers($event)"
+        (page)="getSettlements($event)"
       >
       </mat-paginator>
     </fury-list>

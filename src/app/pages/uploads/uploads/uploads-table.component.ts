@@ -70,6 +70,8 @@ export class UploadsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: "Actions", property: "actions", visible: true },
   ] as ListColumn[];
   pageSize = 10;
+  filterData: any;
+  showFilter: boolean;
   dataSource: MatTableDataSource<Customer> | null;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -91,6 +93,7 @@ export class UploadsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
+    this.setFilterData();
 
     // this.data$.pipe(filter((data) => !!data)).subscribe((customers) => {
     //   this.customers = customers;
@@ -104,6 +107,21 @@ export class UploadsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataSource.sort = this.sort;
   }
 
+  setFilterData() {
+    this.filterData = {
+      type: "",
+      status: "",
+    };
+  }
+
+  onFilterClick(payload: any): void {
+    console.log(payload);
+    const { type, status } = payload;
+    this.filterData.type = type;
+    this.filterData.status = status;
+    this.getUploads();
+  }
+
   getUploads(pageEvent?: PageEvent) {
     let pageNumber, pageSize;
     if (pageEvent) {
@@ -115,7 +133,7 @@ export class UploadsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
-    this.appService.getUploads(pageNumber, pageSize).subscribe(
+    this.appService.getUploads(pageNumber, pageSize, this.filterData).subscribe(
       (response) => {
         this.uploads = response.data;
         this.dataSource.data = this.uploads;

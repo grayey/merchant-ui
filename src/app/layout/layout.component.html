@@ -1,28 +1,39 @@
 <fury-loading-indicator></fury-loading-indicator>
 <fury-backdrop #backdrop="furyBackdrop"></fury-backdrop>
-<fury-config-panel-toggle (openConfig)="openConfigPanel()"></fury-config-panel-toggle>
+<fury-config-panel-toggle
+  (openConfig)="openConfigPanel()"
+></fury-config-panel-toggle>
 
 <!-- QUICKPANEL -->
-<fury-sidebar #configPanel="furySidebar" [backdrop]="backdrop" [invisibleBackdrop]="true" position="right">
+<fury-sidebar
+  #configPanel="furySidebar"
+  [backdrop]="backdrop"
+  [invisibleBackdrop]="true"
+  position="right"
+>
   <fury-config-panel></fury-config-panel>
 </fury-sidebar>
 <!-- END QUICKPANEL -->
 
-<div class="container" fxLayout="column">
+<div class="fury-layout-container" fxLayout="column">
   <ng-container *ngIf="(toolbarPosition$ | async) === 'above-fixed'">
     <ng-container *ngTemplateOutlet="toolbar"></ng-container>
   </ng-container>
 
   <mat-sidenav-container autosize fxFlex>
-
     <!-- SIDENAV -->
-    <mat-sidenav (closedStart)="closeSidenav()"
-                 (openedStart)="openSidenav()"
-                 [mode]="sidenavMode$ | async"
-                 [opened]="sidenavOpen$ | async"
-                 *ngIf="sideNavigation$ | async"
-                 class="fury-collapsable-sidenav">
-      <fury-sidenav [collapsed]="sidenavCollapsed$ | async" [expanded]="sidenavExpanded$ | async"></fury-sidenav>
+    <mat-sidenav
+      (closedStart)="closeSidenav()"
+      (openedStart)="openSidenav()"
+      [mode]="sidenavMode$ | async"
+      [opened]="sidenavOpen$ | async"
+      *ngIf="sideNavigation$ | async"
+      class="fury-collapsable-sidenav"
+    >
+      <fury-sidenav
+        [collapsed]="sidenavCollapsed$ | async"
+        [expanded]="sidenavExpanded$ | async"
+      ></fury-sidenav>
     </mat-sidenav>
     <!-- END SIDENAV -->
 
@@ -36,11 +47,13 @@
       </ng-container>
 
       <!-- CONTENT -->
-      <div [class.scroll-disabled]="scrollDisabled$ | async"
-           cdkScrollable
-           class="content"
-           fxFlex="auto"
-           fxLayout="column">
+      <div
+        [class.scroll-disabled]="scrollDisabled$ | async"
+        cdkScrollable
+        class="content"
+        fxFlex="auto"
+        fxLayout="column"
+      >
         <ng-container *ngIf="(toolbarPosition$ | async) === 'static'">
           <ng-container *ngTemplateOutlet="toolbar"></ng-container>
         </ng-container>
@@ -68,16 +81,20 @@
 
 <ng-template #toolbar>
   <!-- TOOLBAR -->
-  <fury-toolbar (openQuickPanel)="openQuickPanel()"
-                [hasNavigation]="topNavigation$ | async"
-                (openSidenav)="openSidenav()"
-                *ngIf="toolbarVisible$ | async"
-                fxFlex="none"></fury-toolbar>
+  <fury-toolbar
+    (openQuickPanel)="openQuickPanel()"
+    [hasNavigation]="topNavigation$ | async"
+    (openSidenav)="openSidenav()"
+    *ngIf="toolbarVisible$ | async"
+    fxFlex="none"
+  ></fury-toolbar>
   <!-- END TOOLBAR -->
 
   <!-- NAVIGATION -->
-  <fury-navigation *ngIf="topNavigation$ | async"
-                   fxFlex="none"></fury-navigation>
+  <fury-navigation
+    *ngIf="topNavigation$ | async"
+    fxFlex="none"
+  ></fury-navigation>
   <!-- END NAVIGATION -->
 </ng-template>
 
@@ -86,4 +103,3 @@
   <fury-footer fxFlex="none"></fury-footer>
   <!-- END FOOTER -->
 </ng-template>
-

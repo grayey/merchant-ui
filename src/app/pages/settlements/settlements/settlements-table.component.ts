@@ -34,7 +34,7 @@ export class SettlementsTableComponent
   subject$: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1);
   data$: Observable<Customer[]> = this.subject$.asObservable();
   customers: Customer[];
-  users = [];
+  settlements = [];
   dataLenght: number = 10;
 
   @Input()
@@ -75,6 +75,7 @@ export class SettlementsTableComponent
     { name: "Actions", property: "actions", visible: true },
   ] as ListColumn[];
   pageSize = 10;
+  filterData: any;
   dataSource: MatTableDataSource<Customer> | null;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -90,20 +91,22 @@ export class SettlementsTableComponent
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
-
-    // this.data$.pipe(filter((data) => !!data)).subscribe((customers) => {
-    //   this.customers = customers;
-    //   this.dataSource.data = customers;
-    // });
-    // this.getUsers();
+    this.setFilterData();
+    this.getSettlements();
   }
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  getUsers(pageEvent?: PageEvent) {
+  setFilterData() {
+    this.filterData = {
+      type: "",
+      status: "",
+    };
+  }
+
+  getSettlements(pageEvent?: PageEvent) {
     let pageNumber, pageSize;
     if (pageEvent) {
       pageSize = pageEvent.pageSize;
@@ -114,15 +117,17 @@ export class SettlementsTableComponent
     }
 
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
-    this.appService.getUsers(pageNumber, pageSize).subscribe(
-      (response) => {
-        this.users = response.data;
-        this.dataSource.data = this.users;
-        this.dataLenght = response.rows;
-      },
-      (err) => {},
-      () => {}
-    );
+    this.appService
+      .getSettlements(pageNumber, pageSize, this.filterData)
+      .subscribe(
+        (response) => {
+          this.settlements = response.data;
+          this.dataSource.data = this.settlements;
+          this.dataLenght = response.rows;
+        },
+        (err) => {},
+        () => {}
+      );
   }
 
   createCustomer() {
@@ -133,7 +138,7 @@ export class SettlementsTableComponent
         /**
          * Customer is the updated customer (if the user pressed Save - otherwise it's null)
          */
-        this.getUsers();
+        this.getSettlements();
         // if (customer) {
         //   /**
         //    * Here we are updating our local array.
@@ -155,7 +160,7 @@ export class SettlementsTableComponent
         /**
          * Customer is the updated customer (if the user pressed Save - otherwise it's null)
          */
-        this.getUsers();
+        this.getSettlements();
         // if (customer) {
         //   /**
         //    * Here we are updating our local array.
