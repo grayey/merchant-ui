@@ -17,10 +17,11 @@ export class AppService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getUsers(pageNumber, pageSize): any {
+  getUsers(pageNumber, pageSize, filterData): any {
+    const { fullName, username } = filterData;
     return this.http.get(
       this.appBaseUrl +
-        `/api/v1/user?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        `/api/v1/user?pageNumber=${pageNumber}&pageSize=${pageSize}&fullName=${fullName}&username=${username}`,
       {
         headers: {
           Authorization: this.getToken(),
@@ -89,10 +90,17 @@ export class AppService {
     });
   }
 
-  getTransactions(pageNumber, pageSize): any {
+  getTransactions(pageNumber, pageSize, filterData): any {
+    const {
+      gatewayTransactionReference,
+      transactionDate,
+      transactionStatus,
+      amount,
+      merchantTransactionReference,
+    } = filterData;
     return this.http.get(
       this.appBaseUrl +
-        `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}&gatewayTransactionReference=${gatewayTransactionReference}&transactionDate=${transactionDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
       {
         headers: {
           Authorization: this.getToken(),

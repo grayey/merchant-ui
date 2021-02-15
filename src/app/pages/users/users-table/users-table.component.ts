@@ -75,6 +75,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: "Actions", property: "actions", visible: true },
   ] as ListColumn[];
   pageSize = 10;
+  filterData: any;
   dataSource: MatTableDataSource<Customer> | null;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -103,6 +104,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getData().subscribe((customers) => {
       this.subject$.next(customers);
     });
+    this.setFilterData();
 
     // this.data$.pipe(filter((data) => !!data)).subscribe((customers) => {
     //   this.customers = customers;
@@ -116,6 +118,21 @@ export class UsersTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataSource.sort = this.sort;
   }
 
+  setFilterData() {
+    this.filterData = {
+      fullName: "",
+      username: "",
+    };
+  }
+
+  onFilterClick(payload: any): void {
+    console.log(payload);
+    const { fullName, username } = payload;
+    this.filterData.fullName = fullName || "";
+    this.filterData.username = username || "";
+    this.getUsers();
+  }
+
   getUsers(pageEvent?: PageEvent) {
     let pageNumber, pageSize;
     if (pageEvent) {
@@ -127,7 +144,7 @@ export class UsersTableComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
-    this.appService.getUsers(pageNumber, pageSize).subscribe(
+    this.appService.getUsers(pageNumber, pageSize, this.filterData).subscribe(
       (response) => {
         this.users = response.data;
         this.dataSource.data = this.users;

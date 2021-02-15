@@ -8,6 +8,10 @@
       name="Users"
       [columns]="columns"
       (filterChange)="onFilterChange($event)"
+      [fullName]="true"
+      [username]="true"
+      [showFilter]="true"
+      (filterClick)="onFilterClick($event)"
     >
       <div class="actions">
         <button

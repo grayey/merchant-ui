@@ -1,9 +1,8 @@
-
 fury-list {
   @include mat-elevation($elevation);
   border-radius: $border-radius;
   overflow: auto;
-  display: flex;
+  // display: flex;
 
   .fury-list-table {
     flex: 1 1 auto;
@@ -22,7 +21,8 @@ fury-list {
       }
     }
 
-    .fury-filter-input-icon, .fury-column-filter {
+    .fury-filter-input-icon,
+    .fury-column-filter {
       color: $theme-icon;
     }
 
@@ -31,7 +31,8 @@ fury-list {
     }
   }
 
-  .mat-header-row, .paginator {
+  .mat-header-row,
+  .paginator {
     background: $theme-app-bar;
   }
 
@@ -39,13 +40,15 @@ fury-list {
     background: $theme-background-hover;
   }
 
-  .mat-cell.actions-cell, .mat-header-cell.actions-cell {
+  .mat-cell.actions-cell,
+  .mat-header-cell.actions-cell {
     button {
       color: $theme-icon;
     }
   }
 
-  .mat-cell.image-cell, .mat-header-cell.image-cell {
+  .mat-cell.image-cell,
+  .mat-header-cell.image-cell {
     img {
       background: $theme-app-bar;
     }

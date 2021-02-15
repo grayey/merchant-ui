@@ -23,6 +23,13 @@
       *ngIf="showFilter"
       [showType]="showType"
       [showStatus]="showStatus"
+      [fullName]="fullName"
+      [username]="username"
+      [gatewayTransactionReference]="gatewayTransactionReference"
+      [transactionStatus]="transactionStatus"
+      [amount]="amount"
+      [transactionDate]="transactionDate"
+      [merchantTransactionReference]="merchantTransactionReference"
       (filterClick)="filterClick.emit($event)"
     ></filter-dropdown>
 
