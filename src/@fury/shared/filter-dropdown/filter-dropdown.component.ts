@@ -23,6 +23,13 @@ export class FilterDropdownComponent implements OnInit {
 
   @Input() showType = false;
   @Input() showStatus = false;
+  @Input() fullName = false;
+  @Input() username = false;
+  @Input() gatewayTransactionReference = false;
+  @Input() transactionStatus = false;
+  @Input() amount = false;
+  @Input() merchantTransactionReference = false;
+  @Input() transactionDate = false;
 
   @Output() filterClick: EventEmitter<any> = new EventEmitter<any>();
 
@@ -54,6 +61,15 @@ export class FilterDropdownComponent implements OnInit {
     this.form = this.fb.group({
       status: [""],
       type: [""],
+      fullName: [""],
+      username: [""],
+      gatewayTransactionReference: [""],
+      amount: [""],
+      merchantTransactionReference: [""],
+      transactionStatus: [""],
+      transactionDate: [""],
+      startDate: [""],
+      endDate: [""],
     });
   }
 

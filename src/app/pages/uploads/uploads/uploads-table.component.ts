@@ -117,8 +117,8 @@ export class UploadsTableComponent implements OnInit, AfterViewInit, OnDestroy {
   onFilterClick(payload: any): void {
     console.log(payload);
     const { type, status } = payload;
-    this.filterData.type = type;
-    this.filterData.status = status;
+    this.filterData.type = type || "";
+    this.filterData.status = status || "";
     this.getUploads();
   }
 

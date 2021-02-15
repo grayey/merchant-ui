@@ -8,6 +8,12 @@
       name="Transactions"
       [columns]="columns"
       (filterChange)="onFilterChange($event)"
+      [gatewayTransactionReference]="true"
+      [transactionStatus]="true"
+      [amount]="true"
+      [merchantTransactionReference]="true"
+      [showFilter]="true"
+      (filterClick)="onFilterClick($event)"
     >
       <!--<div class="actions">
         <button

@@ -37,6 +37,7 @@ export class TransactionsTableComponent
   customers: Customer[];
   transactions = [];
   dataLenght: number = 10;
+  filterData: any;
 
   @Input()
   columns: ListColumn[] = [
@@ -161,6 +162,7 @@ export class TransactionsTableComponent
     this.getData().subscribe((customers) => {
       this.subject$.next(customers);
     });
+    this.setFilterData();
 
     this.dataSource = new MatTableDataSource();
 
@@ -176,6 +178,35 @@ export class TransactionsTableComponent
     this.dataSource.sort = this.sort;
   }
 
+  setFilterData() {
+    this.filterData = {
+      gatewayTransactionReference: "",
+      transactionDate: "",
+      transactionStatus: "",
+      amount: 0,
+      merchantTransactionReference: "",
+    };
+  }
+
+  onFilterClick(payload: any): void {
+    console.log(payload);
+    const {
+      gatewayTransactionReference,
+      transactionDate,
+      transactionStatus,
+      amount,
+      merchantTransactionReference,
+    } = payload;
+    this.filterData.gatewayTransactionReference =
+      gatewayTransactionReference || "";
+    this.filterData.transactionDate = transactionDate || "";
+    this.filterData.transactionStatus = transactionStatus || "";
+    this.filterData.amount = amount || 0;
+    this.filterData.merchantTransactionReference =
+      merchantTransactionReference || "";
+    this.getTransactions();
+  }
+
   getTransactions(pageEvent?: PageEvent) {
     let pageNumber, pageSize;
     if (pageEvent) {
@@ -187,22 +218,24 @@ export class TransactionsTableComponent
     }
 
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
-    this.appService.getTransactions(pageNumber, pageSize).subscribe(
-      (response) => {
-        this.transactions = response.data;
-        this.dataSource.data = this.transactions;
-        this.dataLenght = response.rows;
-      },
-      (err) => {
-        // this.toastrService.error(
-        //   "An unknown error was encountered.Please try again",
-        //   "Unknown Error"
-        // );
-      },
-      () => {
-        // this.hmoService.hideSpinner();
-      }
-    );
+    this.appService
+      .getTransactions(pageNumber, pageSize, this.filterData)
+      .subscribe(
+        (response) => {
+          this.transactions = response.data;
+          this.dataSource.data = this.transactions;
+          this.dataLenght = response.rows;
+        },
+        (err) => {
+          // this.toastrService.error(
+          //   "An unknown error was encountered.Please try again",
+          //   "Unknown Error"
+          // );
+        },
+        () => {
+          // this.hmoService.hideSpinner();
+        }
+      );
   }
 
   createCustomer() {

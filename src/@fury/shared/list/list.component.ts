@@ -24,6 +24,13 @@ export class ListComponent implements AfterViewInit {
 
   @Input() showType = false;
   @Input() showStatus = false;
+  @Input() fullName = false;
+  @Input() username = false;
+  @Input() gatewayTransactionReference = false;
+  @Input() transactionStatus = false;
+  @Input() amount = false;
+  @Input() merchantTransactionReference = false;
+  @Input() transactionDate = false;
   @Input() showFilter = false;
 
   @Output() filterClick: EventEmitter<any> = new EventEmitter<any>();
