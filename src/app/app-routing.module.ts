@@ -136,6 +136,13 @@ const routes: Routes = [
           import(
             "./pages/charge-backs/charge-backs/charge-backs-table.module"
           ).then((m) => m.ChargeBacksTableModule),
+      },      
+      {
+        path: "reports",
+        loadChildren: () =>
+          import(
+            "./pages/reports/reports.module"
+          ).then((m) => m.ReportsModule),
       },
       {
         path: "drag-and-drop",

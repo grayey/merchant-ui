@@ -69,7 +69,7 @@ export class AppComponent {
       {
         name: "Users",
         routeOrFunction: "/users",
-        icon: "assignment",
+        icon: "supervisor_account",
         // badge: "22",
         badgeColor: "#2196F3",
         position: 15,
@@ -77,7 +77,7 @@ export class AppComponent {
       {
         name: "Uploads",
         routeOrFunction: "/uploads",
-        icon: "assignment",
+        icon: "upload_file",
         // badge: "22",
         badgeColor: "#2196F3",
         position: 15,
@@ -85,7 +85,7 @@ export class AppComponent {
       {
         name: "Settlements",
         routeOrFunction: "/settlements",
-        icon: "assignment",
+        icon: "credit_card",
         // badge: "22",
         badgeColor: "#2196F3",
         position: 15,
@@ -93,10 +93,33 @@ export class AppComponent {
       {
         name: "Charge Backs",
         routeOrFunction: "/charge-backs",
-        icon: "assignment",
+        icon: "credit_card_off",
         // badge: "22",
         badgeColor: "#2196F3",
         position: 15,
+      },
+      {
+        name: "Reports",
+        icon: "account_balance",
+        position: 45,
+        subItems: [
+          {
+            name: "Platform Cost",
+            routeOrFunction: "/reports/platform-cost",
+            icon: "account_balance",
+            position: 1
+          },
+          {
+            name: "Refund Cost",
+            routeOrFunction: "/reports/refund-cost",
+            position: 2
+          },
+          {
+            name: "Charge Back Cost",
+            routeOrFunction: "/reports/charge-back-cost",
+            position: 3
+          }
+        ]
       },
       // {
       //   name: "Calendar",

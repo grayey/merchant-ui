@@ -10,8 +10,8 @@ export interface IBearerToken {
 
 @Injectable()
 export class AppService {
-  // appBaseUrl = "http://localhost:8080";
-  appBaseUrl = "http://3.10.80.41:8086";
+  appBaseUrl = "http://localhost:8080";
+  // appBaseUrl = "http://3.10.80.41:8086";
 
   user = null;
 
@@ -126,6 +126,106 @@ export class AppService {
         },
       }
     );
+  }
+
+  getPlatformCost(startDate: string, endDate: string, merchantId: number = 0): any {
+    let pageNumber: number = 1;
+    let pageSize: number = 1;
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/transaction/platform-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  downloadPlatformCost(startDate: string, endDate: string, reportType: string, merchantId: number = 0): any {
+    let pageNumber: number = 1;
+    let pageSize: number = 1;
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/transaction/download/platform-cost?merchantId=${merchantId}&reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  getRefundCost(startDate: string, endDate: string, merchantId: number = 0): any {
+    let pageNumber: number = 1;
+    let pageSize: number = 1;
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/transaction/refund-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  downloadtRefundCost(startDate: string, endDate: string, reportType: string, merchantId: number = 0): any {
+    let pageNumber: number = 1;
+    let pageSize: number = 1;
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/transaction/download/refund-cost?merchantId=${merchantId}&reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  getChargebackCost(startDate: string, endDate: string, merchantId: number = 0): any {
+    let pageNumber: number = 1;
+    let pageSize: number = 1;
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/transaction/charge-back-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+
+  downloadChargebackCost(startDate: string, endDate: string, reportType: string, merchantId: number = 0): any {
+    let pageNumber: number = 1;
+    let pageSize: number = 1;
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/transaction/download/charge-back-cost?merchantId=${merchantId}&reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  getReportTypes(): any {
+    return this.http.get(this.appBaseUrl + `/api/v1/transaction/report-types`, {
+      headers: {
+        Authorization: this.getToken(),
+        "Content-Type": "application/json",
+      },
+    });
   }
 
   loginUser(username: string, password: string): Observable<any> {
