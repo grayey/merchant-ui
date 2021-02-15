@@ -10,8 +10,8 @@ export interface IBearerToken {
 
 @Injectable()
 export class AppService {
-  appBaseUrl = "http://localhost:8080";
-  // appBaseUrl = "http://3.10.80.41:8086";
+  // appBaseUrl = "http://localhost:8080";
+  appBaseUrl = "http://3.10.80.41:8086";
 
   user = null;
 
@@ -136,7 +136,11 @@ export class AppService {
     );
   }
 
-  getPlatformCost(startDate: string, endDate: string, merchantId: number = 0): any {
+  getPlatformCost(
+    startDate: string,
+    endDate: string,
+    merchantId: number = 0
+  ): any {
     let pageNumber: number = 1;
     let pageSize: number = 1;
     return this.http.get(
@@ -151,7 +155,12 @@ export class AppService {
     );
   }
 
-  downloadPlatformCost(startDate: string, endDate: string, reportType: string, merchantId: number = 0): any {
+  downloadPlatformCost(
+    startDate: string,
+    endDate: string,
+    reportType: string,
+    merchantId: number = 0
+  ): any {
     let pageNumber: number = 1;
     let pageSize: number = 1;
     return this.http.get(
@@ -166,7 +175,11 @@ export class AppService {
     );
   }
 
-  getRefundCost(startDate: string, endDate: string, merchantId: number = 0): any {
+  getRefundCost(
+    startDate: string,
+    endDate: string,
+    merchantId: number = 0
+  ): any {
     let pageNumber: number = 1;
     let pageSize: number = 1;
     return this.http.get(
@@ -181,7 +194,12 @@ export class AppService {
     );
   }
 
-  downloadtRefundCost(startDate: string, endDate: string, reportType: string, merchantId: number = 0): any {
+  downloadtRefundCost(
+    startDate: string,
+    endDate: string,
+    reportType: string,
+    merchantId: number = 0
+  ): any {
     let pageNumber: number = 1;
     let pageSize: number = 1;
     return this.http.get(
@@ -196,7 +214,11 @@ export class AppService {
     );
   }
 
-  getChargebackCost(startDate: string, endDate: string, merchantId: number = 0): any {
+  getChargebackCost(
+    startDate: string,
+    endDate: string,
+    merchantId: number = 0
+  ): any {
     let pageNumber: number = 1;
     let pageSize: number = 1;
     return this.http.get(
@@ -211,8 +233,12 @@ export class AppService {
     );
   }
 
-
-  downloadChargebackCost(startDate: string, endDate: string, reportType: string, merchantId: number = 0): any {
+  downloadChargebackCost(
+    startDate: string,
+    endDate: string,
+    reportType: string,
+    merchantId: number = 0
+  ): any {
     let pageNumber: number = 1;
     let pageSize: number = 1;
     return this.http.get(
