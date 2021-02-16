@@ -15,6 +15,15 @@ export class CustomerCreateUpdateComponent implements OnInit {
   userStatuses = [];
   userTypes = [];
 
+  typesx: [
+    {
+      name: "SETTLEMENT";
+    },
+    {
+      name: "CHARGE_BACKS";
+    }
+  ];
+
   form: FormGroup;
   mode: "create" | "update" = "create";
 

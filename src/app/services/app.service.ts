@@ -63,6 +63,15 @@ export class AppService {
     });
   }
 
+  getMerchants(): any {
+    return this.http.get(this.appBaseUrl + `/api/v1/merchant`, {
+      headers: {
+        Authorization: this.getToken(),
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
   getUserTypes(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/user/types`, {
       headers: {
@@ -136,16 +145,13 @@ export class AppService {
     );
   }
 
-  getPlatformCost(
-    startDate: string,
-    endDate: string,
-    merchantId: number = 0
-  ): any {
-    let pageNumber: number = 1;
-    let pageSize: number = 1;
+  getPlatformCost(pageNumber: string, pageSize: string, filterData: any): any {
+    const { reportType, merchantId, endDate, startDate } = filterData;
+    // let pageNumber: number = 1;
+    // let pageSize: number = 1;
     return this.http.get(
       this.appBaseUrl +
-        `/api/v1/transaction/platform-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        `/api/v1/transaction/platform-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&reportType=${reportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
       {
         headers: {
           Authorization: this.getToken(),
@@ -175,16 +181,12 @@ export class AppService {
     );
   }
 
-  getRefundCost(
-    startDate: string,
-    endDate: string,
-    merchantId: number = 0
-  ): any {
-    let pageNumber: number = 1;
-    let pageSize: number = 1;
+  getRefundCost(pageNumber: string, pageSize: string, filterData: any): any {
+    const { reportType, merchantId, endDate, startDate } = filterData;
+
     return this.http.get(
       this.appBaseUrl +
-        `/api/v1/transaction/refund-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        `/api/v1/transaction/refund-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&reportType=${reportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
       {
         headers: {
           Authorization: this.getToken(),
@@ -215,15 +217,14 @@ export class AppService {
   }
 
   getChargebackCost(
-    startDate: string,
-    endDate: string,
-    merchantId: number = 0
+    pageNumber: string,
+    pageSize: string,
+    filterData: any
   ): any {
-    let pageNumber: number = 1;
-    let pageSize: number = 1;
+    const { reportType, merchantId, endDate, startDate } = filterData;
     return this.http.get(
       this.appBaseUrl +
-        `/api/v1/transaction/charge-back-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        `/api/v1/transaction/charge-back-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&reportType=${reportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
       {
         headers: {
           Authorization: this.getToken(),

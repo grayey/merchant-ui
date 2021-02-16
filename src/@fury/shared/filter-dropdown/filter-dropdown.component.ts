@@ -30,31 +30,31 @@ export class FilterDropdownComponent implements OnInit {
   @Input() amount = false;
   @Input() merchantTransactionReference = false;
   @Input() transactionDate = false;
+  @Input() merchantId = false;
+  @Input() reportType = false;
 
   @Output() filterClick: EventEmitter<any> = new EventEmitter<any>();
 
-  uploadStatuses: [
-    {
-      name: "PENDING";
-    },
-    {
-      name: "COMPLETED";
-    }
-  ];
-
-  types: [
-    {
-      name: "SETTLEMENT";
-    },
-    {
-      name: "CHARGE_BACKS";
-    }
-  ];
+  uploadStatuses = [];
+  reportTypes = [];
+  types = [];
+  merchants = [];
 
   constructor(private fb: FormBuilder, private appService: AppService) {}
 
   ngOnInit() {
     this.initForm();
+    this.getUploadStatuses();
+    this.getMerchants();
+    this.getReportTypes();
+    this.types = [
+      {
+        name: "SETTLEMENT",
+      },
+      {
+        name: "CHARGE_BACKS",
+      },
+    ];
   }
 
   private initForm(): void {
@@ -70,6 +70,8 @@ export class FilterDropdownComponent implements OnInit {
       transactionDate: [""],
       startDate: [""],
       endDate: [""],
+      merchantId: [""],
+      reportType: [""],
     });
   }
 
@@ -78,6 +80,26 @@ export class FilterDropdownComponent implements OnInit {
       (response) => {
         this.uploadStatuses = response.data;
         console.log(this.uploadStatuses);
+      },
+      (err) => {},
+      () => {}
+    );
+  }
+
+  private getMerchants() {
+    this.appService.getMerchants().subscribe(
+      (response) => {
+        this.merchants = response.data;
+      },
+      (err) => {},
+      () => {}
+    );
+  }
+
+  private getReportTypes() {
+    this.appService.getReportTypes().subscribe(
+      (response) => {
+        this.reportTypes = response.data;
       },
       (err) => {},
       () => {}

@@ -1,24 +1,31 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { fadeInRightAnimation } from 'src/@fury/animations/fade-in-right.animation';
-import { fadeInUpAnimation } from 'src/@fury/animations/fade-in-up.animation';
-import { ListColumn } from 'src/@fury/shared/list/list-column.model';
-import { AppService } from 'src/app/services/app.service';
-import { IRefundCostReport } from '../model';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { fadeInRightAnimation } from "src/@fury/animations/fade-in-right.animation";
+import { fadeInUpAnimation } from "src/@fury/animations/fade-in-up.animation";
+import { ListColumn } from "src/@fury/shared/list/list-column.model";
+import { AppService } from "src/app/services/app.service";
+import { IRefundCostReport } from "../model";
 
 @Component({
-  selector: 'fury-refund-cost',
-  templateUrl: './refund-cost.component.html',
-  styleUrls: ['./refund-cost.component.scss'],
-  animations: [fadeInRightAnimation, fadeInUpAnimation]
+  selector: "fury-refund-cost",
+  templateUrl: "./refund-cost.component.html",
+  styleUrls: ["./refund-cost.component.scss"],
+  animations: [fadeInRightAnimation, fadeInUpAnimation],
 })
 export class RefundCostComponent implements OnInit, AfterViewInit, OnDestroy {
-
   transactions = [];
   dataLenght: number = 10;
+  filterData: any;
 
   @Input()
   columns: ListColumn[] = [
@@ -45,7 +52,7 @@ export class RefundCostComponent implements OnInit, AfterViewInit, OnDestroy {
       property: "totalRefundCost",
       visible: true,
       isModelProperty: true,
-    }
+    },
   ] as ListColumn[];
 
   pageSize = 10;
@@ -64,6 +71,7 @@ export class RefundCostComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
+    this.setFilterData();
     this.getRefundCost();
   }
 
@@ -73,8 +81,8 @@ export class RefundCostComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getRefundCost(pageEvent?: PageEvent) {
-    let startDate = '2021-02-15 00:00:00';
-    let endDate = '2021-02-15 23:59:59';
+    // let startDate = "2021-02-15 00:00:00";
+    // let endDate = "2021-02-15 23:59:59";
     let pageNumber, pageSize;
     if (pageEvent) {
       pageSize = pageEvent.pageSize;
@@ -84,23 +92,17 @@ export class RefundCostComponent implements OnInit, AfterViewInit, OnDestroy {
       pageNumber = 1;
     }
 
-    // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
-    this.appService.getRefundCost(startDate, endDate).subscribe(
-      (response) => {
-        this.transactions = response.data;
-        this.dataSource.data = this.transactions;
-        this.dataLenght = response.rows;
-      },
-      (err: any) => {
-        // this.toastrService.error(
-        //   "An unknown error was encountered.Please try again",
-        //   "Unknown Error"
-        // );
-      },
-      () => {
-        // this.hmoService.hideSpinner();
-      }
-    );
+    this.appService
+      .getRefundCost(pageNumber, pageSize, this.filterData)
+      .subscribe(
+        (response) => {
+          this.transactions = response.data;
+          this.dataSource.data = this.transactions;
+          this.dataLenght = response.rows;
+        },
+        (err: any) => {},
+        () => {}
+      );
   }
 
   onFilterChange(value) {
@@ -112,6 +114,25 @@ export class RefundCostComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataSource.filter = value;
   }
 
-  ngOnDestroy() {}
+  setFilterData() {
+    this.filterData = {
+      merchantId: 0,
+      reportType: "",
+      startDate: "",
+      endDate: "",
+    };
+  }
 
+  onFilterClick(payload: any): void {
+    console.log(payload);
+    const { reportType, merchantId, endDate, startDate } = payload;
+    this.filterData.reportType = reportType || "";
+    this.filterData.merchantId = merchantId || 0;
+    // this.filterData.startDate = startDate || "";
+    // this.filterData.endDate = endDate || "";
+
+    this.getRefundCost();
+  }
+
+  ngOnDestroy() {}
 }

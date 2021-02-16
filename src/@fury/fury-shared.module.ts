@@ -18,6 +18,7 @@ import { RouterModule } from "@angular/router";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { PageLayoutModule } from "./shared/page-layout/page-layout.module";
 import { FilterDropdownModule } from "./shared/filter-dropdown/filter-dropdown.module";
+import { DropdownModule } from "./shared/dropdown/dropdown.module";
 
 @NgModule({
   imports: [CommonModule],

@@ -12,7 +12,7 @@ import { FilterDropdownComponent } from "./filter-dropdown.component";
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbDropdownModule,
+    NgbModule,
   ],
   declarations: [FilterDropdownComponent],
   exports: [FilterDropdownComponent],

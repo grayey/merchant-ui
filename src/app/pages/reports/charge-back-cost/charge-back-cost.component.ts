@@ -1,22 +1,29 @@
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { fadeInRightAnimation } from 'src/@fury/animations/fade-in-right.animation';
-import { fadeInUpAnimation } from 'src/@fury/animations/fade-in-up.animation';
-import { ListColumn } from 'src/@fury/shared/list/list-column.model';
-import { AppService } from 'src/app/services/app.service';
-import { IChargebackCostReport } from '../model';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { fadeInRightAnimation } from "src/@fury/animations/fade-in-right.animation";
+import { fadeInUpAnimation } from "src/@fury/animations/fade-in-up.animation";
+import { ListColumn } from "src/@fury/shared/list/list-column.model";
+import { AppService } from "src/app/services/app.service";
+import { IChargebackCostReport } from "../model";
 
 @Component({
-  selector: 'fury-charge-back-cost',
-  templateUrl: './charge-back-cost.component.html',
-  styleUrls: ['./charge-back-cost.component.scss'],
-  animations: [fadeInRightAnimation, fadeInUpAnimation]
+  selector: "fury-charge-back-cost",
+  templateUrl: "./charge-back-cost.component.html",
+  styleUrls: ["./charge-back-cost.component.scss"],
+  animations: [fadeInRightAnimation, fadeInUpAnimation],
 })
-export class ChargeBackCostComponent implements OnInit, AfterViewInit, OnDestroy {
-
+export class ChargeBackCostComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   transactions = [];
   dataLenght: number = 10;
 
@@ -45,9 +52,10 @@ export class ChargeBackCostComponent implements OnInit, AfterViewInit, OnDestroy
       property: "totalChargeBackCost",
       visible: true,
       isModelProperty: true,
-    }
+    },
   ] as ListColumn[];
 
+  filterData: any;
   pageSize = 10;
   dataSource: MatTableDataSource<IChargebackCostReport> | null;
 
@@ -64,6 +72,7 @@ export class ChargeBackCostComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
+    this.setFilterData();
     this.getChargebackCost();
   }
 
@@ -73,8 +82,8 @@ export class ChargeBackCostComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getChargebackCost(pageEvent?: PageEvent) {
-    let startDate = '2021-02-15 00:00:00';
-    let endDate = '2021-02-15 23:59:59';
+    // let startDate = "2021-02-15 00:00:00";
+    // let endDate = "2021-02-15 23:59:59";
     let pageNumber, pageSize;
     if (pageEvent) {
       pageSize = pageEvent.pageSize;
@@ -85,22 +94,24 @@ export class ChargeBackCostComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
-    this.appService.getChargebackCost(startDate, endDate).subscribe(
-      (response) => {
-        this.transactions = response.data;
-        this.dataSource.data = this.transactions;
-        this.dataLenght = response.rows;
-      },
-      (err: any) => {
-        // this.toastrService.error(
-        //   "An unknown error was encountered.Please try again",
-        //   "Unknown Error"
-        // );
-      },
-      () => {
-        // this.hmoService.hideSpinner();
-      }
-    );
+    this.appService
+      .getChargebackCost(pageNumber, pageSize, this.filterData)
+      .subscribe(
+        (response) => {
+          this.transactions = response.data;
+          this.dataSource.data = this.transactions;
+          this.dataLenght = response.rows;
+        },
+        (err: any) => {
+          // this.toastrService.error(
+          //   "An unknown error was encountered.Please try again",
+          //   "Unknown Error"
+          // );
+        },
+        () => {
+          // this.hmoService.hideSpinner();
+        }
+      );
   }
 
   onFilterChange(value) {
@@ -112,6 +123,25 @@ export class ChargeBackCostComponent implements OnInit, AfterViewInit, OnDestroy
     this.dataSource.filter = value;
   }
 
-  ngOnDestroy() {}
+  setFilterData() {
+    this.filterData = {
+      merchantId: 1,
+      reportType: "",
+      startDate: "2021-01-16",
+      endDate: "2021-01-16",
+    };
+  }
 
+  onFilterClick(payload: any): void {
+    console.log(payload);
+    const { reportType, merchantId, endDate, startDate } = payload;
+    this.filterData.reportType = reportType || "";
+    this.filterData.merchantId = merchantId || 0;
+    // this.filterData.startDate = startDate || "";
+    // this.filterData.endDate = endDate || "";
+
+    this.getChargebackCost();
+  }
+
+  ngOnDestroy() {}
 }

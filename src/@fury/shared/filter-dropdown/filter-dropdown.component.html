@@ -88,6 +88,39 @@
             </div>
           </div>
 
+          <div class="form-group" *ngIf="merchantId">
+            <label>Merchant</label>
+            <div class="select-dropdown">
+              <select
+                name="merchantId"
+                id="merchantId"
+                formControlName="merchantId"
+              >
+                <option
+                  *ngFor="let merchant of merchants"
+                  [value]="merchant.merchantId"
+                >
+                  {{ merchant.merchantName }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="reportType">
+            <label>Report Type</label>
+            <div class="select-dropdown">
+              <select
+                name="reportType"
+                id="reportType"
+                formControlName="reportType"
+              >
+                <option *ngFor="let type of reportTypes" [value]="type.key">
+                  {{ type.value }}
+                </option>
+              </select>
+            </div>
+          </div>
+
           <div class="form-group" *ngIf="amount">
             <label for="amount">Amount</label>
             <input
@@ -115,9 +148,10 @@
           <div class="form-group" *ngIf="showType">
             <label>Type</label>
             <div class="select-dropdown">
-              <select name="cars" id="types" formControlName="type">
-                <option value="SETTLEMENT">SETTLEMENT</option>
-                <option value="CHARGE_BACKS">CHARGE_BACKS</option>
+              <select name="types" id="types" formControlName="type">
+                <option *ngFor="let type of types" [value]="type.name">
+                  {{ type.name }}
+                </option>
               </select>
             </div>
           </div>
@@ -125,10 +159,12 @@
             <label>Status</label>
             <div class="select-dropdown">
               <select name="cars" id="statuses" formControlName="status">
-                <option value="PENDING">PENDING</option>
-                <option value="FAILED">FAILED</option>
-                <option value="SUCCESSFUL">SUCCESSFUL</option>
-                <option value="COMPLETED">COMPLETED</option>
+                <option
+                  *ngFor="let status of uploadStatuses"
+                  [value]="status.key"
+                >
+                  {{ status.value }}
+                </option>
               </select>
             </div>
           </div>

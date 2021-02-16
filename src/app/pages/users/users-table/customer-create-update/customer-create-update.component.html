@@ -9,9 +9,9 @@
           <input type="text" formControlName="username" matInput />
         </mat-form-field>
 
-        <mat-form-field fxFlex *ngIf="mode === 'create'"> 
+        <mat-form-field fxFlex *ngIf="mode === 'create'">
           <mat-label>Password</mat-label>
-          <input type="password" formControlName="password" matInput/>
+          <input type="password" formControlName="password" matInput />
         </mat-form-field>
       </div>
     </div>
@@ -44,6 +44,8 @@
         </mat-select>
       </mat-form-field>
     </div>
+
+    <dropdown></dropdown>
 
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
       <mat-form-field fxFlex>
