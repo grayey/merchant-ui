@@ -12,6 +12,7 @@
       [merchantId]="true"
       [reportType]="true"
       (filterClick)="onFilterClick($event)"
+      [showDownloadFilter]="true"
     >
       <table [dataSource]="dataSource" mat-table matSort>
         <!--- Note that these columns can be defined in any order.

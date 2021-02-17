@@ -35,7 +35,7 @@
       [reportType]="reportType"
     ></filter-dropdown>
 
-    <download-dropdown
+    <download-dropdown *ngIf="showDownloadFilter"
     (downloadClick)="downloadClick.emit($event)"
     ></download-dropdown>
 

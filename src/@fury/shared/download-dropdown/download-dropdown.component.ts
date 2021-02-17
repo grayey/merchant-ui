@@ -15,22 +15,9 @@ export class DownloadDropdownComponent implements OnInit {
 
   ngOnInit(): void {
     this.getReportTypes();
-  }
-
-  private isOpen = '';
-  
-  toggled(event) {
-    if (event) {
-        console.log(event);
-        this.isOpen = 'is open'
-    } else {
-      console.log(event);
-      this.isOpen = 'is closed'
-    }
-  }
+  }  
 
   download(value: string): void{
-    console.log(value);
     this.downloadClick.emit(value);
   }
 
