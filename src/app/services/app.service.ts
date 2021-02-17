@@ -10,8 +10,9 @@ export interface IBearerToken {
 
 @Injectable()
 export class AppService {
-   appBaseUrl = "http://52.208.91.202:8085";
+  //  appBaseUrl = "http://52.208.91.202:8085";
   //appBaseUrl = "http://3.10.80.41:8086";
+  appBaseUrl = "http://localhost:8080";
 
   user = null;
 
@@ -121,6 +122,31 @@ export class AppService {
     );
   }
 
+
+  downloadTransactions(pageNumber, pageSize, filterData): Observable<Blob> {
+    const {
+      gatewayTransactionReference,
+      transactionDate,
+      transactionStatus,
+      amount,
+      merchantTransactionReference,
+      startDate,
+      endDate,
+      reportType
+    } = filterData;
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/transaction/download?pageNumber=${pageNumber}&pageSize=${pageSize}&reportType=${reportType}&gatewayTransactionReference=${gatewayTransactionReference}&transactionStartDate=${startDate}&transactionEndDate=${endDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+        responseType: 'blob' as 'blob'
+      }
+    );
+  }
+
   getSettlements(pageNumber, pageSize, filterData): any {
     return this.http.get(
       this.appBaseUrl +
@@ -149,8 +175,6 @@ export class AppService {
 
   getPlatformCost(pageNumber: string, pageSize: string, filterData: any): any {
     const { reportType, merchantId, endDate, startDate } = filterData;
-    // let pageNumber: number = 1;
-    // let pageSize: number = 1;
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/transaction/platform-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&reportType=${reportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
@@ -241,7 +265,7 @@ export class AppService {
   ): any {
     const { reportType, merchantId, endDate, startDate } = filterData;
     let pageNumber: number = 1;
-    let pageSize: number = 1;
+    let pageSize: number = 1000;
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/transaction/download/charge-back-cost?merchantId=${merchantId}&reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,

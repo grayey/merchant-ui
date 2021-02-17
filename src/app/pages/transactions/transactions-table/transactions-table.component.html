@@ -15,8 +15,9 @@
       [showFilter]="true"
       [startDate]="true"
       [endDate]="true"
-      (filterClick)="onFilterClick($event)"
       [showDownloadFilter]="true"
+      (filterClick)="onFilterClick($event)"
+      (downloadClick)="onDownloadClick($event)"
     >
       <!--<div class="actions">
         <button
