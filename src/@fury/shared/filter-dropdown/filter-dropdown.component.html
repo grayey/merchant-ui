@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col">
-    <div ngbDropdown class="d-inline-block" #myDrop="ngbDropdown">
+    <div ngbDropdown class="d-inline-block" #myDrop="ngbDropdown" autoClose="false">
       <button
         class="btn btn-outline-primary"
         id="dropdownForm1"
@@ -18,7 +18,7 @@
           [formGroup]="form"
           (ngSubmit)="onSubmit(); myDrop.close()"
         >
-          <!-- <div class="form-group">
+          <div class="form-group">
             <mat-form-field fxFlex="auto">
               <mat-label>Start Date</mat-label>
               <input
@@ -32,9 +32,25 @@
               ></mat-datepicker-toggle>
               <mat-datepicker #startDatepicker></mat-datepicker>
             </mat-form-field>
-          </div> -->
+          </div> 
 
-          <!-- <mat-form-field fxFlex="auto">
+          <div class="form-group">
+            <mat-form-field fxFlex="auto">
+              <mat-label>End Date</mat-label>
+              <input
+                matInput
+                [matDatepicker]="endDatepicker"
+                formControlName="endDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="endDatepicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #endDatepicker></mat-datepicker>
+            </mat-form-field>
+          </div> 
+
+           <!-- <mat-form-field fxFlex="auto">
             <mat-label>End Date</mat-label>
             <input matInput [matDatepicker]="endDatepicker" formControlName="end">
             <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>

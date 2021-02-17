@@ -10,8 +10,8 @@ export interface IBearerToken {
 
 @Injectable()
 export class AppService {
-  appBaseUrl = "http://localhost:8080";
-  // appBaseUrl = "http://3.10.80.41:8086";
+   appBaseUrl = "http://52.208.91.202:8085";
+  //appBaseUrl = "http://3.10.80.41:8086";
 
   user = null;
 
@@ -106,10 +106,12 @@ export class AppService {
       transactionStatus,
       amount,
       merchantTransactionReference,
+      startDate,
+      endDate
     } = filterData;
     return this.http.get(
       this.appBaseUrl +
-        `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}&gatewayTransactionReference=${gatewayTransactionReference}&transactionDate=${transactionDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
+        `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}&gatewayTransactionReference=${gatewayTransactionReference}&transactionStartDate=${startDate}&transactionEndDate=${endDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
       {
         headers: {
           Authorization: this.getToken(),

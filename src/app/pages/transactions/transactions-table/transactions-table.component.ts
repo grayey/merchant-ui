@@ -19,6 +19,7 @@ import { Customer } from "./customer-create-update/customer.model";
 import { fadeInRightAnimation } from "../../../../@fury/animations/fade-in-right.animation";
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
 import { AppService } from "src/app/services/app.service";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "transactions-table",
@@ -140,7 +141,7 @@ export class TransactionsTableComponent
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private appService: AppService) {}
+  constructor(private dialog: MatDialog, private appService: AppService, private datePipe: DatePipe) {}
 
   get visibleColumns() {
     return this.columns
@@ -185,6 +186,8 @@ export class TransactionsTableComponent
       transactionStatus: "",
       amount: 0,
       merchantTransactionReference: "",
+      startDate: "",
+      endDate: ""
     };
   }
 
@@ -196,6 +199,8 @@ export class TransactionsTableComponent
       transactionStatus,
       amount,
       merchantTransactionReference,
+      startDate,
+      endDate
     } = payload;
     this.filterData.gatewayTransactionReference =
       gatewayTransactionReference || "";
@@ -204,6 +209,8 @@ export class TransactionsTableComponent
     this.filterData.amount = amount || 0;
     this.filterData.merchantTransactionReference =
       merchantTransactionReference || "";
+      this.filterData.startDate = this.datePipe.transform(startDate, 'yyyy-MM-dd') || "";
+      this.filterData.endDate = this.datePipe.transform(endDate, 'yyyy-MM-dd') || "";
     this.getTransactions();
   }
 
@@ -217,6 +224,7 @@ export class TransactionsTableComponent
       pageNumber = 1;
     }
 
+    console.log(this.filterData);
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
     this.appService
       .getTransactions(pageNumber, pageSize, this.filterData)

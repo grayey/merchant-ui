@@ -32,7 +32,8 @@ export class FilterDropdownComponent implements OnInit {
   @Input() transactionDate = false;
   @Input() merchantId = false;
   @Input() reportType = false;
-
+  @Input() startDate = false;
+  @Input() endDate = false;
   @Output() filterClick: EventEmitter<any> = new EventEmitter<any>();
 
   uploadStatuses = [];
