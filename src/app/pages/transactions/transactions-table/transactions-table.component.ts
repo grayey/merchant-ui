@@ -20,6 +20,7 @@ import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.anima
 import { AppService } from "src/app/services/app.service";
 import { DatePipe } from "@angular/common";
 import { saveAs } from "file-saver/FileSaver";
+import * as fileSaver from "file-saver";
 
 @Component({
   selector: "transactions-table",
@@ -141,7 +142,11 @@ export class TransactionsTableComponent
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private appService: AppService, private datePipe: DatePipe) {}
+  constructor(
+    private dialog: MatDialog,
+    private appService: AppService,
+    private datePipe: DatePipe
+  ) {}
 
   get visibleColumns() {
     return this.columns
@@ -187,7 +192,7 @@ export class TransactionsTableComponent
       amount: 0,
       merchantTransactionReference: "",
       startDate: "",
-      endDate: ""
+      endDate: "",
     };
   }
 
@@ -200,7 +205,7 @@ export class TransactionsTableComponent
       amount,
       merchantTransactionReference,
       startDate,
-      endDate
+      endDate,
     } = payload;
     this.filterData.gatewayTransactionReference =
       gatewayTransactionReference || "";
@@ -209,8 +214,10 @@ export class TransactionsTableComponent
     this.filterData.amount = amount || 0;
     this.filterData.merchantTransactionReference =
       merchantTransactionReference || "";
-      this.filterData.startDate = this.datePipe.transform(startDate, 'yyyy-MM-dd') || "";
-      this.filterData.endDate = this.datePipe.transform(endDate, 'yyyy-MM-dd') || "";
+    this.filterData.startDate =
+      this.datePipe.transform(startDate, "yyyy-MM-dd") || "";
+    this.filterData.endDate =
+      this.datePipe.transform(endDate, "yyyy-MM-dd") || "";
     this.getTransactions();
   }
 
@@ -244,7 +251,7 @@ export class TransactionsTableComponent
           // this.hmoService.hideSpinner();
         }
       );
-  }  
+  }
 
   onFilterChange(value) {
     if (!this.dataSource) {
@@ -263,19 +270,15 @@ export class TransactionsTableComponent
 
   downloadTransactionReport() {
     console.log("downloadTransactionReport");
-    this.appService
-      .downloadTransactions(1, 1000, this.filterData)
-      .subscribe(
-        (response) => {
-          this.handleDownload(response);
-        },
-        (err: any) => {     
-          console.log(err);     
-        },
-        () => {
-          
-        }
-      );
+    this.appService.downloadTransactions(1, 1000, this.filterData).subscribe(
+      (response) => {
+        this.handleDownload(response);
+      },
+      (err: any) => {
+        console.log(err);
+      },
+      () => {}
+    );
   }
 
   handleDownload(response: any): void {
@@ -287,12 +290,17 @@ export class TransactionsTableComponent
     // console.log(contentDispositionHeader);
     // const parts: string[] = contentDispositionHeader.split(";");
     // const fileName = parts[1].split("=")[1];
-    const fileName = 'demo.txt';
-    console.log(fileName)
-    let blob = new Blob([response._body], {
-      type: "text/html",
-    });
-    saveAs(blob, fileName);
+    // const fileName = 'demo.txt';
+    // console.log(fileName)
+    // let blob = new Blob([response._body], {
+    //   type: "text/html",
+    // });
+    // saveAs(blob, fileName);
+    let blob: any = new Blob([response], { type: "text/txt; charset=utf-8" });
+    const url = window.URL.createObjectURL(blob);
+    //window.open(url);
+    //window.location.href = response.url;
+    fileSaver.saveAs(blob, "employees.txt");
   }
 
   ngOnDestroy() {}

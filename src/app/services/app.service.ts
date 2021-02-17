@@ -11,8 +11,8 @@ export interface IBearerToken {
 @Injectable()
 export class AppService {
   //  appBaseUrl = "http://52.208.91.202:8085";
-  //appBaseUrl = "http://3.10.80.41:8086";
-  appBaseUrl = "http://localhost:8080";
+  appBaseUrl = "http://3.10.80.41:8086";
+  // appBaseUrl = "http://localhost:8080";
 
   user = null;
 
@@ -108,7 +108,7 @@ export class AppService {
       amount,
       merchantTransactionReference,
       startDate,
-      endDate
+      endDate,
     } = filterData;
     return this.http.get(
       this.appBaseUrl +
@@ -122,7 +122,6 @@ export class AppService {
     );
   }
 
-
   downloadTransactions(pageNumber, pageSize, filterData): Observable<Blob> {
     const {
       gatewayTransactionReference,
@@ -132,7 +131,7 @@ export class AppService {
       merchantTransactionReference,
       startDate,
       endDate,
-      reportType
+      reportType,
     } = filterData;
     return this.http.get(
       this.appBaseUrl +
@@ -142,7 +141,7 @@ export class AppService {
           Authorization: this.getToken(),
           "Content-Type": "application/json",
         },
-        responseType: 'blob' as 'blob'
+        responseType: "blob",
       }
     );
   }
@@ -260,9 +259,7 @@ export class AppService {
     );
   }
 
-  downloadChargebackCost(    
-    filterData: any
-  ): any {
+  downloadChargebackCost(filterData: any): any {
     const { reportType, merchantId, endDate, startDate } = filterData;
     let pageNumber: number = 1;
     let pageSize: number = 1000;
