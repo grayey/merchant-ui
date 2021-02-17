@@ -35,6 +35,10 @@
       [reportType]="reportType"
     ></filter-dropdown>
 
+    <download-dropdown *ngIf="showDownloadFilter"
+    (downloadClick)="downloadClick.emit($event)"
+    ></download-dropdown>
+
     <button
       class="fury-column-filter"
       type="button"
