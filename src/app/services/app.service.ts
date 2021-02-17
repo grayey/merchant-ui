@@ -106,10 +106,12 @@ export class AppService {
       transactionStatus,
       amount,
       merchantTransactionReference,
+      startDate,
+      endDate,
     } = filterData;
     return this.http.get(
       this.appBaseUrl +
-        `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}&gatewayTransactionReference=${gatewayTransactionReference}&transactionDate=${transactionDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
+        `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}&startDate=${startDate}&endDate=${endDate}&gatewayTransactionReference=${gatewayTransactionReference}&transactionDate=${transactionDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
       {
         headers: {
           Authorization: this.getToken(),

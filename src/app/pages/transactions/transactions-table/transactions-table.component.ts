@@ -196,6 +196,8 @@ export class TransactionsTableComponent
       transactionStatus,
       amount,
       merchantTransactionReference,
+      startDate,
+      endDate,
     } = payload;
     this.filterData.gatewayTransactionReference =
       gatewayTransactionReference || "";
@@ -204,6 +206,8 @@ export class TransactionsTableComponent
     this.filterData.amount = amount || 0;
     this.filterData.merchantTransactionReference =
       merchantTransactionReference || "";
+    this.filterData.startDate = startDate;
+    this.filterData.endDate = endDate;
     this.getTransactions();
   }
 
