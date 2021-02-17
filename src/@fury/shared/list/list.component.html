@@ -35,6 +35,10 @@
       [reportType]="reportType"
     ></filter-dropdown>
 
+    <download-dropdown
+    (downloadClick)="downloadClick.emit($event)"
+    ></download-dropdown>
+
     <button
       class="fury-column-filter"
       type="button"

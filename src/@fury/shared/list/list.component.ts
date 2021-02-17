@@ -36,6 +36,7 @@ export class ListComponent implements AfterViewInit {
   @Input() reportType = false;
 
   @Output() filterClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output() downloadClick: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild("filter") filter: ElementRef;
   @Output() filterChange = new EventEmitter<string>();

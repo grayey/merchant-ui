@@ -15,6 +15,7 @@ import { fadeInUpAnimation } from "src/@fury/animations/fade-in-up.animation";
 import { ListColumn } from "src/@fury/shared/list/list-column.model";
 import { AppService } from "src/app/services/app.service";
 import { IChargebackCostReport } from "../model";
+import { saveAs } from "file-saver/FileSaver";
 
 @Component({
   selector: "fury-charge-back-cost",
@@ -103,13 +104,25 @@ export class ChargeBackCostComponent
           this.dataLenght = response.rows;
         },
         (err: any) => {
-          // this.toastrService.error(
-          //   "An unknown error was encountered.Please try again",
-          //   "Unknown Error"
-          // );
+          
         },
         () => {
-          // this.hmoService.hideSpinner();
+          
+        }
+      );
+  }
+
+  downloadChargebackCost() {
+    this.appService
+      .downloadChargebackCost(this.filterData)
+      .subscribe(
+        (response) => {
+          this.handleDownload(response);
+        },
+        (err: any) => {          
+        },
+        () => {
+          
         }
       );
   }
@@ -141,6 +154,25 @@ export class ChargeBackCostComponent
     // this.filterData.endDate = endDate || "";
 
     this.getChargebackCost();
+  }
+
+
+  onDownloadClick(reportType: string): void {
+    console.log(reportType);
+    this.filterData.reportType = reportType;
+    this.getChargebackCost();
+  }
+
+  handleDownload(response: any): void {
+    const contentDispositionHeader = response.headers.get(
+      "Content-Disposition"
+    );
+    const parts: string[] = contentDispositionHeader.split(";");
+    const fileName = parts[1].split("=")[1];
+    let blob = new Blob([response._body], {
+      type: response._body.type,
+    });
+    saveAs(blob, fileName);
   }
 
   ngOnDestroy() {}
