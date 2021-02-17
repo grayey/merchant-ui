@@ -140,8 +140,8 @@ export class PlatformCostComponent implements OnInit, AfterViewInit, OnDestroy {
     const { reportType, merchantId, endDate, startDate } = payload;
     this.filterData.reportType = reportType || "";
     this.filterData.merchantId = merchantId || 0;
-    // this.filterData.startDate = startDate || "2021-01-16";
-    // this.filterData.endDate = endDate || "2021-01-16";
+    this.filterData.startDate = startDate || "2021-01-16";
+    this.filterData.endDate = endDate || "2021-01-16";
 
     this.getPlatformCost();
   }

@@ -18,28 +18,48 @@
           [formGroup]="form"
           (ngSubmit)="onSubmit(); myDrop.close()"
         >
-          <!-- <div class="form-group">
-            <mat-form-field fxFlex="auto">
-              <mat-label>Start Date</mat-label>
+          <div class="form-group" *ngIf="startDate">
+            <label>Start Date</label>
+            <div class="input-group">
               <input
-                matInput
-                [matDatepicker]="startDatepicker"
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="dp"
                 formControlName="startDate"
+                ngbDatepicker
+                #d="ngbDatepicker"
               />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="startDatepicker"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #startDatepicker></mat-datepicker>
-            </mat-form-field>
-          </div> -->
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="d.toggle()"
+                  type="button"
+                ></button>
+              </div>
+            </div>
+          </div>
 
-          <!-- <mat-form-field fxFlex="auto">
-            <mat-label>End Date</mat-label>
-            <input matInput [matDatepicker]="endDatepicker" formControlName="end">
-            <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
-            <mat-datepicker #endDatepicker></mat-datepicker>
-          </mat-form-field> -->
+          <div class="form-group" *ngIf="endDate">
+            <label>End Date</label>
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="dp"
+                formControlName="endDate"
+                ngbDatepicker
+                #d2="ngbDatepicker"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="d2.toggle()"
+                  type="button"
+                ></button>
+              </div>
+            </div>
+          </div>
+
           <div class="form-group" *ngIf="fullName">
             <label for="fullName">Full Name</label>
             <input

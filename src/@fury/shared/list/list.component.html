@@ -33,10 +33,13 @@
       (filterClick)="filterClick.emit($event)"
       [merchantId]="merchantId"
       [reportType]="reportType"
+      [startDate]="startDate"
+      [endDate]="endDate"
     ></filter-dropdown>
 
-    <download-dropdown *ngIf="showDownloadFilter"
-    (downloadClick)="downloadClick.emit($event)"
+    <download-dropdown
+      *ngIf="showDownloadFilter"
+      (downloadClick)="downloadClick.emit($event)"
     ></download-dropdown>
 
     <button

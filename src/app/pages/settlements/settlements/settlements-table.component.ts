@@ -103,6 +103,8 @@ export class SettlementsTableComponent
     this.filterData = {
       type: "",
       status: "",
+      startDate: "",
+      endDate: "",
     };
   }
 
@@ -196,6 +198,15 @@ export class SettlementsTableComponent
     value = value.trim();
     value = value.toLowerCase();
     this.dataSource.filter = value;
+  }
+
+  onFilterClick(payload: any): void {
+    console.log(payload);
+    const { endDate, startDate } = payload;
+    this.filterData.startDate = startDate;
+    this.filterData.endDate = endDate;
+
+    this.getSettlements();
   }
 
   ngOnDestroy() {}

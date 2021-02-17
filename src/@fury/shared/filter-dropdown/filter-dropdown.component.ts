@@ -10,6 +10,7 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { AppService } from "src/app/services/app.service";
 
 @Component({
@@ -32,6 +33,8 @@ export class FilterDropdownComponent implements OnInit {
   @Input() transactionDate = false;
   @Input() merchantId = false;
   @Input() reportType = false;
+  @Input() startDate = false;
+  @Input() endDate = false;
 
   @Output() filterClick: EventEmitter<any> = new EventEmitter<any>();
 
@@ -39,6 +42,8 @@ export class FilterDropdownComponent implements OnInit {
   reportTypes = [];
   types = [];
   merchants = [];
+
+  model: NgbDateStruct;
 
   constructor(private fb: FormBuilder, private appService: AppService) {}
 
@@ -121,8 +126,23 @@ export class FilterDropdownComponent implements OnInit {
     this.form.reset();
   }
 
+  formatDate(date) {
+    let formatedDate = "";
+    const { day, month, year } = date;
+    formatedDate =
+      year.toString() + "-" + month.toString() + "-" + day.toString();
+    return formatedDate;
+  }
+
   onSubmit() {
     const payLoad = this.form.value;
+    const { startDate, endDate } = payLoad;
+    if (startDate) {
+      payLoad.startDate = this.formatDate(startDate);
+    }
+    if (endDate) {
+      payLoad.endDate = this.formatDate(endDate);
+    }
     this.filterClick.emit(payLoad);
   }
 

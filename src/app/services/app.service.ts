@@ -10,8 +10,8 @@ export interface IBearerToken {
 
 @Injectable()
 export class AppService {
-  appBaseUrl = "http://localhost:8080";
-  // appBaseUrl = "http://3.10.80.41:8086";
+  // appBaseUrl = "http://localhost:8080";
+  appBaseUrl = "http://3.10.80.41:8086";
 
   user = null;
 
@@ -120,9 +120,10 @@ export class AppService {
   }
 
   getSettlements(pageNumber, pageSize, filterData): any {
+    const { startDate, endDate } = filterData;
     return this.http.get(
       this.appBaseUrl +
-        `/api/v1/settlement?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        `/api/v1/settlement?pageNumber=${pageNumber}&pageSize=${pageSize}&startDate=${startDate}&endDate=${endDate}`,
       {
         headers: {
           Authorization: this.getToken(),
@@ -234,9 +235,7 @@ export class AppService {
     );
   }
 
-  downloadChargebackCost(    
-    filterData: any
-  ): any {
+  downloadChargebackCost(filterData: any): any {
     const { reportType, merchantId, endDate, startDate } = filterData;
     let pageNumber: number = 1;
     let pageSize: number = 1;

@@ -103,28 +103,19 @@ export class ChargeBackCostComponent
           this.dataSource.data = this.transactions;
           this.dataLenght = response.rows;
         },
-        (err: any) => {
-          
-        },
-        () => {
-          
-        }
+        (err: any) => {},
+        () => {}
       );
   }
 
   downloadChargebackCost() {
-    this.appService
-      .downloadChargebackCost(this.filterData)
-      .subscribe(
-        (response) => {
-          this.handleDownload(response);
-        },
-        (err: any) => {          
-        },
-        () => {
-          
-        }
-      );
+    this.appService.downloadChargebackCost(this.filterData).subscribe(
+      (response) => {
+        this.handleDownload(response);
+      },
+      (err: any) => {},
+      () => {}
+    );
   }
 
   onFilterChange(value) {
@@ -150,12 +141,11 @@ export class ChargeBackCostComponent
     const { reportType, merchantId, endDate, startDate } = payload;
     this.filterData.reportType = reportType || "";
     this.filterData.merchantId = merchantId || 0;
-    // this.filterData.startDate = startDate || "";
-    // this.filterData.endDate = endDate || "";
+    this.filterData.startDate = startDate || "";
+    this.filterData.endDate = endDate || "";
 
     this.getChargebackCost();
   }
-
 
   onDownloadClick(reportType: string): void {
     console.log(reportType);

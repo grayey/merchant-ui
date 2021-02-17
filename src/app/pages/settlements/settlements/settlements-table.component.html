@@ -8,7 +8,11 @@
       name="Settlements"
       [columns]="columns"
       (filterChange)="onFilterChange($event)"
+      (filterClick)="onFilterClick($event)"
+      [showFilter]="true"
       [showDownloadFilter]="true"
+      [startDate]="true"
+      [endDate]="true"
     >
       <!-- <div class="actions">
         <button

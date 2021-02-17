@@ -1,26 +1,33 @@
-import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { AppService } from 'src/app/services/app.service';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from "@angular/core";
+import { AppService } from "src/app/services/app.service";
 
 @Component({
-  selector: 'download-dropdown',
-  templateUrl: './download-dropdown.component.html',
-  styleUrls: ['./download-dropdown.component.scss'],
+  selector: "download-dropdown",
+  templateUrl: "./download-dropdown.component.html",
+  styleUrls: ["./download-dropdown.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
 export class DownloadDropdownComponent implements OnInit {
   @Output() downloadClick: EventEmitter<any> = new EventEmitter<any>();
   reportTypes = [];
 
-  constructor(private appService: AppService) { }
+  constructor(private appService: AppService) {}
 
   ngOnInit(): void {
     this.getReportTypes();
-  }  
+  }
 
-  download(value: string): void{
+  download(value: string): void {
     this.downloadClick.emit(value);
   }
 
+  toggled(event) {}
 
   private getReportTypes() {
     this.appService.getReportTypes().subscribe(
@@ -31,5 +38,4 @@ export class DownloadDropdownComponent implements OnInit {
       () => {}
     );
   }
-
 }

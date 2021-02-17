@@ -128,8 +128,8 @@ export class RefundCostComponent implements OnInit, AfterViewInit, OnDestroy {
     const { reportType, merchantId, endDate, startDate } = payload;
     this.filterData.reportType = reportType || "";
     this.filterData.merchantId = merchantId || 0;
-    // this.filterData.startDate = startDate || "";
-    // this.filterData.endDate = endDate || "";
+    this.filterData.startDate = startDate || "";
+    this.filterData.endDate = endDate || "";
 
     this.getRefundCost();
   }
