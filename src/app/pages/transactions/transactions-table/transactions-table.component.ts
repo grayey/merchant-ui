@@ -297,7 +297,7 @@ export class TransactionsTableComponent
     // });
     // saveAs(blob, fileName);
     let blob: any = new Blob([response], { type: "text/txt; charset=utf-8" });
-    const url = window.URL.createObjectURL(blob);
+    //const url = window.URL.createObjectURL(blob);
     //window.open(url);
     //window.location.href = response.url;
     fileSaver.saveAs(blob, "employees.txt");
