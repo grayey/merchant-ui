@@ -19,8 +19,6 @@ import { fadeInRightAnimation } from "../../../../@fury/animations/fade-in-right
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
 import { AppService } from "src/app/services/app.service";
 import { DatePipe } from "@angular/common";
-import { saveAs } from "file-saver/FileSaver";
-import * as fileSaver from "file-saver";
 
 @Component({
   selector: "transactions-table",
@@ -263,44 +261,20 @@ export class TransactionsTableComponent
   }
 
   onDownloadClick(reportType: string): void {
-    console.log(reportType);
     this.filterData.reportType = reportType;
     this.downloadTransactionReport();
   }
 
   downloadTransactionReport() {
-    console.log("downloadTransactionReport");
     this.appService.downloadTransactions(1, 1000, this.filterData).subscribe(
       (response) => {
-        this.handleDownload(response);
+        this.appService.handleDownload(response);
       },
       (err: any) => {
         console.log(err);
       },
       () => {}
     );
-  }
-
-  handleDownload(response: any): void {
-    console.log("handleDownload");
-    console.log(response);
-    // const contentDispositionHeader = response.headers.get(
-    //   "Content-Disposition"
-    // );
-    // console.log(contentDispositionHeader);
-    // const parts: string[] = contentDispositionHeader.split(";");
-    // const fileName = parts[1].split("=")[1];
-    // const fileName = 'demo.txt';
-    // console.log(fileName)
-    // let blob = new Blob([response._body], {
-    //   type: "text/html",
-    // });
-    // saveAs(blob, fileName);
-    let blob: any = new Blob([response], { type: "text/txt; charset=utf-8" });
-    //const url = window.URL.createObjectURL(blob);
-    //window.open(url);
-    //window.location.href = response.url;
-    fileSaver.saveAs(blob, "employees.txt");
   }
 
   ngOnDestroy() {}

@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
 // import { Http } from "@angular/http";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
+import { saveAs } from "file-saver/FileSaver";
+import * as fileSaver from "file-saver";
 
 export interface IBearerToken {
   access_token: string;
@@ -122,7 +124,7 @@ export class AppService {
     );
   }
 
-  downloadTransactions(pageNumber, pageSize, filterData): Observable<Blob> {
+  downloadTransactions(pageNumber, pageSize, filterData): Observable<HttpResponse<Blob>> {
     const {
       gatewayTransactionReference,
       transactionDate,
@@ -141,6 +143,7 @@ export class AppService {
           Authorization: this.getToken(),
           "Content-Type": "application/json",
         },
+        observe: 'response',
         responseType: "blob",
       }
     );
@@ -344,5 +347,13 @@ export class AppService {
     return <IBearerToken>{
       access_token: "",
     };
+  }
+
+  handleDownload(response: any): void {
+    const contentDispositionHeader = response.headers.get("Content-Disposition");
+    const parts: string[] = contentDispositionHeader.split(";");
+    const fileName = parts[1].split("=")[1];
+    let blob = new Blob([response.body], {type: response.type});
+    fileSaver.saveAs(blob, fileName);
   }
 }
