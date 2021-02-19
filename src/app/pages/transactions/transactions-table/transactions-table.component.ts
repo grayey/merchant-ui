@@ -212,15 +212,10 @@ export class TransactionsTableComponent
     this.filterData.amount = amount || 0;
     this.filterData.merchantTransactionReference =
       merchantTransactionReference || "";
-<<<<<<< HEAD
-    this.filterData.startDate = startDate;
-    this.filterData.endDate = endDate;
-=======
     this.filterData.startDate =
       this.datePipe.transform(startDate, "yyyy-MM-dd") || "";
     this.filterData.endDate =
       this.datePipe.transform(endDate, "yyyy-MM-dd") || "";
->>>>>>> improvements
     this.getTransactions();
   }
 

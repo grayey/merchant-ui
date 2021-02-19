@@ -18,15 +18,9 @@
           [formGroup]="form"
           (ngSubmit)="onSubmit(); myDrop.close()"
         >
-<<<<<<< HEAD
           <div class="form-group" *ngIf="startDate">
             <label>Start Date</label>
             <div class="input-group">
-=======
-          <div class="form-group">
-            <mat-form-field fxFlex="auto">
-              <mat-label>Start Date</mat-label>
->>>>>>> improvements
               <input
                 class="form-control"
                 placeholder="yyyy-mm-dd"
@@ -35,7 +29,6 @@
                 ngbDatepicker
                 #d="ngbDatepicker"
               />
-<<<<<<< HEAD
               <div class="input-group-append">
                 <button
                   class="btn btn-outline-secondary calendar"
@@ -67,38 +60,6 @@
             </div>
           </div>
 
-=======
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="startDatepicker"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #startDatepicker></mat-datepicker>
-            </mat-form-field>
-          </div> 
-
-          <div class="form-group">
-            <mat-form-field fxFlex="auto">
-              <mat-label>End Date</mat-label>
-              <input
-                matInput
-                [matDatepicker]="endDatepicker"
-                formControlName="endDate"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="endDatepicker"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #endDatepicker></mat-datepicker>
-            </mat-form-field>
-          </div> 
-
-           <!-- <mat-form-field fxFlex="auto">
-            <mat-label>End Date</mat-label>
-            <input matInput [matDatepicker]="endDatepicker" formControlName="end">
-            <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
-            <mat-datepicker #endDatepicker></mat-datepicker>
-          </mat-form-field> -->
->>>>>>> improvements
           <div class="form-group" *ngIf="fullName">
             <label for="fullName">Full Name</label>
             <input

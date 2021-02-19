@@ -35,11 +35,7 @@ export class ListComponent implements AfterViewInit {
   @Input() merchantId = false;
   @Input() reportType = false;
   @Input() showDownloadFilter = false;
-<<<<<<< HEAD
   @Input() startDate = false;
-=======
-  @Input() startDate=false;
->>>>>>> improvements
   @Input() endDate = false;
 
   @Output() filterClick: EventEmitter<any> = new EventEmitter<any>();
