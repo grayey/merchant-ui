@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BreadcrumbsModule } from "../../../../@fury/shared/breadcrumbs/breadcrumbs.module";
@@ -30,5 +30,6 @@ import { MatInputModule } from "@angular/material/input";
   ],
   declarations: [TransactionsTableComponent],
   exports: [TransactionsTableComponent],
+  providers: [DatePipe]
 })
 export class TransactionsTableModule {}

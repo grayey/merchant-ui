@@ -11,7 +11,6 @@ import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Observable, of, ReplaySubject } from "rxjs";
-import { filter } from "rxjs/operators";
 import { ListColumn } from "../../../../@fury/shared/list/list-column.model";
 import { ALL_IN_ONE_TABLE_DEMO_DATA } from "./all-in-one-table.demo";
 import { CustomerCreateUpdateComponent } from "./customer-create-update/customer-create-update.component";
@@ -19,6 +18,7 @@ import { Customer } from "./customer-create-update/customer.model";
 import { fadeInRightAnimation } from "../../../../@fury/animations/fade-in-right.animation";
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
 import { AppService } from "src/app/services/app.service";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "transactions-table",
@@ -140,7 +140,11 @@ export class TransactionsTableComponent
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private appService: AppService) {}
+  constructor(
+    private dialog: MatDialog,
+    private appService: AppService,
+    private datePipe: DatePipe
+  ) {}
 
   get visibleColumns() {
     return this.columns
@@ -185,6 +189,8 @@ export class TransactionsTableComponent
       transactionStatus: "",
       amount: 0,
       merchantTransactionReference: "",
+      startDate: "",
+      endDate: "",
     };
   }
 
@@ -206,8 +212,15 @@ export class TransactionsTableComponent
     this.filterData.amount = amount || 0;
     this.filterData.merchantTransactionReference =
       merchantTransactionReference || "";
+<<<<<<< HEAD
     this.filterData.startDate = startDate;
     this.filterData.endDate = endDate;
+=======
+    this.filterData.startDate =
+      this.datePipe.transform(startDate, "yyyy-MM-dd") || "";
+    this.filterData.endDate =
+      this.datePipe.transform(endDate, "yyyy-MM-dd") || "";
+>>>>>>> improvements
     this.getTransactions();
   }
 
@@ -221,6 +234,7 @@ export class TransactionsTableComponent
       pageNumber = 1;
     }
 
+    console.log(this.filterData);
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
     this.appService
       .getTransactions(pageNumber, pageSize, this.filterData)
@@ -242,63 +256,6 @@ export class TransactionsTableComponent
       );
   }
 
-  createCustomer() {
-    this.dialog
-      .open(CustomerCreateUpdateComponent)
-      .afterClosed()
-      .subscribe((customer: Customer) => {
-        /**
-         * Customer is the updated customer (if the user pressed Save - otherwise it's null)
-         */
-        if (customer) {
-          /**
-           * Here we are updating our local array.
-           * You would probably make an HTTP request here.
-           */
-          this.customers.unshift(new Customer(customer));
-          this.subject$.next(this.customers);
-        }
-      });
-  }
-
-  updateCustomer(customer) {
-    this.dialog
-      .open(CustomerCreateUpdateComponent, {
-        data: customer,
-      })
-      .afterClosed()
-      .subscribe((customer) => {
-        /**
-         * Customer is the updated customer (if the user pressed Save - otherwise it's null)
-         */
-        if (customer) {
-          /**
-           * Here we are updating our local array.
-           * You would probably make an HTTP request here.
-           */
-          const index = this.customers.findIndex(
-            (existingCustomer) => existingCustomer.id === customer.id
-          );
-          this.customers[index] = new Customer(customer);
-          this.subject$.next(this.customers);
-        }
-      });
-  }
-
-  deleteCustomer(customer) {
-    /**
-     * Here we are updating our local array.
-     * You would probably make an HTTP request here.
-     */
-    this.customers.splice(
-      this.customers.findIndex(
-        (existingCustomer) => existingCustomer.id === customer.id
-      ),
-      1
-    );
-    this.subject$.next(this.customers);
-  }
-
   onFilterChange(value) {
     if (!this.dataSource) {
       return;
@@ -306,6 +263,23 @@ export class TransactionsTableComponent
     value = value.trim();
     value = value.toLowerCase();
     this.dataSource.filter = value;
+  }
+
+  onDownloadClick(reportType: string): void {
+    this.filterData.reportType = reportType;
+    this.downloadTransactionReport();
+  }
+
+  downloadTransactionReport() {
+    this.appService.downloadTransactions(1, 1000, this.filterData).subscribe(
+      (response) => {
+        this.appService.handleDownload(response);
+      },
+      (err: any) => {
+        console.log(err);
+      },
+      () => {}
+    );
   }
 
   ngOnDestroy() {}

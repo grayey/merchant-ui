@@ -35,7 +35,10 @@ export class FilterDropdownComponent implements OnInit {
   @Input() reportType = false;
   @Input() startDate = false;
   @Input() endDate = false;
+<<<<<<< HEAD
 
+=======
+>>>>>>> improvements
   @Output() filterClick: EventEmitter<any> = new EventEmitter<any>();
 
   uploadStatuses = [];

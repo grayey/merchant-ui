@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
 // import { Http } from "@angular/http";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
+import { saveAs } from "file-saver/FileSaver";
+import * as fileSaver from "file-saver";
 
 export interface IBearerToken {
   access_token: string;
@@ -10,8 +12,14 @@ export interface IBearerToken {
 
 @Injectable()
 export class AppService {
+<<<<<<< HEAD
   // appBaseUrl = "http://localhost:8080";
   appBaseUrl = "http://3.10.80.41:8086";
+=======
+  //  appBaseUrl = "http://52.208.91.202:8085";
+  // appBaseUrl = "http://3.10.80.41:8086";
+  appBaseUrl = "http://localhost:8080";
+>>>>>>> improvements
 
   user = null;
 
@@ -111,12 +119,41 @@ export class AppService {
     } = filterData;
     return this.http.get(
       this.appBaseUrl +
+<<<<<<< HEAD
         `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}&startDate=${startDate}&endDate=${endDate}&gatewayTransactionReference=${gatewayTransactionReference}&transactionDate=${transactionDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
+=======
+        `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}&gatewayTransactionReference=${gatewayTransactionReference}&transactionStartDate=${startDate}&transactionEndDate=${endDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
+>>>>>>> improvements
       {
         headers: {
           Authorization: this.getToken(),
           "Content-Type": "application/json",
         },
+      }
+    );
+  }
+
+  downloadTransactions(pageNumber, pageSize, filterData): Observable<HttpResponse<Blob>> {
+    const {
+      gatewayTransactionReference,
+      transactionDate,
+      transactionStatus,
+      amount,
+      merchantTransactionReference,
+      startDate,
+      endDate,
+      reportType,
+    } = filterData;
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/transaction/download?pageNumber=${pageNumber}&pageSize=${pageSize}&reportType=${reportType}&gatewayTransactionReference=${gatewayTransactionReference}&transactionStartDate=${startDate}&transactionEndDate=${endDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+        observe: 'response',
+        responseType: "blob",
       }
     );
   }
@@ -150,8 +187,6 @@ export class AppService {
 
   getPlatformCost(pageNumber: string, pageSize: string, filterData: any): any {
     const { reportType, merchantId, endDate, startDate } = filterData;
-    // let pageNumber: number = 1;
-    // let pageSize: number = 1;
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/transaction/platform-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&reportType=${reportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
@@ -240,7 +275,7 @@ export class AppService {
   downloadChargebackCost(filterData: any): any {
     const { reportType, merchantId, endDate, startDate } = filterData;
     let pageNumber: number = 1;
-    let pageSize: number = 1;
+    let pageSize: number = 1000;
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/transaction/download/charge-back-cost?merchantId=${merchantId}&reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
@@ -322,5 +357,13 @@ export class AppService {
     return <IBearerToken>{
       access_token: "",
     };
+  }
+
+  handleDownload(response: any): void {
+    const contentDispositionHeader = response.headers.get("Content-Disposition");
+    const parts: string[] = contentDispositionHeader.split(";");
+    const fileName = parts[1].split("=")[1];
+    let blob = new Blob([response.body], {type: response.type});
+    fileSaver.saveAs(blob, fileName);
   }
 }
