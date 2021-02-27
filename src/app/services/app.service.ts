@@ -15,7 +15,7 @@ export class AppService {
   //  appBaseUrl = "http://52.208.91.202:8085";
   // appBaseUrl = "http://3.10.80.41:8086";
   // appBaseUrl = "http://localhost:8080";
-  appBaseUrl = "http://34.240.160.43";
+  appBaseUrl = "http://34.240.160.43:8085";
 
   user = null;
 
