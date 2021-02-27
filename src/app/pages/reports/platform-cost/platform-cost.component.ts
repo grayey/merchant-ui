@@ -13,7 +13,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatDialog } from "@angular/material/dialog";
-import { AppService } from "src/app/services/app.service";
+import { AppService } from "src/services/app.service";
 import { IPlatformCostReport } from "../model";
 
 @Component({

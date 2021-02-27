@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
-import { AppService } from "src/app/services/app.service";
-import { AuthService } from "src/app/services/auth.service";
+import { AppService } from "src/services/app.service";
+import { AuthService } from "src/services/auth.service";
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
 
 @Component({

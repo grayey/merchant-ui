@@ -3,8 +3,12 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
+import { ApiHandlerService } from "./api-handler.service";
 import { saveAs } from "file-saver/FileSaver";
 import * as fileSaver from "file-saver";
+import { environment } from "../environments/environment";
+import { buildUrlParams } from "../utils/helpers";
+
 
 export interface IBearerToken {
   access_token: string;
@@ -12,16 +16,14 @@ export interface IBearerToken {
 
 @Injectable()
 export class AppService {
-  //  appBaseUrl = "http://52.208.91.202:8085";
-  // appBaseUrl = "http://3.10.80.41:8086";
-  // appBaseUrl = "http://localhost:8080";
-  appBaseUrl = "http://34.240.160.43:8085";
+
+  appBaseUrl = environment.backend;
 
   user = null;
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService, private apiHandler:ApiHandlerService) {}
 
-  getUsers(pageNumber, pageSize, filterData): any {
+  getUsers(pageNumber, pageSize, filterData): Observable<any>  {
     const { fullName, username } = filterData;
     return this.http.get(
       this.appBaseUrl +
@@ -33,6 +35,22 @@ export class AppService {
         },
       }
     );
+    return this.getUsers_(pageNumber, pageSize, filterData);
+
+  }
+
+  /**
+   * 
+   * @param pageNumber 
+   * @param pageSize 
+   * @param filterData 
+   * This method return an observable list of users
+   */
+  public getUsers_(pageNumber, pageSize, filterData): Observable<any> {
+    const paramData = {...{pageNumber, pageSize}, ...filterData};
+    const urlParams = buildUrlParams(paramData);
+    const url = `user/${urlParams}`;
+    return this.apiHandler.get(url);
   }
 
   getUploads(pageNumber, pageSize, filterData): any {
@@ -340,6 +358,7 @@ export class AppService {
   private getToken(): string {
     let bearerToken: IBearerToken = this.initEmptyData();
     const accessToken = this.authService.user;
+    console.log({accessToken })
     Object.assign(bearerToken, accessToken);
     let token = "Bearer " + bearerToken.access_token;
     return token;

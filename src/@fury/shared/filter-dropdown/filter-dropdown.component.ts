@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
-import { AppService } from "src/app/services/app.service";
+import { AppService } from "src/services/app.service";
 
 @Component({
   selector: "filter-dropdown",

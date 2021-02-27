@@ -10,7 +10,7 @@ import {
   ViewEncapsulation,
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { AppService } from "src/app/services/app.service";
+import { AppService } from "src/services/app.service";
 
 @Component({
   selector: "dropdown",

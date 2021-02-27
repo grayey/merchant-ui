@@ -14,10 +14,12 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatSnackBarConfig,
 } from "@angular/material/snack-bar";
-import { AppService } from "./services/app.service";
-import { AuthGuard } from "./services/auth-guard.service";
-import { AuthService } from "./services/auth.service";
+import { AppService } from "../services/app.service";
+import { AuthGuard } from "../services/auth-guard.service";
+import { AuthService } from "../services/auth.service";
+import { ApiHandlerService } from "../services/api-handler.service";
 import { ToastrModule } from "ngx-toastr";
+import { UserService } from "../services/user/user.service";
 
 @NgModule({
   imports: [
@@ -59,6 +61,8 @@ import { ToastrModule } from "ngx-toastr";
     AppService,
     AuthGuard,
     AuthService,
+    ApiHandlerService,
+    UserService
   ],
 })
 export class AppModule {}

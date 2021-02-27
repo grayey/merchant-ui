@@ -18,7 +18,7 @@ import { CustomerCreateUpdateComponent } from "./customer-create-update/customer
 import { Customer } from "./customer-create-update/customer.model";
 import { fadeInRightAnimation } from "../../../../@fury/animations/fade-in-right.animation";
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
-import { AppService } from "src/app/services/app.service";
+import { AppService } from "src/services/app.service";
 
 @Component({
   selector: "fury-users-table",

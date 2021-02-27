@@ -2,7 +2,7 @@ import { HttpEventType, HttpResponse } from "@angular/common/http";
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { AppService } from "src/app/services/app.service";
+import { AppService } from "src/services/app.service";
 import { Customer } from "./customer.model";
 
 @Component({

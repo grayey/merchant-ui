@@ -6,5 +6,8 @@
 export const environment = {
   production: false,
   googleMapsApiKey: '',
-  backend: 'http://localhost:4200' // Put your backend here
+  backend: 'http://34.240.160.43:8085',// Put your backend here
+  // API_BASE_URL:"http://52.208.91.202:8085",
+  API_BASE_URL:"http://34.240.160.43:8085/api/v1/",
+  API_KEY:""
 };
