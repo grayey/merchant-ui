@@ -24,17 +24,17 @@ export class AppService {
   constructor(private http: HttpClient, private authService: AuthService, private apiHandler:ApiHandlerService) {}
 
   getUsers(pageNumber, pageSize, filterData): Observable<any>  {
-    const { fullName, username } = filterData;
-    return this.http.get(
-      this.appBaseUrl +
-        `/api/v1/user?pageNumber=${pageNumber}&pageSize=${pageSize}&fullName=${fullName}&username=${username}`,
-      {
-        headers: {
-          Authorization: this.getToken(),
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // const { fullName, username } = filterData;
+    // return this.http.get(
+    //   this.appBaseUrl +
+    //     `/api/v1/user?pageNumber=${pageNumber}&pageSize=${pageSize}&fullName=${fullName}&username=${username}`,
+    //   {
+    //     headers: {
+    //       Authorization: this.getToken(),
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
     return this.getUsers_(pageNumber, pageSize, filterData);
 
   }

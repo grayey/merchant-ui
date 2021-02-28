@@ -18,6 +18,7 @@ import { AppService } from "../services/app.service";
 import { AuthGuard } from "../services/auth-guard.service";
 import { AuthService } from "../services/auth.service";
 import { ApiHandlerService } from "../services/api-handler.service";
+import { RefundsService } from "../services/refunds/refunds.service";
 import { ToastrModule } from "ngx-toastr";
 import { UserService } from "../services/user/user.service";
 
@@ -62,7 +63,9 @@ import { UserService } from "../services/user/user.service";
     AuthGuard,
     AuthService,
     ApiHandlerService,
-    UserService
+    UserService,
+    RefundsService,
+
   ],
 })
 export class AppModule {}
