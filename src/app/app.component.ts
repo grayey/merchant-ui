@@ -99,14 +99,6 @@ export class AppComponent {
         position: 15,
       },
       {
-        name: "Refunds",
-        routeOrFunction: "/refunds",
-        icon: "credit_card_off",
-        // badge: "22",
-        badgeColor: "#2196F3",
-        position: 15,
-      },
-      {
         name: "Reports",
         icon: "account_balance",
         position: 45,
@@ -126,7 +118,22 @@ export class AppComponent {
             name: "Charge Back Cost",
             routeOrFunction: "/reports/charge-back-cost",
             position: 3
-          }
+          },
+          {
+            name: "Refunds",
+            routeOrFunction: "/reports/refunds",
+            position: 4
+          },
+          {
+            name: "Success & Failure Rate",
+            routeOrFunction: "/reports/success-failure-rate",
+            position: 5
+          },
+          {
+            name: "Merchants' Balance",
+            routeOrFunction: "/reports/merchant-balance",
+            position: 6
+          },
         ]
       },
       // {

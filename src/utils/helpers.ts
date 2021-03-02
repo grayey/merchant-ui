@@ -5,6 +5,7 @@ declare const $: any;
 /**
  *
  * @param abstractControl
+ * @returns boolean
  * This method returns checks if a field is required
  */
 export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
@@ -27,6 +28,12 @@ export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
 }
 
 
+/**
+ * 
+ * @param paramData 
+ * @returns string
+ * This method builds the params for a url
+ */
 export const buildUrlParams = (paramData):string | void => {
     if(!paramData) return;
     let urlParams = "?";
@@ -36,6 +43,13 @@ export const buildUrlParams = (paramData):string | void => {
     return urlParams;
 }
 
+/**
+ * 
+ * @param data : Array
+ * @param processDatum : fn
+ * @returns Array
+ * This method takes an array and callback that modifies each item
+ */
 export const refineData = (data:any[], processDatum:any):any[] => {
   return data.map((datum) =>  processDatum(datum));
 }
@@ -44,6 +58,7 @@ export const refineData = (data:any[], processDatum:any):any[] => {
 /**
  *
  * @param formIsValid
+ * @returns string
  * This method sets the class on a submit button based on form validation
  */
 export const  setValidationClass = (formIsValid): string => {
@@ -53,6 +68,14 @@ export const  setValidationClass = (formIsValid): string => {
 
 
 
+/**
+ * 
+ * @param data 
+ * @param tableId 
+ * @param tableTitle 
+ * @returns void
+ * This method renders a datatable
+ */
 export const tableRun = (data, tableId = '', tableTitle = '') => {
   $(document).ready(() => {
     const tId = (tableId) ? tableId : 'data_table';
@@ -102,6 +125,13 @@ export const tableRun = (data, tableId = '', tableTitle = '') => {
   });
 };
 
+/**
+ * 
+ * @param data 
+ * @param tableId 
+ * @param tableTitle 
+ * This method destroys and re-renders a data table
+ */
 export const tableRerender =  (data, tableId = '', tableTitle = '') => {
   $(document).ready(() => {
     if ($.fn.DataTable.isDataTable(`#${tableId}`)) {

@@ -19,7 +19,7 @@ import { AuthGuard } from "../services/auth-guard.service";
 import { AuthService } from "../services/auth.service";
 import { ApiHandlerService } from "../services/api-handler.service";
 import { ApiInterceptorService } from "../services/api-interceptor.service";
-import { RefundsService } from "../services/refunds/refunds.service";
+import { ReportsService } from "../services/reports/reports.service";
 import { ToastrModule } from "ngx-toastr";
 import { UserService } from "../services/user/user.service";
 
@@ -70,7 +70,7 @@ import { UserService } from "../services/user/user.service";
     AuthService,
     ApiHandlerService,
     UserService,
-    RefundsService,
+    ReportsService,
 
   ],
 })

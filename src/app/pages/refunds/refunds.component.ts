@@ -17,7 +17,7 @@ import {
   import { ListColumn } from "../../../@fury/shared/list/list-column.model";
   import { fadeInRightAnimation } from "../../../@fury/animations/fade-in-right.animation";
   import { fadeInUpAnimation } from "../../../@fury/animations/fade-in-up.animation";
-import { RefundsService } from "../../../services/refunds/refunds.service";
+import { ReportsService } from "../../../services/reports/reports.service";
 import { refineData } from "../../../utils/helpers";
 import { formatCurrency, getCurrencySymbol, formatDate } from '@angular/common';
 
@@ -89,7 +89,7 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort: MatSort;
   
-    constructor(private dialog: MatDialog, private refundService:RefundsService, @Inject(LOCALE_ID) private locale: string) {}
+    constructor(private dialog: MatDialog, private reportService:ReportsService, @Inject(LOCALE_ID) private locale: string) {}
   
     get visibleColumns() {
       return this.columns
@@ -129,9 +129,9 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
           pageSize = 10;
           pageNumber = 1;
         }
-        RefundsService.REFUNDS_LIST_FILTER = { pageSize, pageNumber, ...this.filterData };
+        ReportsService.REFUNDS_LIST_FILTER = { pageSize, pageNumber, ...this.filterData };
         
-        this.refundService.getAllRefunds().subscribe(
+        this.reportService.getAllRefunds().subscribe(
             (refundsResponse)=>{
                 const refineRefunds = (refund:any) => {
                   refund.processing_gateway_name = refund?.processingGateway?.name;

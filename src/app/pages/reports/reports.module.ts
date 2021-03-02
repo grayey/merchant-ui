@@ -13,10 +13,12 @@ import { FurySharedModule } from 'src/@fury/fury-shared.module';
 import { BreadcrumbsModule } from 'src/@fury/shared/breadcrumbs/breadcrumbs.module';
 import { ListModule } from 'src/@fury/shared/list/list.module';
 import { MaterialModule } from 'src/@fury/shared/material-components.module';
+import { SuccessFailureRateComponent } from './success-failure-rate/success-failure-rate.component';
+import { MerchantBalanceComponent } from './merchant-balance/merchant-balance.component';
 
 
 @NgModule({
-  declarations: [PlatformCostComponent, RefundCostComponent, ChargeBackCostComponent],
+  declarations: [PlatformCostComponent, RefundCostComponent, ChargeBackCostComponent, SuccessFailureRateComponent, MerchantBalanceComponent],
   imports: [
     CommonModule,
     FormsModule,

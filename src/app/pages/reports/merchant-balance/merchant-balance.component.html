@@ -1,11 +1,11 @@
 <fury-page-layout mode="card">
     <fury-page-layout-header>
-      <fury-breadcrumbs [@fadeInRight] current="Refunds"></fury-breadcrumbs>
+      <fury-breadcrumbs [@fadeInRight] current="Merchants' Balance"></fury-breadcrumbs>
     </fury-page-layout-header>
   
     <fury-page-layout-content [@fadeInUp]>
       <fury-list
-        name="Refunds"
+        name="Merchants' Balance"
         [columns]="columns"
         (filterChange)="onFilterChange($event)"
       >
@@ -45,7 +45,7 @@
           <ng-container matColumnDef="image">
             <th *matHeaderCellDef class="image-cell" mat-header-cell></th>
             <td *matCellDef="let row" class="image-cell" mat-cell>
-              <img src="http://i.pravatar.cc/30?u={{ row.name }}" />
+              <img src="http://i.pravatar.cc/30?u={{ row.merchantName }}" />
             </td>
           </ng-container>
   
@@ -117,7 +117,7 @@
           [pageSize]="10"
           [pageSizeOptions]="[5, 10, 20, 50, 100, 500, 100]"
           [showFirstLastButtons]="true"
-          (page)="getAllRefunds($event)"
+          (page)="getAllMerchantBalances($event)"
         >
         </mat-paginator>
       </fury-list>
