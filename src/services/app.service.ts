@@ -23,19 +23,19 @@ export class AppService {
 
   constructor(private http: HttpClient, private authService: AuthService, private apiHandler:ApiHandlerService) {}
 
-  getUsers(pageNumber, pageSize, filterData): Observable<any>  {
-    // const { fullName, username } = filterData;
-    // return this.http.get(
-    //   this.appBaseUrl +
-    //     `/api/v1/user?pageNumber=${pageNumber}&pageSize=${pageSize}&fullName=${fullName}&username=${username}`,
-    //   {
-    //     headers: {
-    //       Authorization: this.getToken(),
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    return this.getUsers_(pageNumber, pageSize, filterData);
+  getUsers_old(pageNumber, pageSize, filterData): Observable<any>  {
+    const { fullName, username } = filterData;
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/user?pageNumber=${pageNumber}&pageSize=${pageSize}&fullName=${fullName}&username=${username}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return this.getUsers(pageNumber, pageSize, filterData);
 
   }
 
@@ -46,14 +46,14 @@ export class AppService {
    * @param filterData 
    * This method return an observable list of users
    */
-  public getUsers_(pageNumber, pageSize, filterData): Observable<any> {
+  public getUsers(pageNumber, pageSize, filterData): Observable<any> {
     const paramData = {...{pageNumber, pageSize}, ...filterData};
     const urlParams = buildUrlParams(paramData);
     const url = `user/${urlParams}`;
     return this.apiHandler.get(url);
   }
 
-  getUploads(pageNumber, pageSize, filterData): any {
+  getUploads_old(pageNumber, pageSize, filterData): any {
     const { type, status } = filterData;
     return this.http.get(
       this.appBaseUrl +
@@ -65,15 +65,28 @@ export class AppService {
         },
       }
     );
+    return this.getUploads(pageNumber, pageSize, filterData);
   }
 
-  getUploadTypes(): any {
+  getUploads(pageNumber, pageSize, filterData): Observable<any> {
+    const paramData = {...{pageNumber, pageSize}, ...filterData};
+    const urlParams = buildUrlParams(paramData);
+    const url = `upload-request/${urlParams}`;
+    return this.apiHandler.get(url);
+  }
+
+  getUploadTypes_old(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/upload-request/types`, {
       headers: {
         Authorization: this.getToken(),
         "Content-Type": "application/json",
       },
     });
+    return this.getUploadTypes();
+  }
+
+  getUploadTypes(): Observable<any> {
+    return this.apiHandler.get('upload-request/types');
   }
 
   getUploadStatuses(): any {
@@ -307,22 +320,32 @@ export class AppService {
     });
   }
 
+  loginUser_old(username: string, password: string): Observable<any> {
+    // const params = new URLSearchParams();
+    // params.append("username", username);
+    // params.append("password", password);
+    // params.append("grant_type", "password");
+    // const config = {
+    //   headers: {
+    //     Authorization: "Basic Y29kZWlxLXBheW1lbnQtZ2F0ZXdheTpzZWNyZXQ=",
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    // };
+    // return this.http.post(
+    //   this.appBaseUrl + "/oauth/token",
+    //   params.toString(),
+    //   config
+    // );
+    return this.loginUser(username, password);
+  }
+
   loginUser(username: string, password: string): Observable<any> {
     const params = new URLSearchParams();
     params.append("username", username);
     params.append("password", password);
     params.append("grant_type", "password");
-    const config = {
-      headers: {
-        Authorization: "Basic Y29kZWlxLXBheW1lbnQtZ2F0ZXdheTpzZWNyZXQ=",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    };
-    return this.http.post(
-      this.appBaseUrl + "/oauth/token",
-      params.toString(),
-      config
-    );
+    ApiHandlerService.API_BASE_URL = this.appBaseUrl;
+    return this.apiHandler.post('/oauth/token',params.toString());
   }
 
   createUser(data: any): Observable<any> {

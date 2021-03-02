@@ -99,6 +99,14 @@ export class AppComponent {
         position: 15,
       },
       {
+        name: "Refunds",
+        routeOrFunction: "/refunds",
+        icon: "credit_card_off",
+        // badge: "22",
+        badgeColor: "#2196F3",
+        position: 15,
+      },
+      {
         name: "Reports",
         icon: "account_balance",
         position: 45,

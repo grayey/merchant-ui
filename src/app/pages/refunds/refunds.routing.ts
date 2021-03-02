@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { RefundsComponent } './refunds.component';
+import { RefundsComponent } from './refunds.component';
 
 export const REFUNDS_ROUTES:Routes = [
     {

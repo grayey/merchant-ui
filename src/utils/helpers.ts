@@ -27,12 +27,17 @@ export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
 }
 
 
-export const buildUrlParams = (paramData):string => {
+export const buildUrlParams = (paramData):string | void => {
+    if(!paramData) return;
     let urlParams = "?";
     for(const param in paramData){
       urlParams +=`${param}=${paramData[param]}&`;
     }
     return urlParams;
+}
+
+export const refineData = (data:any[], processDatum:any):any[] => {
+  return data.map((datum) =>  processDatum(datum));
 }
 
 

@@ -145,6 +145,13 @@ const routes: Routes = [
           ).then((m) => m.ReportsModule),
       },
       {
+        path: "refunds",
+        loadChildren: () =>
+          import(
+            "./pages/refunds/refunds.module"
+          ).then((m) => m.RefundsModule),
+      },
+      {
         path: "drag-and-drop",
         loadChildren: () =>
           import("./pages/drag-and-drop/drag-and-drop.module").then(

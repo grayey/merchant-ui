@@ -52,7 +52,7 @@ export class ApiHandlerService extends ApiConfig{
 
     const url = `${ApiHandlerService.API_BASE_URL}${path}`;
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
-    return this.http.post(url, (data || {}), this.headers)
+    return this.http.post(url, data || {}, this.headers)
       .retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))

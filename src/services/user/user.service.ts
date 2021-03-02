@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import CONSTANTS  from '../../utils/constants';
 import { IBearerToken } from "../../interfaces/bearer-token.interface";
 import { AuthService } from "../auth.service";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class UserService {
@@ -24,13 +25,14 @@ export class UserService {
   /**
    * This method returns the logged in user's jwt token
    */
-  public getAuthUserToken():string{
+  public getAuthUserToken(requestUrl=''):string{
     const bearerToken:IBearerToken = {
       access_token:""
     }
     const accessToken = this.authService.user;
     Object.assign(bearerToken, accessToken);
-    return "Bearer " + bearerToken.access_token;
+
+    return requestUrl.endsWith('oauth/token') ? environment.BASIC_TOKEN : "Bearer " + bearerToken.access_token;
   }
 
 

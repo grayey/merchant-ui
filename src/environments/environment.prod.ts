@@ -3,6 +3,7 @@ export const environment = {
   googleMapsApiKey: '',
   backend: '', // Put your backend here
   API_BASE_URL:"",
-  API_KEY:""
+  API_KEY:"",
+  BASIC_TOKEN:""
 
 };

@@ -12,16 +12,17 @@ export class ApiInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const X_JWT_TOKEN = localStorage.getItem('X_JWT_TOKEN');
-    req = req.clone({headers: req.headers.set('Accept', 'application/json')});
-    if (X_JWT_TOKEN) {
-      req = req.clone({headers: req.headers.set('x-jwt-token', X_JWT_TOKEN)});
-    }
-    if (this.userService.isLoggedIn()) {
-      req = req.clone({headers: req.headers.set('Authorization', this.userService.getAuthUserToken())});
-    }
+    const REQUEST_CONTENT = req.url.endsWith('oauth/token')? 'x-www-form-urlencoded': 'json'
+    req = req.clone({headers: req.headers.set('Accept', `application/${REQUEST_CONTENT}`)});
+
+   
+    // if (this.userService.isLoggedIn()) {
+    req = req.clone({headers: req.headers.set('Authorization', this.userService.getAuthUserToken(req.url))});
+
+    // }
+
     if (!req.headers.has('Content-Type')) {
-      req = req.clone({headers: req.headers.set('Content-Type', 'application/json')});
+      req = req.clone({headers: req.headers.set('Content-Type', `application/${REQUEST_CONTENT}`)});
     }
 
     return next.handle(req);

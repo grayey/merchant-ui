@@ -1,4 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"; // Needed for Touch functionality of Material Components
@@ -18,6 +18,7 @@ import { AppService } from "../services/app.service";
 import { AuthGuard } from "../services/auth-guard.service";
 import { AuthService } from "../services/auth.service";
 import { ApiHandlerService } from "../services/api-handler.service";
+import { ApiInterceptorService } from "../services/api-interceptor.service";
 import { RefundsService } from "../services/refunds/refunds.service";
 import { ToastrModule } from "ngx-toastr";
 import { UserService } from "../services/user/user.service";
@@ -58,6 +59,11 @@ import { UserService } from "../services/user/user.service";
         horizontalPosition: "end",
         verticalPosition: "bottom",
       } as MatSnackBarConfig,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptorService,
+      multi: true
     },
     AppService,
     AuthGuard,

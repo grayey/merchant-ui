@@ -32,17 +32,14 @@ export class ApiConfig{
     const contentOrAccept = `application/${ApiConfig.REQUEST_CONTENT}`;
     headersConfig.append('Content-Type', contentOrAccept);
     headersConfig.append('Accept', contentOrAccept);
-    if (this.userService.isLoggedIn()) {
+    // if (this.userService.isLoggedIn()) {
       headersConfig['Authorization'] = `${this.userService.getAuthUserToken()}`;
-    }
+    // }
     if (ApiConfig.API_KEY) {
       headersConfig['API-KEY'] = ApiConfig.API_KEY;
     }
-    const X_JWT_TOKEN = localStorage.getItem('X_JWT_TOKEN');
-    console.log({ X_JWT_TOKEN })
-    if(X_JWT_TOKEN){
-      headersConfig['x-jwt-token'] = X_JWT_TOKEN;
-    }
+
+    console.log({headersConfig})
     return headersConfig;
   }
 
