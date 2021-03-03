@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,} from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/operators/map';
-import 'rxjs/operators/retryWhen';
-import 'rxjs/operators/delay';
-import 'rxjs/operators/take';
+import {map, retryWhen, delay, take } from 'rxjs/operators';
+// import 'rxjs/operators/map';
+// import 'rxjs/operators/retryWhen';
+// import 'rxjs/operators/delay';
+// import 'rxjs/operators/take';
 import { ApiConfig } from '../utils/config';
 import { UserService } from './user/user.service';
 import { environment } from '../environments/environment';
