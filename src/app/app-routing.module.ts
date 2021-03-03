@@ -144,6 +144,13 @@ const routes: Routes = [
             "./pages/reports/reports.module"
           ).then((m) => m.ReportsModule),
       },
+      {
+        path: "refunds",
+        loadChildren: () =>
+          import(
+            "./pages/refunds/refunds.module"
+          ).then((m) => m.RefundsModule),
+      },
     
       {
         path: "drag-and-drop",
@@ -152,6 +159,7 @@ const routes: Routes = [
             (m) => m.DragAndDropModule
           ),
       },
+
       {
         path: "editor",
         loadChildren: () =>

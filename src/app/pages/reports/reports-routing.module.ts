@@ -19,13 +19,7 @@ const routes: Routes = [
     path: "charge-back-cost",
     component: ChargeBackCostComponent,
   },
-  {
-    path: "refunds",
-    loadChildren: () =>
-      import(
-        "../../pages/refunds/refunds.module"
-      ).then((m) => m.RefundsModule),
-  },
+
   {
     path:"success-failure-rate",
     component:SuccessFailureRateComponent
