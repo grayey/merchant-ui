@@ -30,6 +30,7 @@ export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestro
   transactions = [];
   dataLength: number = 10;
 
+
   @Input()
   columns: ListColumn[] = [
     {
@@ -39,41 +40,35 @@ export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestro
       isModelProperty: true,
     },
     {
-      name: "Successful Transactions",
-      property: "totalSuccessfulCount",
+      name: "Merchant No.",
+      property: "merchantAccountNumber",
       visible: true,
       isModelProperty: true,
     },
     {
-      name: "Sum of Successful Transactions",
-      property: "totalSuccessfulSum",
+      name: "No. of Transactions",
+      property: "transactionCount",
       visible: true,
       isModelProperty: true,
     },
     {
-      name: "Failed Transactions",
-      property: "totalFailedCount",
+      name: "Sum of Transactions",
+      property: "transactionSum",
       visible: true,
       isModelProperty: true,
     },
     {
-      name: "Sum of Failed Transactions",
-      property: "totalFailedSum",
-      visible: true,
+      name: "Total Processing Cost",
+      property: "totalProcessingCost",
+      visible: false,
       isModelProperty: true,
     },
     {
-      name: "Total Transactions",
-      property: "totalTransactionCount",
-      visible: true,
+      name: "Sum to Merchant",
+      property: "sumToMerchant",
+      visible: false,
       isModelProperty: true,
-    },
-    {
-      name: "Total sum of Transactions",
-      property: "totalTransactionSum",
-      visible: true,
-      isModelProperty: true,
-    },
+    }
   ] as ListColumn[];
 
   filterData:any;
@@ -120,17 +115,16 @@ export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestro
       
       this.reportService.getMerchantBalances().subscribe(
           (merchantBalancesResponse)=>{
-              // const refineMerchantBalances = (merchantBalance:any) => {
-              //   merchantBalance.totalSuccessfulSum = formatCurrency(merchantBalance.totalSuccessfulSum, this.locale,getCurrencySymbol('USD', 'wide'));
-              //   merchantBalance.totalFailedSum = formatCurrency(merchantBalance.totalFailedSum, this.locale,getCurrencySymbol('USD', 'wide'));
-              //   merchantBalance.totalTransactionSum = formatCurrency(merchantBalance.totalTransactionSum, this.locale,getCurrencySymbol('USD', 'wide'));
-              //   merchantBalance.totalSuccessfulCount = formatNumber(merchantBalance.totalSuccessfulCount, this.locale);
-              //   merchantBalance.totalFailedCount = formatNumber(merchantBalance.totalFailedCount, this.locale);
-              //   return merchantBalance;
-              // }
-              // this.allMerchantBalances = refineData(merchantBalancesResponse.data, refineMerchantBalances);
-              // this.dataSource.data = this.allMerchantBalances;
-              // this.dataLength = merchantBalancesResponse.rows;
+              const refineMerchantBalances = (merchantBalance:any) => {
+                merchantBalance.sumToMerchant = formatCurrency(merchantBalance.sumToMerchant, this.locale,getCurrencySymbol('USD', 'wide'));
+                merchantBalance.totalProcessingCost = formatCurrency(merchantBalance.totalProcessingCost, this.locale,getCurrencySymbol('USD', 'wide'));
+                merchantBalance.transactionSum = formatCurrency(merchantBalance.transactionSum, this.locale,getCurrencySymbol('USD', 'wide'));
+                merchantBalance.transactionCount = formatNumber(merchantBalance.transactionCount, this.locale);
+                return merchantBalance;
+              }
+              this.allMerchantBalances = refineData(merchantBalancesResponse.data, refineMerchantBalances);
+              this.dataSource.data = this.allMerchantBalances;
+              this.dataLength = merchantBalancesResponse.rows;
               console.log({ merchantBalancesResponse })
               
       },
