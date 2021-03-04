@@ -17,8 +17,9 @@ import { fadeInUpAnimation } from "src/@fury/animations/fade-in-up.animation";
 import { ListColumn } from "src/@fury/shared/list/list-column.model";
 import { ReportsService } from "../../../../services/reports/reports.service";
 import { saveAs } from "file-saver/FileSaver";
-import { refineData } from "../../../../utils/helpers";
+import { refineData, getToday } from "../../../../utils/helpers";
 import { formatCurrency, getCurrencySymbol, formatNumber } from '@angular/common';
+import { ISFRFilter } from "src/interfaces/sfr-filter.interface";
 
 @Component({
   selector: 'fury-success-failure-rate',
@@ -29,6 +30,7 @@ import { formatCurrency, getCurrencySymbol, formatNumber } from '@angular/common
 export class SuccessFailureRateComponent implements OnInit, AfterViewInit, OnDestroy {
   transactions = [];
   dataLength: number = 10;
+  REPORT = "SFR";
 
   @Input()
   columns: ListColumn[] = [
@@ -76,7 +78,12 @@ export class SuccessFailureRateComponent implements OnInit, AfterViewInit, OnDes
     },
   ] as ListColumn[];
 
-  filterData: any;
+  filterData: ISFRFilter ={
+    startDate:getToday(),
+    endDate:getToday(),
+    pageNumber:1,
+    pageSize:10
+  };
   pageSize = 10;
   dataSource: MatTableDataSource<any> | null;
   allSuccessFailureRates:any[] = [];
@@ -94,7 +101,7 @@ export class SuccessFailureRateComponent implements OnInit, AfterViewInit, OnDes
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
-    this.setFilterData();
+    // this.setFilterData();
     this.getAllSuccessFailureRates();
   }
 
@@ -107,14 +114,11 @@ export class SuccessFailureRateComponent implements OnInit, AfterViewInit, OnDes
      * This methods gets a list of all successFailureRateed transactions
      */
     public getAllSuccessFailureRates = async (pageEvent?: PageEvent) => {
-      let pageNumber, pageSize;
+      let { pageNumber, pageSize} = this.filterData;
       if (pageEvent) {
         pageSize = pageEvent.pageSize;
         pageNumber = pageEvent.pageIndex + 1;
-      } else {
-        pageSize = 10;
-        pageNumber = 1;
-      }
+      } 
       ReportsService.S_F_RATES_LIST_FILTER = { pageSize, pageNumber, ...this.filterData };
       
       this.reportService.getSuccessFailureRates().subscribe(
@@ -181,8 +185,26 @@ export class SuccessFailureRateComponent implements OnInit, AfterViewInit, OnDes
   onDownloadClick(reportType: string): void {
     console.log(reportType);
     this.filterData.reportType = reportType;
-    this.getAllSuccessFailureRates();
+    this.downloadSFRReport();
   }
+
+  /**
+     * This method downloads a report
+     */
+    private downloadSFRReport() {
+      this.filterData.pageNumber = 1;
+      this.filterData.pageSize = 1000;
+
+      this.reportService.downloadReport(this.REPORT, this.filterData).subscribe(
+        (response) => {
+         console.log({ response })
+        },
+        (err: any) => {
+          console.log(err);
+        },
+        () => {}
+      );
+    }
 
   handleDownload(response: any): void {
     const contentDispositionHeader = response.headers.get(

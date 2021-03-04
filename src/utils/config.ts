@@ -14,11 +14,15 @@ export class ApiConfig{
     this.headers = {
       headers: this.setHeaders(), observe:'response'
      }
+     if(ApiConfig.EXPECT_FILE){
+       this.headers['responseType'] = "blob";
+     }
 
   }
 
   private static API_KEY = environment.API_KEY;
   public static REQUEST_CONTENT = 'json'; //e.g of other content: 'octet-stream' for file uploads
+  public static EXPECT_FILE= null;
   public headers;
 
 

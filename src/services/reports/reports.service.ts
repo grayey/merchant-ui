@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiHandlerService } from "../api-handler.service";
 import { buildUrlParams } from "../../utils/helpers";
+import * as fileSaver from "file-saver";
 
 
 
@@ -45,5 +46,51 @@ export class ReportsService{
         const url = `report/merchant-balance/${params}`;
         return this.apiHandler.get(url);
     }
+
+    /**
+     * 
+     * @param filterData 
+     * this method downloads a report
+     * 
+     */
+
+    downloadReport(reportType, filterData): any {
+        let url = "transaction/download/";
+        switch(reportType){
+            case "REFUNDS":
+                url+="refunded";
+                break;
+            case "MERCHANT_BALANCE":
+                url += "merchant-balance"
+                break;
+            case "SFR":
+                url +="success-failure-rate";
+                break;
+            default:
+                return alert('Unknow report type')
+        }
+        const path = `${url}/${buildUrlParams(filterData)}`;
+        return this.apiHandler.getFile(path).subscribe(
+            (fileResponse)=>{
+                this.handleDownload(fileResponse)
+            },
+            (error)=>{
+                console.log({error})
+            });
+        
+      }
+
+       /**
+   * 
+   * @param response 
+   * This method downloads a file
+   */
+  private handleDownload = (response: any): void => {
+    const contentDispositionHeader = response.headers.get("Content-Disposition");
+    const parts: string[] = contentDispositionHeader.split(";");
+    const fileName = parts[1].split("=")[1];
+    let blob = new Blob([response.body], {type: response.type});
+    fileSaver.saveAs(blob, fileName);
+  }
 
 }

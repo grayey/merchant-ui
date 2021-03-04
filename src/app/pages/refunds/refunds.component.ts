@@ -18,8 +18,9 @@ import {
   import { fadeInRightAnimation } from "../../../@fury/animations/fade-in-right.animation";
   import { fadeInUpAnimation } from "../../../@fury/animations/fade-in-up.animation";
 import { ReportsService } from "../../../services/reports/reports.service";
-import { refineData } from "../../../utils/helpers";
+import { refineData, getToday } from "../../../utils/helpers";
 import { formatCurrency, getCurrencySymbol, formatDate } from '@angular/common';
+import { IRefundsFilter } from "src/interfaces/refund-filter.interface";
 
 @Component({
     selector: 'app-refunds',
@@ -32,6 +33,7 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     allRefunds = [];
     dataLength: number = 10;
+    REPORT ="REFUNDS";
   
     @Input()
     columns: ListColumn[] = [
@@ -80,9 +82,12 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
       { name: "Actions", property: "actions", visible: true },
     ] as ListColumn[];
     pageSize = 10;
-    filterData = {
-        type: "",
-        status: "",
+    filterData : IRefundsFilter = {
+        startDate: getToday(),
+        endDate:getToday(),
+        pageNumber:1,
+        pageSize:10
+
       };
     dataSource: MatTableDataSource<any> | null;
   
@@ -121,14 +126,11 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
      * This methods gets a list of all refunded transactions
      */
     public getAllRefunds = async (pageEvent?: PageEvent) => {
-        let pageNumber, pageSize;
+        let { pageNumber, pageSize } = this.filterData;
         if (pageEvent) {
           pageSize = pageEvent.pageSize;
           pageNumber = pageEvent.pageIndex + 1;
-        } else {
-          pageSize = 10;
-          pageNumber = 1;
-        }
+        } 
         ReportsService.REFUNDS_LIST_FILTER = { pageSize, pageNumber, ...this.filterData };
         
         this.reportService.getAllRefunds().subscribe(
@@ -153,7 +155,52 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
   
+    onDownloadClick(reportType: string): void {
+      this.filterData.reportType = reportType;
+      this.downloadRefundsReport();
+    }
+
+    onFilterClick(payload: any): void {
+      console.log({payload});
+      const {
+        gatewayTransactionReference,
+        transactionDate,
+        transactionStatus,
+        amount,
+        merchantTransactionReference,
+        startDate,
+        endDate,
+      } = payload;
+      this.filterData.gatewayTransactionReference =
+        gatewayTransactionReference || "";
+ 
+      this.filterData.amount = amount || 0;
+      this.filterData.merchantTransactionReference =
+        merchantTransactionReference || "";
+      this.filterData.startDate = formatDate(startDate, "yyyy-MM-dd", this.locale) || "";
+      this.filterData.endDate = formatDate(endDate, "yyyy-MM-dd", this.locale)
+   
+ 
+    }
+
     
+    /**
+     * This method downloads a report
+     */
+    private downloadRefundsReport() {
+      this.filterData.pageNumber = 1;
+      this.filterData.pageSize = 1000;
+
+      this.reportService.downloadReport(this.REPORT, this.filterData).subscribe(
+        (response) => {
+         console.log({ response })
+        },
+        (err: any) => {
+          console.log(err);
+        },
+        () => {}
+      );
+    }
   
     deleteCustomer(customer) {
   

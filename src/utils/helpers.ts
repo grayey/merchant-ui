@@ -66,8 +66,8 @@ export const  setValidationClass = (formIsValid): string => {
   return formIsValid ? 'btn btn-success' : 'btn btn-primary';
 }
 
-export const getToday = (date= null) =>{
-  return new Date(date).toISOString().split(':')[0]
+export const getToday = () =>{
+  return new Date().toISOString().split('T')[0]
 
 }
 

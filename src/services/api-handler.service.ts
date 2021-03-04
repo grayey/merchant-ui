@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,} from '@angular/common/http';
+import { HttpClient, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 // import {map, retryWhen, delay, take } from 'rxjs/operators';
 import 'rxjs/operators/map';
@@ -9,6 +9,7 @@ import 'rxjs/operators/take';
 import { ApiConfig } from '../utils/config';
 import { UserService } from './user/user.service';
 import { environment } from '../environments/environment';
+
 
 @Injectable()
 export class ApiHandlerService extends ApiConfig{
@@ -119,6 +120,30 @@ export class ApiHandlerService extends ApiConfig{
       });
   }
 
+
+
+  /**
+   * 
+   * @param path 
+   * this method retrieve a file
+   */
+  public getFile = (path): Observable<HttpResponse<Blob>> => {
+    const url = `${ApiHandlerService.API_BASE_URL}${path}`;
+    ApiConfig.EXPECT_FILE = "blob";
+    ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
+    const fileResponse = this.http.get(`${url}`, this.headers).retryWhen((errors) => {
+        return errors
+          .mergeMap((error) => this.errorHandler(error))
+          .delay(1000)
+          .take(2);
+      })
+      .catch(this.errorHandler)
+      .map((res) => res);
+      ApiConfig.EXPECT_FILE = null;
+      return fileResponse;
+  }
+
+ 
 
 
   /**

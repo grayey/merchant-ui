@@ -21,6 +21,7 @@ import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.anima
 import { AppService } from "src/services/app.service";
 import { DatePipe } from "@angular/common";
 import { ViewTransactionComponent } from "./view-transaction.component";
+import { getToday } from "src/utils/helpers"
 
 
 @Component({
@@ -192,8 +193,8 @@ export class TransactionsTableComponent
       transactionStatus: "",
       amount: 0,
       merchantTransactionReference: "",
-      startDate: "",
-      endDate: "",
+      startDate: "", //getToday()
+      endDate: ""//getToday(),
     };
   }
 

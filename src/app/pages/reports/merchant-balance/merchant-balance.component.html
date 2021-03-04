@@ -8,6 +8,16 @@
         name="Merchants' Balance"
         [columns]="columns"
         (filterChange)="onFilterChange($event)"
+
+        [showFilter]="true"
+        [startDate]="true"
+        [endDate]="true"
+        [showDownloadFilter]="true"
+        [merchantId]="true"
+        (filterClick)="onFilterClick($event)"
+        [startDate]="true"
+        [endDate]="true"
+        (downloadClick)="onDownloadClick($event)"
       >
         <!-- <div class="actions">
           <button

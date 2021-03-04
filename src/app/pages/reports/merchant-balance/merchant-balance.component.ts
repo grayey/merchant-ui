@@ -17,8 +17,9 @@ import { fadeInUpAnimation } from "src/@fury/animations/fade-in-up.animation";
 import { ListColumn } from "src/@fury/shared/list/list-column.model";
 import { ReportsService } from "../../../../services/reports/reports.service";
 import { saveAs } from "file-saver/FileSaver";
-import { refineData } from "../../../../utils/helpers";
+import { refineData, getToday } from "../../../../utils/helpers";
 import { formatCurrency, getCurrencySymbol, formatNumber } from '@angular/common';
+import { IMerchantBalanceFilter } from "src/interfaces/merchant-balance-filter.interface";
 
 @Component({
   selector: 'fury-merchant-balance',
@@ -29,7 +30,7 @@ import { formatCurrency, getCurrencySymbol, formatNumber } from '@angular/common
 export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestroy {
   transactions = [];
   dataLength: number = 10;
-
+  REPORT = "MERCHANT_BALANCE";
 
   @Input()
   columns: ListColumn[] = [
@@ -71,7 +72,12 @@ export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestro
     }
   ] as ListColumn[];
 
-  filterData:any;
+  filterData: IMerchantBalanceFilter ={
+    startDate:getToday(),
+    endDate:getToday(),
+    pageNumber:1,
+    pageSize:10
+  };
 
   pageSize = 10;
   dataSource: MatTableDataSource<any> | null;
@@ -90,7 +96,7 @@ export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestro
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
-    this.setFilterData();
+    // this.setFilterData();
     this.getAllMerchantBalances();
   }
 
@@ -103,14 +109,11 @@ export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestro
      * This methods gets a list of all merchantBalances 
      */
     public getAllMerchantBalances = async (pageEvent?: PageEvent) => {
-      let pageNumber, pageSize;
+      let {pageNumber, pageSize} = this.filterData;
       if (pageEvent) {
         pageSize = pageEvent.pageSize;
         pageNumber = pageEvent.pageIndex + 1;
-      } else {
-        pageSize = 10;
-        pageNumber = 1;
-      }
+      } 
       ReportsService.MERCHANT_BALANCE_LIST_FILTER = { pageSize, pageNumber, ...this.filterData };
       
       this.reportService.getMerchantBalances().subscribe(
@@ -177,8 +180,26 @@ export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestro
   onDownloadClick(reportType: string): void {
     console.log(reportType);
     this.filterData.reportType = reportType;
-    this.getAllMerchantBalances();
+    this.downloadMerchantBalanceReport();
   }
+
+   /**
+     * This method downloads a report
+     */
+    private downloadMerchantBalanceReport() {
+      this.filterData.pageNumber = 1;
+      this.filterData.pageSize = 1000;
+
+      this.reportService.downloadReport(this.REPORT, this.filterData).subscribe(
+        (response) => {
+         console.log({ response })
+        },
+        (err: any) => {
+          console.log(err);
+        },
+        () => {}
+      );
+    }
 
   handleDownload(response: any): void {
     const contentDispositionHeader = response.headers.get(
