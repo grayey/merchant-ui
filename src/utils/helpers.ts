@@ -55,6 +55,7 @@ export const refineData = (data:any[], processDatum:any):any[] => {
 }
 
 
+
 /**
  *
  * @param formIsValid
@@ -65,6 +66,10 @@ export const  setValidationClass = (formIsValid): string => {
   return formIsValid ? 'btn btn-success' : 'btn btn-primary';
 }
 
+export const getToday = (date= null) =>{
+  return new Date(date).toISOString().split(':')[0]
+
+}
 
 
 

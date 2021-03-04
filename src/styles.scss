@@ -17,3 +17,45 @@
 @import "~bootstrap/scss/bootstrap";
 
 // @import "../node_modules/bootstrap/scss/bootstrap";
+
+.dialog-sm {
+  max-width: 300px;
+}
+.dialog-lg {
+  max-width: 900px;
+  min-width: 700px;
+  overflow-y: scroll !important;
+  // margin-top: -20%;
+
+  
+}
+.dialog-c{
+}
+
+@media (min-width: 768px) {
+  .dialog-dialog {
+    margin: 30px auto;
+  }
+}
+@media (min-width: 320px) {
+  .dialog-sm {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+@media (min-width: 620px) {
+  .dialog-dialog {
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .dialog-lg {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
+@media (min-width: 920px) {
+  .dialog-lg {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

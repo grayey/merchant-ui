@@ -5,8 +5,9 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  Inject,
 } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog, } from "@angular/material/dialog";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -19,6 +20,8 @@ import { fadeInRightAnimation } from "../../../../@fury/animations/fade-in-right
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
 import { AppService } from "src/services/app.service";
 import { DatePipe } from "@angular/common";
+import { ViewTransactionComponent } from "./view-transaction.component";
+
 
 @Component({
   selector: "transactions-table",
@@ -102,7 +105,7 @@ export class TransactionsTableComponent
     {
       name: "Gateway Response Message",
       property: "gatewayResponseMessage",
-      visible: true,
+      visible: false,
       isModelProperty: true,
     },
     {
@@ -114,13 +117,13 @@ export class TransactionsTableComponent
     {
       name: "Settlement Status",
       property: "settlementStatus",
-      visible: true,
+      visible: false,
       isModelProperty: true,
     },
     {
       name: "Settlement Date",
       property: "settlementDate",
-      visible: true,
+      visible: false,
       isModelProperty: true,
     },
 
@@ -131,7 +134,7 @@ export class TransactionsTableComponent
     //   visible: true,
     //   isModelProperty: true,
     // },
-    // { name: "Actions", property: "actions", visible: true },
+    { name: "Actions", property: "actions", visible: true },
   ] as ListColumn[];
 
   pageSize = 10;
@@ -260,6 +263,21 @@ export class TransactionsTableComponent
     this.dataSource.filter = value;
   }
 
+  viewTransaction = (data) => {
+    this.dialog.open(ViewTransactionComponent, { 
+      data,
+      panelClass:'dialog-lg'
+     }).afterOpened().subscribe(
+      (transResponse) =>{
+
+        console.log({ transResponse })
+
+      },
+      (error) =>{
+        console.log({ error })
+      })
+  }
+
   onDownloadClick(reportType: string): void {
     this.filterData.reportType = reportType;
     this.downloadTransactionReport();
@@ -279,3 +297,5 @@ export class TransactionsTableComponent
 
   ngOnDestroy() {}
 }
+
+

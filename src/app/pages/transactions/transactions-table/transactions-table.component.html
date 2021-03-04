@@ -189,26 +189,25 @@
             mat-sort-header
           ></th>
           <td *matCellDef="let row" class="actions-cell" mat-cell>
-            <!--<button
+            <button
               type="button"
               mat-icon-button
               [matMenuTriggerFor]="actionsMenu"
               (click)="$event.stopPropagation()"
             >
               <mat-icon>more_horiz</mat-icon>
-            </button>-->
+            </button>
 
             <mat-menu
               #actionsMenu="matMenu"
               yPosition="below"
               xPosition="before"
             >
-              <button (click)="updateCustomer(row)" mat-menu-item>
-                <span>Modify</span>
-              </button>
-              <button (click)="deleteCustomer(row)" mat-menu-item>
-                <span>Delete</span>
-              </button>
+            <button (click)="viewTransaction(row)" mat-menu-item>
+              <span>View</span>
+            </button>
+
+            
             </mat-menu>
           </td>
         </ng-container>

@@ -41,7 +41,7 @@ export class CustomerCreateUpdateComponent implements OnInit {
       this.defaults = {} as Customer;
     }
 
-    console.log(this.mode);
+    console.log(this.mode, "DSEESFFS", this.defaults );
 
     // username: [
     //   this.defaults.username || "",

@@ -8,6 +8,7 @@ import { TransactionsTableRoutingModule } from "./transactions-table-routing.mod
 import { CustomerCreateUpdateModule } from "./customer-create-update/customer-create-update.module";
 import { FurySharedModule } from "../../../../@fury/fury-shared.module";
 import { TransactionsTableComponent } from "./transactions-table.component";
+import { ViewTransactionComponent } from "./view-transaction.component";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatTableModule } from "@angular/material/table";
 import { MatInputModule } from "@angular/material/input";
@@ -28,8 +29,8 @@ import { MatInputModule } from "@angular/material/input";
     CustomerCreateUpdateModule,
     BreadcrumbsModule,
   ],
-  declarations: [TransactionsTableComponent],
-  exports: [TransactionsTableComponent],
+  declarations: [TransactionsTableComponent, ViewTransactionComponent],
+  exports: [TransactionsTableComponent, ViewTransactionComponent],
   providers: [DatePipe]
 })
 export class TransactionsTableModule {}
