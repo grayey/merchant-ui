@@ -1,14 +1,14 @@
 
-<div class='cardx'>
+<div class='cardx' id="transaction_detail">
 
     <div class='card-header'>
 
         <div class='float-right '>
-            <button class='btn btn-secondary mt-2'><i class='fa fa-print'></i> Print</button>
+            <button class='btn btn-secondary mt-2' id='print_button' (click)="printTransaction('transaction_detail')"><i class='fa fa-print'></i> Print</button>
 
         </div>
     
-        <h3><b>Transaction: </b>{{transaction?.transactionReference}}</h3>
+        <h3 id='transaction_title'><b>Transaction: </b>{{transaction?.transactionReference}}</h3>
     </div>
     <div class='card-body'>
         <ul class="list-group list-group-flush">
