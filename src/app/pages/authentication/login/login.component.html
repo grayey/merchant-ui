@@ -58,7 +58,7 @@
         >
       </div>
       <button type="button" (click)="send()" [disabled]="loaders?.processing || form?.invalid" color="primary" mat-raised-button>
-        SIGN IN <small *ngIf="loaders?.processing"><mat-spinner></mat-spinner></small>
+        SIGN IN <small *ngIf="loaders?.processing"> &nbsp;&nbsp; <i class='loader'></i></small>
       </button>
       <!--<p class="secondary-text text-center">
         Don't have an account?<br/>

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
-import { retryWhen, map, delay, take } from 'rxjs/operators';
+import 'rxjs/operators/map';
+import 'rxjs/operators/retryWhen';
+import 'rxjs/operators/delay';
+import 'rxjs/operators/take';
 import { ApiConfig } from '../utils/config';
 import { UserService } from './user/user.service';
 import { environment } from '../environments/environment';
@@ -28,7 +31,7 @@ export class ApiHandlerService extends ApiConfig{
   public get(path: string, paginator?): Observable<any> {
     const url = `${ApiHandlerService.API_BASE_URL}${path}`;
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
-    return this.http.get(`${url}`, this.headers)['retryWhen']((errors) => {
+    return this.http.get(`${url}`, this.headers).retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
           .delay(1000)
@@ -51,7 +54,7 @@ export class ApiHandlerService extends ApiConfig{
     const url = `${ApiHandlerService.API_BASE_URL}${path}`;
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
     return this.http.post(url, data || {}, this.headers)
-      ['retryWhen']((errors) => {
+      .retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
           .delay(1000)
@@ -81,7 +84,7 @@ export class ApiHandlerService extends ApiConfig{
     const url = `${ApiHandlerService.API_BASE_URL}${path}`;
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
     return this.http.put(url, (data || {}) || {}, this.headers)
-      ['retryWhen']((errors) => {
+      .retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
           .delay(1000)
@@ -103,7 +106,7 @@ export class ApiHandlerService extends ApiConfig{
     const url = `${ApiHandlerService.API_BASE_URL}${path}`;
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL; //set back in case of subsequent calls
     return this.http.delete(url, this.headers)
-      ['retryWhen']((errors) => {
+      .retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
           .delay(1000)
@@ -127,7 +130,7 @@ export class ApiHandlerService extends ApiConfig{
     const url = `${ApiHandlerService.API_BASE_URL}${path}`;
     ApiConfig.EXPECT_FILE = "blob";
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
-    const fileResponse = this.http.get(`${url}`, this.headers)['retryWhen']((errors) => {
+    const fileResponse = this.http.get(`${url}`, this.headers).retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
           .delay(1000)
