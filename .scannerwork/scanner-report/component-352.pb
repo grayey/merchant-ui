@@ -1,0 +1,1 @@
+à 2cssXhrRsrc/app/pages/dashboard/widgets/quick-info-widget/quick-info-widget.component.scss

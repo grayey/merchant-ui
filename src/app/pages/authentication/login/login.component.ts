@@ -28,6 +28,13 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private toastr: ToastrService
   ) {}
+  
+  /**
+   * 
+   */
+  public loaders = {
+    processing:false
+  }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -51,13 +58,16 @@ export class LoginComponent implements OnInit {
 
   private login(data: any) {
     const { username, password } = data;
+    this.loaders.processing = true;
     this.appService.loginUser(username, password).subscribe(
       (response) => {
         const user = response;
+        this.loaders.processing = false;
         this.authService.performLogin(user);
       },
       (err) => {
         console.log("Could not login because of wrong credentials", err);
+        this.loaders.processing = false;
         if (err.status == 400) {
           this.toastr.error("Invalid Username or Password");
         } else {

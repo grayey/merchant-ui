@@ -1,0 +1,1 @@
+« 2webX"hr5src/app/pages/components/slider/slider.component.html

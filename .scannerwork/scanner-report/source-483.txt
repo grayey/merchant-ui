@@ -1,0 +1,41 @@
+
+<div class='cardx' id="transaction_detail">
+
+    <div class='card-header'>
+
+        <div class='float-right '>
+            <button class='btn btn-secondary mt-2' id='print_button' (click)="printTransaction('transaction_detail')"> <small><mat-icon>print</mat-icon></small></button>
+
+        </div>
+    
+        <h3 id='transaction_title'><b>Transaction: </b>{{transaction?.transactionReference}}</h3>
+    </div>
+    <div class='card-body'>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Amount: </b> {{transaction?.amount | currency}}</li>
+            <li class="list-group-item"><b>Transaction Date: </b> {{transaction?.transactionDate }}</li>
+            <li class="list-group-item"><b>Transaction Status: </b> {{transaction?.transactionStatus }}</li>
+            <li class="list-group-item"><b>Transaction Fee: </b> {{transaction?.transactionFee}}</li>
+            <li class="list-group-item"><b>Merchant Name: </b> {{transaction?.merchant?.name}}</li>
+            <li class="list-group-item"><b>Merchant Number: </b> {{transaction?.merchant?.accountNumber}}</li>
+            <li class="list-group-item"><b>Merchant Due Amount: </b> {{transaction?.merchantAmountDue}}</li>
+            <li class="list-group-item"><b>Merchant Transaction Ref.: </b> {{transaction?.merchantTransactionReference}}</li>
+            <li class="list-group-item"><b>Bank: </b> {{transaction?.bank?.name}}</li>
+            <li class="list-group-item"><b>Bank Amount Due: </b> {{transaction?.bank?.bankAmountDue | number}}</li>
+            <li class="list-group-item"><b>Bank Commision: </b> {{transaction?.bankMdrCommission | number}}</li>
+            <li class="list-group-item"><b>Charge Back Date: </b> {{transaction?.chargeBackDate }}</li>
+            <li class="list-group-item"><b>Charge Back Cost: </b> {{transaction?.chargebackCost | currency}}</li>
+            <li class="list-group-item"><b>Fraud Prevention fee: </b> {{transaction?.fraudPreventionFee | number}}</li>
+            <li class="list-group-item"><b>Gateway: </b> {{transaction?.processingGateway?.name }}</li>
+            <li class="list-group-item"><b>Gateway Fee: </b> {{transaction?.processingGateway?.processingFee | number }}</li>
+            <li class="list-group-item"><b>Gateway Response: </b> {{transaction?.gatewayResponseCode }}</li>
+            <li class="list-group-item"><b>Gateway Reference: </b> {{transaction?.gatewayTransactionReference }}</li>
+            <li class="list-group-item"><b>Refund Date: </b> {{transaction?.refundDate  }}</li>
+            <li class="list-group-item"><b>Settlement Status: </b> {{transaction?.settlementStatus }}</li>
+            <li class="list-group-item"><b>Settlement Date: </b> {{transaction?.settlementDate  }}</li>
+
+          </ul>
+    </div>
+
+
+</div>

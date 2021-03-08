@@ -1,0 +1,1 @@
+ˆ 2webX$hr9src/app/pages/components/checkbox/checkbox.component.html

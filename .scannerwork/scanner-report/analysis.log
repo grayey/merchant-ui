@@ -1,0 +1,38 @@
+SonarQube plugins:
+  - Python Code Quality and Security 3.2.0.7856 (python)
+  - CSS Code Quality and Security 1.3.2.1782 (cssfamily)
+  - Go Code Quality and Security 1.8.2.1946 (go)
+  - JaCoCo 1.1.0.898 (jacoco)
+  - Kotlin Code Quality and Security 1.8.2.1946 (kotlin)
+  - JavaScript/TypeScript Code Quality and Security 7.2.0.14938 (javascript)
+  - Ruby Code Quality and Security 1.8.2.1946 (ruby)
+  - Scala Code Quality and Security 1.8.2.1946 (sonarscala)
+  - C# Code Quality and Security 8.18.0.27296 (csharp)
+  - Java Code Quality and Security 6.12.0.24852 (java)
+  - HTML Code Quality and Security 3.3.0.2534 (web)
+  - Flex Code Quality and Security 2.6.0.2294 (flex)
+  - SonarXML 2.0.1.2020 (xml)
+  - PHP Code Quality and Security 3.15.0.7197 (php)
+  - VB.NET Code Quality and Security 8.18.0.27296 (vbnet)
+Global server settings:
+  - sonar.core.id=BF41A1F2-AXgITnC9ePEz-EIRH4l_
+  - sonar.core.startTime=2021-03-06T17:10:57+0100
+  - sonar.forceAuthentication=true
+Project server settings:
+Project scanner properties:
+  - sonar.exclusions=**/node_modules/**
+  - sonar.host.url=http://localhost:9000
+  - sonar.login=******
+  - sonar.password=******
+  - sonar.projectBaseDir=C:\Users\Treal's\Projects\Front\Angular\codeIQ\merchant-portal-ui
+  - sonar.projectKey=Merchant-Portal-UI
+  - sonar.scanner.app=ScannerCli
+  - sonar.scanner.appVersion=3.1.0.1141
+  - sonar.sourceEncoding=UTF-8
+  - sonar.sources=src
+  - sonar.test.inclusions=**/*.spec.ts
+  - sonar.testExecutionReportPaths=reports/ut_report.xml
+  - sonar.tests=src
+  - sonar.typescript.lcov.reportPaths=coverage/lcov.info
+  - sonar.verbose=true
+  - sonar.working.directory=C:\Users\Treal's\Projects\Front\Angular\codeIQ\merchant-portal-ui\.scannerwork

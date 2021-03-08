@@ -1,0 +1,1 @@
+j 2cssX(hr=src/app/layout/config-panel/config-panel.component.theme.scss

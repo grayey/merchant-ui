@@ -1,0 +1,92 @@
+<testExecutions version="1">
+  <file path="src/app/pages/reports/merchant-balance/merchant-balance.component.spec.ts">
+    <testCase name="MerchantBalanceComponent should create" duration="145">
+      <failure message="Error">NullInjectorError: R3InjectorError(DynamicTestModule)[MatDialog -&gt; MatDialog]: 
+  NullInjectorError: No provider for MatDialog!
+error properties: Object({ ngTempTokenPath: null, ngTokenPath: [ 'MatDialog', 'MatDialog' ] })
+NullInjectorError: R3InjectorError(DynamicTestModule)[MatDialog -&gt; MatDialog]: 
+  NullInjectorError: No provider for MatDialog!
+    at NullInjector.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:1005:1)
+    at R3Injector.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:11512:1)
+    at R3Injector.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:11512:1)
+    at NgModuleRef$1.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:24945:1)
+    at Object.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:24652:1)
+    at lookupTokenUsingModuleInjector (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:4215:1)
+    at getOrCreateInjectable (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:4350:1)
+    at ɵɵdirectiveInject (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:15045:1)
+    at NodeInjectorFactory.MerchantBalanceComponent_Factory [as factory] (ng:///MerchantBalanceComponent/ɵfac.js:5:52)
+    at getNodeInjectable (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:4442:1)
+</failure>
+    </testCase>
+  </file>
+  <file path="src/app/pages/reports/success-failure-rate/success-failure-rate.component.spec.ts">
+    <testCase name="SuccessFailureRateComponent should create" duration="579">
+      <failure message="Error">NullInjectorError: R3InjectorError(DynamicTestModule)[MatDialog -&gt; MatDialog]: 
+  NullInjectorError: No provider for MatDialog!
+error properties: Object({ ngTempTokenPath: null, ngTokenPath: [ 'MatDialog', 'MatDialog' ] })
+NullInjectorError: R3InjectorError(DynamicTestModule)[MatDialog -&gt; MatDialog]: 
+  NullInjectorError: No provider for MatDialog!
+    at NullInjector.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:1005:1)
+    at R3Injector.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:11512:1)
+    at R3Injector.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:11512:1)
+    at NgModuleRef$1.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:24945:1)
+    at Object.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:24652:1)
+    at lookupTokenUsingModuleInjector (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:4215:1)
+    at getOrCreateInjectable (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:4350:1)
+    at ɵɵdirectiveInject (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:15045:1)
+    at NodeInjectorFactory.SuccessFailureRateComponent_Factory [as factory] (ng:///SuccessFailureRateComponent/ɵfac.js:5:55)
+    at getNodeInjectable (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:4442:1)
+
+Error: Expected undefined to be truthy.
+    at &lt;Jasmine&gt;
+    at UserContext.&lt;anonymous&gt; (src/app/pages/reports/success-failure-rate/success-failure-rate.component.spec.ts:23:23)
+    at ZoneDelegate.invoke (node_modules/zone.js/dist/zone-evergreen.js:364:1)
+    at ProxyZoneSpec.push.tWgn.ProxyZoneSpec.onInvoke (node_modules/zone.js/dist/proxy.js:117:1)
+</failure>
+    </testCase>
+  </file>
+  <file path="src/app/pages/page-layouts/components/page-layout-content/page-layout-demo-content.component.spec.ts">
+    <testCase name="PageLayoutContentComponent should create" duration="40"/>
+  </file>
+  <file path="src/app/pages/page-layouts/page-layout-simple/page-layout-simple.component.spec.ts">
+    <testCase name="PageLayoutSimpleComponent should create" duration="16"/>
+  </file>
+  <file path="src/app/pages/page-layouts/page-layout-simple-tabbed/page-layout-simple-tabbed.component.spec.ts">
+    <testCase name="PageLayoutSimpleTabbedComponent should create" duration="27"/>
+  </file>
+  <file path="src/@fury/shared/list/list.component.spec.ts">
+    <testCase name="ListComponent should create" duration="91"/>
+  </file>
+  <file path="src/app/pages/page-layouts/page-layout-card/page-layout-card.component.spec.ts">
+    <testCase name="PageLayoutCardComponent should create" duration="21"/>
+  </file>
+  <file path="src/@fury/shared/list/list.component.spec.ts">
+    <testCase name="ListComponent should create" duration="102">
+      <failure message="Error">NullInjectorError: R3InjectorError(DynamicTestModule)[FormBuilder -&gt; FormBuilder]: 
+  NullInjectorError: No provider for FormBuilder!
+error properties: Object({ ngTempTokenPath: null, ngTokenPath: [ 'FormBuilder', 'FormBuilder' ] })
+NullInjectorError: R3InjectorError(DynamicTestModule)[FormBuilder -&gt; FormBuilder]: 
+  NullInjectorError: No provider for FormBuilder!
+    at NullInjector.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:1005:1)
+    at R3Injector.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:11512:1)
+    at R3Injector.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:11512:1)
+    at NgModuleRef$1.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:24945:1)
+    at Object.get (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:24652:1)
+    at lookupTokenUsingModuleInjector (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:4215:1)
+    at getOrCreateInjectable (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:4350:1)
+    at ɵɵdirectiveInject (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:15045:1)
+    at NodeInjectorFactory.FilterDropdownComponent_Factory [as factory] (ng:///FilterDropdownComponent/ɵfac.js:5:51)
+    at getNodeInjectable (node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js:4442:1)
+
+Error: Expected undefined to be truthy.
+    at &lt;Jasmine&gt;
+    at UserContext.&lt;anonymous&gt; (src/@fury/shared/filter-dropdown/filter-dropdown.component.spec.ts:24:23)
+    at ZoneDelegate.invoke (node_modules/zone.js/dist/zone-evergreen.js:364:1)
+    at ProxyZoneSpec.push.tWgn.ProxyZoneSpec.onInvoke (node_modules/zone.js/dist/proxy.js:117:1)
+</failure>
+    </testCase>
+  </file>
+  <file path="src/app/pages/page-layouts/page-layout-card-tabbed/page-layout-card-tabbed.component.spec.ts">
+    <testCase name="PageLayoutCardTabbedComponent should create" duration="35"/>
+  </file>
+</testExecutions>

@@ -1,0 +1,48 @@
+@import "var";
+
+:host {
+  background: url('/assets/img/backgrounds/form-wizard.jpg');
+  background-size: cover;
+  display: block;
+}
+
+.title {
+  color: white;
+}
+
+.card {
+  margin: $spacing;
+  max-width: 100%;
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  @include mat-elevation(10);
+
+  .heading {
+    font: var(--font-title);
+  }
+
+  .subheading {
+    font: var(--font-subheading-1);
+  }
+
+  .content {
+    margin: $spacing/2 0;
+
+    .checkbox {
+      margin-top: $spacing/2;
+    }
+  }
+
+  .actions {
+    margin-top: $spacing;
+    padding: $spacing $spacing/3 0;
+  }
+}
+
+.copyright {
+  position: absolute;
+  bottom: $spacing;
+  right: $spacing;
+  color: white;
+}

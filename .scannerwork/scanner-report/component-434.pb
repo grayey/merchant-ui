@@ -1,0 +1,1 @@
+² 2cssXhr]src/app/pages/page-layouts/page-layout-simple-tabbed/page-layout-simple-tabbed.component.scss

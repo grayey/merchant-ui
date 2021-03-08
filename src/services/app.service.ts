@@ -52,7 +52,8 @@ export class AppService {
     const url = `user/${urlParams}`;
     return this.apiHandler.get(url);
   }
-
+  
+  //0bsolete
   getUploads_old(pageNumber, pageSize, filterData): any {
     const { type, status } = filterData;
     return this.http.get(
@@ -75,6 +76,7 @@ export class AppService {
     return this.apiHandler.get(url);
   }
 
+  //0bsolete
   getUploadTypes_old(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/upload-request/types`, {
       headers: {
@@ -98,13 +100,18 @@ export class AppService {
     });
   }
 
-  getMerchants(): any {
+  //0bsolete
+  getMerchants_old(): any {
     return this.http.get(this.appBaseUrl + `/api/v1/merchant`, {
       headers: {
         Authorization: this.getToken(),
         "Content-Type": "application/json",
       },
     });
+  }
+  
+  getMerchants(): Observable<any> {
+    return this.apiHandler.get('merchant');
   }
 
   getUserTypes(): any {

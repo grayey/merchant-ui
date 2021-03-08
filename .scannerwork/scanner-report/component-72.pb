@@ -1,0 +1,1 @@
+H 2cssX(hr5src/@fury/shared/sidebar/sidebar.directive.theme.scss

@@ -1,0 +1,1 @@
+Ì 2cssXhrGsrc/app/pages/apps/inbox/inbox-mail-star/inbox-mail-star.component.scss

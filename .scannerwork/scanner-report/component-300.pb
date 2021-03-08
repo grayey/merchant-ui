@@ -1,0 +1,1 @@
+¬ 2cssXhr5src/app/pages/components/slider/slider.component.scss

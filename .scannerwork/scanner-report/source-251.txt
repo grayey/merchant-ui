@@ -1,0 +1,87 @@
+@import "var";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+  background: #fff url('/assets/img/backgrounds/editor.jpg');
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.card {
+  border-radius: $border-radius;
+  width: 380px;
+  max-width: 100%;
+  text-align: center;
+  overflow: hidden;
+  @include mat-elevation(8);
+}
+
+.card-content {
+  padding: $spacing;
+}
+
+.card-footer {
+  padding: $spacing;
+}
+
+.logo {
+  margin: $spacing 0;
+
+  svg {
+    height: 80px;
+    width: 80px;
+  }
+}
+
+.socials {
+  $color-facebook: #3b5998;
+  $color-twitter: #00aced;
+  $color-instagram: #cd486b;
+  $color-pinterest: #C92228;
+  $color-github: #000;
+
+  .social {
+    cursor: pointer;
+
+    & + .social {
+      margin-left: 12px;
+    }
+
+    &.facebook {
+      color: $color-facebook;
+    }
+
+    &.twitter {
+      color: $color-twitter;
+    }
+
+    &.instagram {
+      color: $color-instagram;
+    }
+
+    &.pinterest {
+      color: $color-pinterest;
+    }
+
+    &.github {
+      color: $color-github;
+    }
+  }
+}
+
+h1 {
+  font: var(--font-display-1);
+  font-weight: 500;
+  margin: $spacing 0 0;
+}
+
+p {
+  font: var(--font-body-2);
+  margin: 0 0 $spacing;
+}

@@ -1,0 +1,1 @@
+- 2tsXChr'src/@fury/shared/list/list.component.ts

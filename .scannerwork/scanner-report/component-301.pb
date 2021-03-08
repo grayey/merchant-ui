@@ -1,0 +1,1 @@
+­ 2tsXhr3src/app/pages/components/slider/slider.component.ts

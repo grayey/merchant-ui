@@ -1,0 +1,1 @@
+Ö 2tsXÖhrDsrc/app/pages/settlements/settlements/settlements-table.component.ts

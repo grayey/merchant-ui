@@ -1,0 +1,1 @@
+í 2cssXhr:src/app/pages/uploads/uploads/uploads-table.component.scss

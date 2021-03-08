@@ -1,0 +1,1 @@
+* 2webXKhr)src/@fury/shared/list/list.component.html

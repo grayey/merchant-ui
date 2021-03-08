@@ -1,0 +1,1 @@
+{ 2cssX	hr3src/app/layout/navigation/navigation.component.scss

@@ -1,0 +1,1 @@
+€ 2cssX4hr3src/app/layout/quickpanel/quickpanel.component.scss

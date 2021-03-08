@@ -136,7 +136,14 @@ const routes: Routes = [
           import(
             "./pages/charge-backs/charge-backs/charge-backs-table.module"
           ).then((m) => m.ChargeBacksTableModule),
-      },      
+      },   
+      {
+        path: "merchants",
+        loadChildren: () =>
+          import(
+            "./pages/merchants/merchants.module"
+          ).then((m) => m.MerchantsModule),
+      },    
       {
         path: "reports",
         loadChildren: () =>

@@ -1,0 +1,1 @@
+ 2webX‹hr3src/app/layout/quickpanel/quickpanel.component.html

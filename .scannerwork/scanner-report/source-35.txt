@@ -1,0 +1,206 @@
+<div class="row">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block" #myDrop="ngbDropdown" autoClose="false">
+      <button
+        class="btn btn-outline-primary"
+        id="dropdownForm1"
+        ngbDropdownToggle
+      >
+        Filter
+      </button>
+      <div
+        ngbDropdownMenu
+        aria-labelledby="dropdownForm1"
+        class="filter-dropdown"
+      >
+        <form
+          class="px-4 py-3"
+          [formGroup]="form"
+          (ngSubmit)="onSubmit(); myDrop.close()"
+        >
+          <div class="form-group" *ngIf="startDate">
+            <label>Start Date</label>
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="dp"
+                formControlName="startDate"
+                ngbDatepicker
+                #d="ngbDatepicker"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="d.toggle()"
+                  type="button"
+                ></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="endDate">
+            <label>End Date</label>
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="dp"
+                formControlName="endDate"
+                ngbDatepicker
+                #d2="ngbDatepicker"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="d2.toggle()"
+                  type="button"
+                ></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="fullName">
+            <label for="fullName">Full Name</label>
+            <input
+              formControlName="fullName"
+              type="text"
+              class="form-control"
+              id="fullName"
+              placeholder=""
+            />
+          </div>
+          <div class="form-group" *ngIf="username">
+            <label for="username">Username</label>
+            <input
+              formControlName="username"
+              type="text"
+              class="form-control"
+              id="username"
+              placeholder=""
+            />
+          </div>
+          <div class="form-group" *ngIf="gatewayTransactionReference">
+            <label for="gatewayTransactionReference"
+              >Gateway Transaction Reference</label
+            >
+            <input
+              formControlName="gatewayTransactionReference"
+              type="text"
+              class="form-control"
+              id="gatewayTransactionReference"
+              placeholder=""
+            />
+          </div>
+          <!-- TransactionDate -->
+
+          <div class="form-group" *ngIf="transactionStatus">
+            <label>Transaction Status</label>
+            <div class="select-dropdown">
+              <select
+                name="transactionStatus"
+                id="transactionStatus"
+                formControlName="transactionStatus"
+              >
+                <option value="FAILED">FAILED</option>
+                <option value="SUCCESSFUL">SUCCESSFUL</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="merchantId">
+            <label>Merchant</label>
+            <div class="select-dropdown">
+              <select
+                name="merchantId"
+                id="merchantId"
+                formControlName="merchantId"
+              >
+                <option
+                  *ngFor="let merchant of merchants"
+                  [value]="merchant.merchantId"
+                >
+                  {{ merchant.merchantName }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="reportType">
+            <label>Report Type</label>
+            <div class="select-dropdown">
+              <select
+                name="reportType"
+                id="reportType"
+                formControlName="reportType"
+              >
+                <option *ngFor="let type of reportTypes" [value]="type.key">
+                  {{ type.value }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="amount">
+            <label for="amount">Amount</label>
+            <input
+              formControlName="amount"
+              type="number"
+              class="form-control"
+              id="amount"
+              placeholder=""
+            />
+          </div>
+
+          <div class="form-group" *ngIf="merchantTransactionReference">
+            <label for="merchantTransactionReference"
+              >Merchant Transaction Reference</label
+            >
+            <input
+              formControlName="merchantTransactionReference"
+              type="text"
+              class="form-control"
+              id="merchantTransactionReference"
+              placeholder=""
+            />
+          </div>
+
+          <div class="form-group" *ngIf="showType">
+            <label>Type</label>
+            <div class="select-dropdown">
+              <select name="types" id="types" formControlName="type">
+                <option *ngFor="let type of types" [value]="type.name">
+                  {{ type.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="showStatus">
+            <label>Status</label>
+            <div class="select-dropdown">
+              <select name="cars" id="statuses" formControlName="status">
+                <option
+                  *ngFor="let status of uploadStatuses"
+                  [value]="status.key"
+                >
+                  {{ status.value }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            (click)="clearFilterFields()"
+            class="btn btn-secondary float-left"
+          >
+            Clear
+          </button>
+          <button type="submit" class="btn btn-primary float-right">
+            Filter
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

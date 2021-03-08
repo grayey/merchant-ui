@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+
+.logo-img {
+  width: 200px;
+  height: 200px;
+}
+
+.login-header {
+  padding: 0 !important;
+}
+
+@import "./@fury/styles/core";
+@import "./app/app.theme";
+@import "~ngx-toastr/toastr";
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+// @import "../node_modules/bootstrap/scss/bootstrap";
+
+.dialog-sm {
+  max-width: 300px;
+}
+.dialog-lg {
+  max-width: 900px;
+  min-width: 700px;
+  overflow-y: scroll !important;
+  // margin-top: -20%;
+
+  
+}
+.dialog-c{
+}
+
+@media (min-width: 768px) {
+  .dialog-dialog {
+    margin: 30px auto;
+  }
+}
+@media (min-width: 320px) {
+  .dialog-sm {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+@media (min-width: 620px) {
+  .dialog-dialog {
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .dialog-lg {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
+@media (min-width: 920px) {
+  .dialog-lg {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

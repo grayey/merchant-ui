@@ -64,7 +64,7 @@ export class AppComponent {
         icon: "assignment",
         // badge: "22",
         badgeColor: "#2196F3",
-        position: 15,
+        position: 1,
       },
       {
         name: "Users",
@@ -72,7 +72,15 @@ export class AppComponent {
         icon: "supervisor_account",
         // badge: "22",
         badgeColor: "#2196F3",
-        position: 15,
+        position: 2,
+      },
+      {
+        name: "Merchants",
+        routeOrFunction: "/merchants",
+        icon: "supervisor_account",
+        // badge: "22",
+        badgeColor: "#2196F3",
+        position: 3,
       },
       {
         name: "Uploads",
@@ -80,7 +88,7 @@ export class AppComponent {
         icon: "upload_file",
         // badge: "22",
         badgeColor: "#2196F3",
-        position: 15,
+        position: 4,
       },
       {
         name: "Settlements",
@@ -88,7 +96,7 @@ export class AppComponent {
         icon: "credit_card",
         // badge: "22",
         badgeColor: "#2196F3",
-        position: 15,
+        position: 5,
       },
       {
         name: "Charge Backs",
@@ -96,7 +104,7 @@ export class AppComponent {
         icon: "credit_card_off",
         // badge: "22",
         badgeColor: "#2196F3",
-        position: 15,
+        position: 6,
       },
       {
         name: "Refunds",
@@ -104,12 +112,12 @@ export class AppComponent {
         icon: "credit_card_off",
         // badge: "22",
         badgeColor: "#2196F3",
-        position: 16,
+        position: 7,
       },
       {
         name: "Reports",
         icon: "account_balance",
-        position: 45,
+        position: 8,
         subItems: [
           {
             name: "Platform Cost",

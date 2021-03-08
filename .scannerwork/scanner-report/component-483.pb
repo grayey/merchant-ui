@@ -1,0 +1,1 @@
+ã 2webX)hrMsrc/app/pages/transactions/transactions-table/view-transaction.component.html

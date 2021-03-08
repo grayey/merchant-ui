@@ -1,0 +1,16 @@
+<fury-page-layout class="editor" fxLayout="column" mode="card">
+  <fury-page-layout-header>
+    <fury-breadcrumbs current="WYSIWYG Editor"></fury-breadcrumbs>
+  </fury-page-layout-header>
+
+  <fury-page-layout-content fxFlex="auto" fxLayout="column">
+    <quill-editor [@fadeInUp]
+                  [formControl]="form"
+                  [styles]="{ flex: '1 1 auto' }"
+                  class="quill card mat-elevation-z16"
+                  fxFlex="auto"
+                  fxLayout="column"></quill-editor>
+  </fury-page-layout-content>
+</fury-page-layout>
+
+

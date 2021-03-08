@@ -1,0 +1,1 @@
+f 2cssX	hrRsrc/app/layout/config-panel/config-panel-toggle/config-panel-toggle.component.scss

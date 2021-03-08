@@ -1,0 +1,1 @@
+I 2tsXYhr-src/@fury/shared/sidebar/sidebar.directive.ts

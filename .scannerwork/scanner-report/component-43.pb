@@ -1,0 +1,1 @@
++ 2cssXXhr)src/@fury/shared/list/list.component.scss

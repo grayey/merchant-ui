@@ -1,0 +1,1 @@
+Ä 2cssXhr@src/app/pages/reports/platform-cost/platform-cost.component.scss

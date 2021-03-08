@@ -1,0 +1,1 @@
+é 2tsXhr8src/app/pages/authentication/register/register.module.ts

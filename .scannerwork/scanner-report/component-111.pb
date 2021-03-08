@@ -1,0 +1,1 @@
+o 2cssX	hr1src/app/layout/footer/footer.component.theme.scss

@@ -1,0 +1,1 @@
+à 2cssXhrOsrc/app/pages/transactions/transactions-table/transactions-table.component.scss

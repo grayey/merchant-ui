@@ -1,0 +1,1 @@
+± 2webXhr]src/app/pages/page-layouts/page-layout-simple-tabbed/page-layout-simple-tabbed.component.html

@@ -1,0 +1,1 @@
+­ 2cssXhrOsrc/app/pages/page-layouts/page-layout-simple/page-layout-simple.component.scss

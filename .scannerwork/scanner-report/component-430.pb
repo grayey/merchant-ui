@@ -1,0 +1,1 @@
+® 2tsXhrMsrc/app/pages/page-layouts/page-layout-simple/page-layout-simple.component.ts

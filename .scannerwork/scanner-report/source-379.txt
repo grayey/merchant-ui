@@ -1,0 +1,13 @@
+@import "var";
+
+.page {
+  padding: $padding;
+}
+
+.task {
+  height: 48px;
+  padding: 0 16px;
+  cursor: pointer;
+  display: flex;
+}
+
