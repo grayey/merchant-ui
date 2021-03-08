@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/operators/map';
-import 'rxjs/operators/retryWhen';
-import 'rxjs/operators/delay';
-import 'rxjs/operators/take';
 import { ApiConfig } from '../utils/config';
 import { UserService } from './user/user.service';
 import { environment } from '../environments/environment';
+import { map, retryWhen, delay, take, catchError } from "rxjs/operators";
 
 
 @Injectable()
@@ -31,14 +28,20 @@ export class ApiHandlerService extends ApiConfig{
   public get(path: string, paginator?): Observable<any> {
     const url = `${ApiHandlerService.API_BASE_URL}${path}`;
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
-    return this.http.get(`${url}`, this.headers).retryWhen((errors) => {
+    return this.http.get(`${url}`, this.headers).pipe(
+      retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
           .delay(1000)
           .take(2);
       })
-      .catch(this.errorHandler)
-      .map((res) => res['body']);
+    ).pipe(
+      catchError(this.errorHandler)
+    ).pipe(
+      map((res) => {
+        return res['body'];
+      })
+      )
   }
 
 
@@ -50,24 +53,40 @@ export class ApiHandlerService extends ApiConfig{
    * @returns {Observable<R>}
    */
   public post(path: string, data?: any): Observable<any> {
-
     const url = `${ApiHandlerService.API_BASE_URL}${path}`;
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
-    return this.http.post(url, data || {}, this.headers)
-      .retryWhen((errors) => {
+    return this.http.post(url, data || {}, this.headers).pipe(
+      retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
           .delay(1000)
           .take(2);
       })
-      .catch(this.errorHandler)
-      .map((res) => {
+    ).pipe(
+      catchError(this.errorHandler)
+    ).pipe(
+      map((res) => {
         const X_JWT_TOKEN = res['headers'].get('x-jwt-token');
         if(X_JWT_TOKEN){
           localStorage.setItem('X_JWT_TOKEN', X_JWT_TOKEN)
         }
         return res['body'];
-      });
+      })
+    )
+      // retryWhen((errors) => {
+      //   return errors
+      //     .mergeMap((error) => this.errorHandler(error))
+      //     .delay(1000)
+      //     .take(2);
+      // })
+      // .catch(this.errorHandler)
+      // .map((res) => {
+      //   const X_JWT_TOKEN = res['headers'].get('x-jwt-token');
+      //   if(X_JWT_TOKEN){
+      //     localStorage.setItem('X_JWT_TOKEN', X_JWT_TOKEN)
+      //   }
+      //   return res['body'];
+      // })
   }
 
 
@@ -83,15 +102,20 @@ export class ApiHandlerService extends ApiConfig{
   public put(path: string, data?: Object): Observable<any> {
     const url = `${ApiHandlerService.API_BASE_URL}${path}`;
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
-    return this.http.put(url, (data || {}) || {}, this.headers)
-      .retryWhen((errors) => {
+    return this.http.put(url, (data || {}) || {}, this.headers).pipe(
+      retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
           .delay(1000)
           .take(2);
       })
-      .catch(this.errorHandler)
-      .map((res) => res['body']);
+    ).pipe(
+      catchError(this.errorHandler)
+    ).pipe(
+      map((res) => {
+        return res['body'];
+      })
+      )
   }
 
 

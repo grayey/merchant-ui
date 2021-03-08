@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
     this.appService.loginUser(username, password).subscribe(
       (response) => {
         const user = response;
-        this.loaders.processing = false;
+        // this.loaders.processing = false;
         this.authService.performLogin(user);
       },
       (err) => {
