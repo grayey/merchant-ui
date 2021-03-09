@@ -23,6 +23,7 @@ import { ApiInterceptorService } from "../services/api-interceptor.service";
 import { ReportsService } from "../services/reports/reports.service";
 import { ToastrModule } from "ngx-toastr";
 import { UserService } from "../services/user/user.service";
+import { MerchantService } from "src/services/merchant/merchant.service";
 
 @NgModule({
   imports: [
@@ -76,6 +77,7 @@ import { UserService } from "../services/user/user.service";
     ApiHandlerService,
     UserService,
     ReportsService,
+    MerchantService,
 
   ],
 })

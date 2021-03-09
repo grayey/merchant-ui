@@ -10,7 +10,7 @@
         <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
           <mat-step [stepControl]="merchantDetailsForm">
             <form [formGroup]="merchantDetailsForm">
-              <ng-template matStepLabel>Merchant Details</ng-template>
+              <ng-template matStepLabel>General</ng-template>
 
               <div class="content" fxLayout="column" fxLayoutGap="8px">
 
@@ -71,7 +71,7 @@
                       <mat-form-field fxFlex="2 1 auto">
                         <mat-label>Currency</mat-label>
                         <input formControlName="currency" matInput>
-                        <mat-hint align="end">How old is the business?</mat-hint>
+                        <mat-hint align="end"></mat-hint>
                       </mat-form-field>
                  </div>
 
@@ -85,13 +85,13 @@
                       <mat-form-field fxFlex="2 1 auto">
                         <mat-label>Call Back Url</mat-label>
                         <input formControlName="callbackUrl" matInput>
-                        <mat-hint align="end">How old is the business?</mat-hint>
+                        <mat-hint align="end"></mat-hint>
                       </mat-form-field>
                  </div>
               </div>
   
               <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-                <button (click)="stepper.reset()" [disabled]="merchantDetailsForm.pristine" color="primary" mat-button
+                <button (click)="stepper.reset()" *ngIf="!merchantRegistered" [disabled]="merchantDetailsForm.pristine" color="primary" mat-button
                         type="button">RESET
                 </button>
                 <button [disabled]="merchantDetailsForm.invalid" color="primary" mat-raised-button matStepperNext>NEXT
@@ -104,7 +104,7 @@
 
           <mat-step [stepControl]="merchantContactForm">
             <form [formGroup]="merchantContactForm">
-              <ng-template matStepLabel>Contact Info</ng-template>
+              <ng-template matStepLabel>Contact</ng-template>
 
   
               <div class="content" fxLayout="column" fxLayoutGap="8px">
@@ -194,26 +194,26 @@
              
   
               <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-                <button (click)="stepper.reset()" [disabled]="merchantContactForm.pristine" color="primary" mat-button
+                <button (click)="stepper.reset()" *ngIf="!merchantRegistered" [disabled]="merchantContactForm.pristine" color="primary" mat-button
                         type="button">RESET
                 </button>
-                <button [disabled]="merchantContactForm.invalid" color="primary" mat-raised-button matStepperNext>NEXT
+                <button class='d-none' id='register-merchant' matStepperNext></button>
+                <button [disabled]="merchantContactForm.invalid || loaders?.registering" color="primary" mat-raised-button (click)="registerMerchant()">NEXT <small class='loader' *ngIf="loaders?.registering"></small>
                 </button>
               </div>
             </form>
           </mat-step>
   
-          <!-- <mat-step [stepControl]="passwordFormGroup">
-            <form [formGroup]="passwordFormGroup">
+          <mat-step [stepControl]="OTPForm">
+            <form [formGroup]="OTPForm">
               <ng-template matStepLabel>OTP</ng-template>
-  
-              <div class="heading">Select a Password</div>
-              <div class="subheading">Enter your password you will use to log in.</div>
+
+              <div class="subheading">Enter the OTP that was just sent to you.</div>
   
               <div class="content" fxLayout="column" fxLayoutGap="8px">
                 <mat-form-field fxFlex="auto">
-                  <mat-label>Password</mat-label>
-                  <input [type]="passwordInputType" formControlName="password" matInput required>
+                  <mat-label>OTP</mat-label>
+                  <input [type]="passwordInputType" formControlName="otp" matInput required>
                   <button (click)="showPassword()" *ngIf="passwordInputType === 'password'" mat-icon-button matSuffix
                           type="button">
                     <mat-icon>visibility</mat-icon>
@@ -222,10 +222,10 @@
                           type="button">
                     <mat-icon>visibility_off</mat-icon>
                   </button>
-                  <mat-hint>Your password should be atleast 6 characters long.</mat-hint>
+                  <mat-hint>Your OTP should be at least 6 characters long.</mat-hint>
                 </mat-form-field>
   
-                <mat-form-field fxFlex="auto">
+                <!-- <mat-form-field fxFlex="auto">
                   <mat-label>Confirm Password</mat-label>
                   <input [type]="passwordInputType" formControlName="passwordConfirm" matInput required>
                   <button (click)="showPassword()" *ngIf="passwordInputType === 'password'" mat-icon-button matSuffix
@@ -237,42 +237,106 @@
                     <mat-icon>visibility_off</mat-icon>
                   </button>
                   <mat-hint>Please type in your password again.</mat-hint>
-                </mat-form-field>
+                </mat-form-field> -->
               </div>
   
               <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                <button class='d-none' matStepperNext id='verify-registration'></button>
                 <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
-                <button [disabled]="passwordFormGroup.invalid" color="primary" mat-raised-button matStepperNext>NEXT
+                <button [disabled]="OTPForm.invalid || loaders?.verifying" color="primary" mat-raised-button (click)="verifyRegistration()">NEXT 
+                  <small class='loader' *ngIf="loaders?.verifying"></small>
                 </button>
               </div>
             </form>
           </mat-step>
   
-          <mat-step [stepControl]="confirmFormGroup">
-            <form [formGroup]="confirmFormGroup">
-              <ng-template matStepLabel>Preview</ng-template>
-  
-              <div class="heading">You're almost there!</div>
-              <div class="subheading">To finish registration, accept our terms of service and click on "Create Account".
+          <mat-step [stepControl]="previewForm">
+            <form [formGroup]="previewForm">
+              <ng-template matStepLabel>Preview | Finish</ng-template>
+
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <div class='row'>
+                      <div class='col-md-6'>
+                        <b>Company: </b> {{previewData?.companyName}} 
+                      </div>
+                      <div class='col-md-6'>
+                        <b>Business Category: </b> {{previewData?.businessCategoryName}} 
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="list-group-item">
+                    <div class='row'>
+                      <div class='col-md-6'>
+                        <b>Bank: </b> {{previewData?.bankName}} 
+                      </div>
+                      <div class='col-md-6'>
+                        <b>Account Number: </b> {{previewData?.accountNumber}} 
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="list-group-item">
+                    <div class='row'>
+                      <div class='col-md-6'>
+                        <b>AG: </b> {{previewData?.agid}} 
+                      </div>
+                      <div class='col-md-6'>
+                        <b>Age of Business: </b> {{previewData?.businessYears}} 
+                      </div>
+                    </div>
+                  </li>
+
+                  
+                  <li class="list-group-item">
+                    <div class='row'>
+                      <div class='col-md-6'>
+                        <b>Region: </b> {{previewData?.region}} 
+                      </div>
+                      <div class='col-md-6'>
+                        <b>Currency </b> {{previewData?.currency}} 
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="list-group-item">
+                    <div class='row'>
+                      <div class='col-md-6'>
+                        <b>Code: </b> {{previewData?.merchantCode}} 
+                      </div>
+                      <div class='col-md-6'>
+                        <b>Call Back Url </b> {{previewData?.callbackUrl}} 
+                      </div>
+                    </div>
+                  </li>
+
+                  </ul>
+      
+              </div>
+
+              <hr/>
+              <div class="subheading mt-3 mb-3">To finish merchant set-up, "Authorize" and click on "Create Merchant".
               </div>
   
               <div class="content" fxLayout="column" fxLayoutGap="8px">
-                <mat-checkbox class="checkbox" formControlName="terms">
-                  I agree to the terms of service and the usual stuff. *
+                <mat-checkbox class="checkbox" formControlName="authorize">
+                  Authorize.
                 </mat-checkbox>
               </div>
   
               <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
                 <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
-                <button (click)="submit()" [disabled]="confirmFormGroup.invalid" color="primary" mat-raised-button
+                <button (click)="submit()" [disabled]="previewForm.invalid" color="primary" mat-raised-button
                         matStepperNext>
-                  CREATE ACCOUNT
+                  Create Merchant
                 </button>
               </div>
             </form>
   
           </mat-step>
-           -->
+          
         </mat-horizontal-stepper>
       </div>
 
