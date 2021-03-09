@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MerchantComponent } from './merchant.component';
 import { MerchantUpdateComponent } from './merchant-update.component';
 import { MerchantCreateComponent } from './merchant-create.component';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BreadcrumbsModule } from "src/@fury/shared/breadcrumbs/breadcrumbs.module";
 import { ListModule } from "src/@fury/shared/list/list.module";
 import { MaterialModule } from "src/@fury/shared/material-components.module";
@@ -22,6 +22,7 @@ import { MERCHANTS_ROUTES } from './merchants.routing';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     FurySharedModule,
     MatPaginatorModule,

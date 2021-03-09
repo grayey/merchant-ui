@@ -47,30 +47,50 @@ export class MerchantComponent implements OnInit {
        isModelProperty: true,
      },
      {
-       name: "Code",
-       property: "code",
+      name: "Email",
+      property: "email",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Mobile",
+      property: "mobile",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Bank",
+      property: "bankName",
+      visible: true,
+      isModelProperty: true,
+    },
+     {
+       name: "Account No.",
+       property: "accountNumber",
        visible: true,
        isModelProperty: true,
      },
-    //  {
-    //    name: "Status",
-    //    property: "activeStatus",
-    //    visible: true,
-    //    isModelProperty: true,
-    //  },
-     // {
-     //   name: "Zipcode",
-     //   property: "zipcode",
-     //   visible: true,
-     //   isModelProperty: true,
-     // },
-     // { name: "City", property: "city", visible: true, isModelProperty: true },
-     // {
-     //   name: "Phone",
-     //   property: "phoneNumber",
-     //   visible: true,
-     //   isModelProperty: true,
-     // },
+     {
+       name: "Category",
+       property: "businessCategoryName",
+       visible: true,
+       isModelProperty: true,
+     },
+     {
+      name: "Gateway",
+      property: "processingGatewayName",
+      visible: true,
+      isModelProperty: true,
+    },
+     {
+       name: "Country",
+       property: "countryName",
+       visible: false,
+       isModelProperty: true,
+     },
+     { name: "City", property: "city", visible: false, isModelProperty: true },
+     { name: "Date Created", property: "dateCreated", visible: false, isModelProperty: true },
+   
      { name: "Actions", property: "actions", visible: true },
    ] as ListColumn[];
    pageSize = 10;
@@ -103,6 +123,21 @@ export class MerchantComponent implements OnInit {
   
      this.setFilterData();
      this.getMerchants();
+
+// accountNumber: "1234567890"
+// bankName: "Access Bank Plc"
+// businessCategoryName: "General Merchant"
+// city: "NY"
+// code: "b45df525-d976-44f3-ab19-bd09feb0643a"
+// countryName: "US"
+// dateCreated: "2021-01-15T17:48:00.000+0000"
+// developerEmail: null
+// developerMobile: null
+// email: "oo@codeiq.ng"
+// merchantId: 1
+// merchantName: "UK Merchant"
+// mobile: "2348026966835"
+// processingGatewayName: "Access Bank CyberSource Gateway"
    }
  
    ngAfterViewInit() {
