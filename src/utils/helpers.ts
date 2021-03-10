@@ -71,6 +71,21 @@ export const getToday = () =>{
 
 }
 
+export const processErrors = (error): string => {
+  let errorBody = '';
+  const errors = error['error']['error_description'] || error['error']['error'];
+  if (errors) {
+    for (const key in errors) {
+      errorBody += errors[key].toString();
+    }
+  } else if (error['error']['message']) {
+    errorBody = error['error']['error_description'] || error['error']['message'];
+  } else if (error['message']) {
+    errorBody = error['error_description'] || error['message'];
+  }
+  return errorBody;
+}
+
 
 
 /**

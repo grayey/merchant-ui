@@ -6,6 +6,8 @@ import { ToastrService } from "ngx-toastr";
 import { AppService } from "src/services/app.service";
 import { AuthService } from "src/services/auth.service";
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
+import {  processErrors } from 'src/utils/helpers';
+
 
 @Component({
   selector: "fury-login",
@@ -68,11 +70,12 @@ export class LoginComponent implements OnInit {
       (err) => {
         console.log("Could not login because of wrong credentials", err);
         this.loaders.processing = false;
-        if (err.status == 400) {
-          this.toastr.error("Invalid Username or Password");
-        } else {
-          this.toastr.error("Sorry something went wrong");
-        }
+        this.toastr.error(processErrors(err));
+        // if (err.status == 400) {
+        //   this.toastr.error("Invalid Username or Password");
+        // } else {
+        //   this.toastr.error("Sorry something went wrong");
+        // }
       },
       () => {
         // console.log('save enrolle call completed!');

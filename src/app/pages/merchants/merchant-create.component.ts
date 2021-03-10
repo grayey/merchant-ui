@@ -7,7 +7,9 @@ import { fadeInUpAnimation } from 'src/@fury/animations/fade-in-up.animation';
 import { MerchantService } from 'src/services/merchant/merchant.service';
 import { AppService } from 'src/services/app.service';
 import { IMerchantFeeInfo, IMerchantProcessingGatewayAppInfo, IMerchantUser } from "src/interfaces/merchant.interface";
-import { getToday } from 'src/utils/helpers';
+import { getToday, processErrors } from 'src/utils/helpers';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -46,7 +48,8 @@ export class MerchantCreateComponent implements OnInit {
 
   public loaders = {
     registering:false,
-    verifying:false
+    verifying:false,
+    creating:false
   }
 
 
@@ -162,7 +165,9 @@ export class MerchantCreateComponent implements OnInit {
               private cd: ChangeDetectorRef,
               private snackbar: MatSnackBar,
               private merchantService: MerchantService,
-              private appService: AppService) {
+              private appService: AppService,
+              private toastr: ToastrService,
+              private router: Router) {
                 this.merchantDetailsForm = this.fb.group(MerchantCreateComponent.merchantDetailsForm())
                 this.merchantContactForm = this.fb.group(MerchantCreateComponent.merchantContactForm())
                 this.OTPForm = this.fb.group(MerchantCreateComponent.OTPForm());
@@ -220,13 +225,14 @@ export class MerchantCreateComponent implements OnInit {
        this.loaders.registering = false;
         this.merchantRegistered = true;
         document.getElementById('register-merchant').click();
-        
-        
+        this.toastr.success('Please enter the OTP sent to you.')
         console.log({ registrationResponse })
       },
       (error) =>{
        this.loaders.registering = false;
-        alert('Errorooror')
+       this.toastr.error(processErrors(error))
+
+
       }
     )
 
@@ -256,11 +262,12 @@ export class MerchantCreateComponent implements OnInit {
       document.getElementById('verify-registration').click();
       this.completeRegistrationData = this.getCompleteRegistrationData();
       this.generatePreview();
-        console.log({ verificationResponse })
+        // console.log({ verificationResponse })
       },
       (error) =>{
       this.loaders.verifying = false;
-        alert('Errorooror')
+      this.toastr.error(processErrors(error))
+
       }
     )
 
@@ -270,12 +277,19 @@ export class MerchantCreateComponent implements OnInit {
    * This method completes a merchant's registration
    */
    completeMerchantRegistration = () => {
+     this.loaders.creating = true;
     this.merchantService.completeMerchantRegistration(this.completeRegistrationData).subscribe(
       (completionResponse)=> {
+     this.loaders.creating = false;
+     const { companyName } = this.merchantDetailsForm.value;
+     this.toastr.success(`${companyName} successfully registered.`);
+     this.router.navigateByUrl('/merchants');
+
         console.log({ completionResponse })
       },
       (error)=>{
-        alert("ERROROR")
+        this.loaders.creating = false;
+        this.toastr.error(processErrors(error))
       })
 
    }
@@ -444,7 +458,7 @@ export class MerchantCreateComponent implements OnInit {
       return this.allCurrencies.find((currency) => currency.key == currencyKey)?.value;
     }
     const getRegionName = (regionKey) => {
-      return this.userTypes.find((region) => region.key == regionKey)?.value;
+      return this.allRegions.find((region) => region.key == regionKey)?.value;
     }
     const data = {...this.mergedData};
     this.previewData  = {...data,
@@ -457,32 +471,31 @@ export class MerchantCreateComponent implements OnInit {
   }
 
   private getCompleteRegistrationData = () => {
-
     const mergedData = {
       ...this.registrationData,
       ...this.OTPForm.value,
       ...this.encryptionForm.value,
       ...this.feeSetUpForm.value,
-      ...this.merchantUserForm.value
+      ...this.merchantUserForm.value,
+      ...this.merchantContactForm.value
     };
 
-    this.mergedData = {...mergedData};
+    this.mergedData = { ...mergedData };
     const { authData } = mergedData;
     mergedData.authData = undefined; // same as delete 
     const { merchantCode } = this.merchantDetailsForm.value;
 
     const merchantFeeInfo:IMerchantFeeInfo = { ...this.feeSetUpForm.value };
 
-    const merchantInfo = {...this.merchantDetailsForm.value, code: merchantCode, ...authData, aesConfig:this.encryptionForm.value, 
-      mobileNumber:mergedData.phoneNumber, name:mergedData.companyName,
+    const merchantInfo = {...this.merchantUserForm.value, ...this.merchantContactForm.value, ...this.merchantDetailsForm.value,
+       code: merchantCode, ...authData, aesConfig:this.encryptionForm.value, mobileNumber:mergedData.phoneNumber, name:mergedData.companyName,
     };
 
     const merchantProcessingGatewayAppInfo:IMerchantProcessingGatewayAppInfo = {
-      applicationId:mergedData.applicationId,
+      applicationId:authData.applicationId,
       ivKey:mergedData.iv,
       aesKey:mergedData.aesKey,
       expiryDate:mergedData.expiryDate,
-
     };
  
     const portalUserInfo:IMerchantUser = {

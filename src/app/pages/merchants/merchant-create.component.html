@@ -482,7 +482,8 @@
                 <button (click)="stepper.reset()" *ngIf="!merchantRegistered" [disabled]="encryptionForm.pristine" color="primary" mat-button
                         type="button">RESET
                 </button>
-                <button [disabled]="encryptionForm.invalid" color="{{encryptionForm?.invalid ? 'primary':'success'}}" mat-raised-button (click)="registerMerchant()">SAVE
+                <button [disabled]="encryptionForm.invalid || loaders?.registering" color="{{encryptionForm?.invalid ? 'primary':'btn-success'}}" mat-raised-button (click)="registerMerchant()">SAVE
+                  <small class='loader' *ngIf="loaders?.registering"></small>
                 </button>
               </div>
             </form>
@@ -547,16 +548,19 @@
                     </div>
                     <div class='row'>
                      
-                      <div class='col-md-12'>
+                      <div class='col-md-3  mt-2'>
                         <b>Full Name: </b> {{previewData?.fullName}} 
                       </div>
-                      <div class='col-md-4'>
+
+                      <div class='col-md-3  mt-2'>
                         <b>Username: </b> {{previewData?.username}} 
                       </div>
-                      <div class='col-md-4'>
+
+                      <div class='col-md-3 mt-2'>
                         <b>User Role: </b> {{previewData?.userRoleId}} 
                       </div>
-                      <div class='col-md-4'>
+
+                      <div class='col-md-3  mt-2'>
                         <b>User Type: </b> {{previewData?.userTypeId}} 
                       </div>
 
@@ -567,13 +571,17 @@
                     <div class="card-header">
                       <h4>GENERAL</h4>
                     </div>
+
                     <div class='row'>
+
                       <div class='col-md-4'>
                         <b>Company: </b> {{previewData?.companyName}} 
                       </div>
+
                       <div class='col-md-4'>
                         <b>Business Category: </b> {{previewData?.businessCategoryName}} 
                       </div>
+
                       <div class='col-md-4'>
                         <b>Bank: </b> {{previewData?.bankName}} 
                       </div>
@@ -582,17 +590,34 @@
 
                   <li class="list-group-item">
                     <div class='row'>
-                     
+
+                      <div class='col-md-4'>
+                        <b>Processing Gateway: </b> {{previewData?.gatewayName}}
+                      </div>
+
                       <div class='col-md-4'>
                         <b>Account Number: </b> {{previewData?.accountNumber}} 
                       </div>
                       <div class='col-md-4'>
-                        <b>AG: </b> {{previewData?.agid}} 
+                        <b>AG ID: </b> {{previewData?.agid}} 
+                      </div>
+                 
+                    </div>
+                  </li>
+
+                  <li class="list-group-item">
+                    <div class='row'>
+                      <div class='col-md-4'>
+                        <b>Age of Business: </b> {{previewData?.businessYears}} years
+                      </div>
+                     
+                      <div class='col-md-4'>
+                        <b>Country: </b> {{previewData?.countryName}} 
                       </div>
                       <div class='col-md-4'>
-                        <b>Age of Business: </b> {{previewData?.businessYears}} 
+                        <b>City: </b> {{previewData?.city}} 
                       </div>
-
+                      
                     </div>
                   </li>
 
@@ -601,12 +626,15 @@
                       <div class='col-md-4'>
                         <b>Region: </b> {{previewData?.region}} 
                       </div>
+
                       <div class='col-md-4'>
                         <b>Currency </b> {{previewData?.currency}} 
                       </div>
+
                       <div class='col-md-4'>
                         <b>Code: </b> {{previewData?.merchantCode}} 
                       </div>
+
                     </div>
                   </li>
 
@@ -635,43 +663,46 @@
                   
                   <li class="list-group-item">
                     <div class='row'>
-                      
                       <div class='col-md-4'>
-                        <b>Email: </b> {{previewData?.email }} 
+                        <b>Primay Contact: </b> {{previewData?.primaryContactName }} 
                       </div>
+
                       <div class='col-md-4'>
                         <b>Primary Contact Email: </b> {{previewData?.primaryContactEmail }} 
                       </div>
+                     
                       <div class='col-md-4'>
-                        <b>Primay Contact: </b> {{previewData?.primaryContactName }} 
+                        <b>Primary Contact Mobile: </b> {{previewData?.primaryContactPhoneNumber }} 
                       </div>
                     </div>
                   </li>
 
                   <li class="list-group-item">
                     <div class='row'>
-                      
-                      <div class='col-md-4'>
-                        <b>Primary Contact Mobile: </b> {{previewData?.primaryContactPhoneNumber }} 
-                      </div>
+                     
                       <div class='col-md-4'>
                         <b>Primary Contact Telephone: </b> {{previewData?.primaryContactTelephone }} 
                       </div>
                       <div class='col-md-4'>
                         <b>Secondary Contact: </b> {{previewData?.secondaryContactName }} 
                       </div>
+
+                      <div class='col-md-4'>
+                        <b>Secondary Contact Email: </b> {{previewData?.secondaryContactEmail}} 
+                      </div>
                     </div>
                   </li>
 
                   <li class="list-group-item">
                     <div class='row'>
-                      
-                      <div class='col-md-4'>
+                       <div class='col-md-4'>
                         <b>Secondary Contact Mobile: </b> {{previewData?.secondaryContactPhoneNumber }} 
                       </div>
+
                       <div class='col-md-4'>
                         <b>Secondary Contact Telephone: </b> {{previewData?.secondaryContactTelephone }} 
                       </div>
+                   
                       <div class='col-md-4'>
                         <b>Website: </b> <a href="{{previewData?.websiteLink }}" target="_blank">{{previewData?.websiteLink }} </a>
                       </div>
@@ -681,106 +712,14 @@
                   <li class="list-group-item">
                     <div class='row'>
                       
-                      <div class='col-md-6'>
-                        <b>Secondary Contact Email: </b> {{previewData?.secondaryContactEmail }} 
+                      <div class='col-md-12'>
+                        <b>Address: </b> {{previewData?.address}} 
                       </div>
-                      <div class='col-md-6'>
-                        <b>Address: </b> {{previewData?.address }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <b>Website: </b> <a href="{{previewData?.websiteLink }}" target="_blank">{{previewData?.websiteLink }} </a>
-                      </div>
+                     
                     </div>
                   </li>
 
-                  <li class="list-group-item">
-                    <div class="card-header">
-                      <h4>AUTHENTICATION</h4>
-                    </div>
-                  </li>
-
-                  <li class="list-group-item">
-                    <div class='row'>
-                      
-                      <div class='col-md-4'>
-                        <b>Application ID: </b> {{previewData?.authData?.applicationId }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <b>API KEY: </b> {{previewData?.authData?.apiKey }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <b>Call Back URL: </b> {{previewData?.authData?.callbackUrl }} 
-                      </div>
-                    </div>
-                  </li>
-
-                  <li class="list-group-item">
-                    <div class='row'>
-                      <div class='col-md-4'>
-                        <b>KEY: </b> {{previewData?.authData?.key }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <!-- <b>Init Vector: </b> {{previewData?.initVector }}  -->
-                        <b>URL: </b> {{previewData?.authData?.url }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <b>Merchant Registration URL: </b> {{previewData?.authData?.registerMerchantUrl }} 
-                      </div>
-                    </div>
-                  </li>
-
-                  
-                  <li class="list-group-item">
-                    <div class="card-header">
-                      <h4>ENCRYPTION</h4>
-                    </div>
-                  </li>
-
-                  
-                  <li class="list-group-item">
-                    <div class='row'>
-                      <div class='col-md-4'>
-                        <b>Cipher Transformation: </b> {{previewData?.cipherTransformation }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <!-- <b>Init Vector: </b> {{previewData?.initVector }}  -->
-                        <b>Iteration Count: </b> {{previewData?.iterationCount }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <b>IV: </b> {{previewData?.iv }} 
-                      </div>
-                    </div>
-                  </li>
-
-                  <li class="list-group-item">
-                    <div class='row'>
-                      <div class='col-md-4'>
-                        <b>Key Size: </b> {{previewData?.keySize }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <b>Salt: </b> {{previewData?.salt }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <b>AES Key: </b> {{previewData?.aesKey }} 
-                      </div>
-                    </div>
-                  </li>
-
-                  <li class="list-group-item">
-                    <div class='row'>
-                      <div class='col-md-4'>
-                        <b>Expiry Date: </b> {{previewData?.expiryDate }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <b>Salt: </b> {{previewData?.salt }} 
-                      </div>
-                      <div class='col-md-4'>
-                        <b>AES Key: </b> {{previewData?.aesKey }} 
-                      </div>
-                    </div>
-                  </li>
-
-                      
+                               
                   <li class="list-group-item">
                     <div class="card-header">
                       <h4>FEE SETUP</h4>
@@ -816,6 +755,97 @@
                   </li>
 
 
+
+                  <li class="list-group-item">
+                    <div class="card-header">
+                      <h4>AUTHENTICATION</h4>
+                    </div>
+                  </li>
+
+                  <li class="list-group-item">
+                    <div class='row'>
+                      
+                      <div class='col-md-4'>
+                        <b>Application ID: </b> <code>{{previewData?.authData?.applicationId }} </code>
+                      </div>
+                      <div class='col-md-4'>
+                        <b>API KEY: </b> <code>{{previewData?.authData?.apiKey }}</code> 
+                      </div>
+                      <div class='col-md-4'>
+                        <b>Call Back URL: </b> <a href="javascript:void(0)">{{previewData?.authData?.callbackUrl }} </a>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="list-group-item">
+                    <div class='row'>
+                      <div class='col-md-4'>
+                        <b>KEY: </b> <code>{{previewData?.authData?.key }} </code>
+                      </div>
+                      <div class='col-md-4'>
+                        <!-- <b>Init Vector: </b> {{previewData?.initVector }}  -->
+                        <b>URL: </b> <a href="javascript:void(0)">{{previewData?.authData?.url }} </a>
+                      </div>
+                      <div class='col-md-4'>
+                        <b>Merchant Registration URL: </b> <a href="javascript:void(0)">{{previewData?.authData?.registerMerchantUrl }}</a> 
+                      </div>
+                    </div>
+                  </li>
+
+                  
+                  <li class="list-group-item">
+                    <div class="card-header">
+                      <h4>ENCRYPTION</h4>
+                    </div>
+                  </li>
+
+                  
+                  <li class="list-group-item">
+                    <div class='row'>
+                      <div class='col-md-4'>
+                        <b>Cipher Transformation: </b> <code>{{previewData?.cipherTransformation }}</code> 
+                      </div>
+                      <div class='col-md-4'>
+                        <!-- <b>Init Vector: </b> {{previewData?.initVector }}  -->
+                        <b>Iteration Count: </b> {{previewData?.iterationCount }} 
+                      </div>
+                      <div class='col-md-4'>
+                        <b>IV: </b> <code>{{previewData?.iv }}</code> 
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="list-group-item">
+                    <div class='row'>
+                      <div class='col-md-4'>
+                        <b>Key Size: </b> {{previewData?.keySize }} 
+                      </div>
+                      <div class='col-md-4'>
+                        <b>Salt: </b> <code>{{previewData?.salt}} </code>
+                      </div>
+                      <div class='col-md-4'>
+                        <b>AES Key: </b> <code>{{previewData?.aesKey}} </code>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li class="list-group-item">
+                    <div class='row'>
+                      <div class='col-md-4'>
+                        <b>IV Key: </b> <code>{{previewData?.ivKey }} </code>
+                      </div>
+
+                      <div class='col-md-4'>
+                        <b>Expiry Date: </b> {{previewData?.expiryDate }} 
+                      </div>
+                      <!-- <div class='col-md-4'>
+                        <b>Salt: </b> {{previewData?.salt }} 
+                      </div> -->
+                  
+                    </div>
+                  </li>
+
+         
                   </ul>
       
               </div>
@@ -826,15 +856,15 @@
   
               <div class="content" fxLayout="column" fxLayoutGap="8px">
                 <mat-checkbox class="checkbox" formControlName="authorize">
-                  Authorize.
+                  Authorize
                 </mat-checkbox>
               </div>
   
               <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
                 <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
-                <button (click)="completeMerchantRegistration()" [disabled]="previewForm.invalid" color="primary" mat-raised-button
+                <button (click)="completeMerchantRegistration()" [disabled]="previewForm.invalid || loaders?.creating" color="primary" mat-raised-button
                         matStepperNext>
-                  Create Merchant
+                  Create Merchant <small class='loader' *ngIf="loaders?.creating"></small>
                 </button>
               </div>
             </form>
