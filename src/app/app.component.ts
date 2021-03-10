@@ -153,7 +153,7 @@ export class AppComponent {
     ].concat(this.dummyMenu()));
   }
 
-  private dummyMenu = ():any[] =>{
+  private dummyMenu = () :any[] => {
 
     return environment.production ? [] : [
       {

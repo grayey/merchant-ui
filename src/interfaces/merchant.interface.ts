@@ -40,3 +40,30 @@ export interface IVerifyOTP{
     password: string;
     transactionDescription: string;
   }
+
+  export interface IMerchantFeeInfo{
+    bank_mdr_commission: number;
+    mdrFee: number;
+    mdrFeeValueType: string;
+    platform_mdr_commission: number;
+    transactionFee: number;
+    transactionFeeValueType: string;
+}
+
+export interface IMerchantProcessingGatewayAppInfo {
+  aesKey: string;
+  applicationId: string;
+  expiryDate: string;
+  ivKey: string;
+}
+
+export interface IMerchantUser{
+    fullName: string;
+    merchantId: number;
+    password: string;
+    processingGatewayId: number;
+    userRoleId: number;
+    userTypeId: number;
+    username: string;
+  
+}
