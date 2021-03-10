@@ -5,6 +5,9 @@ import { ApiConfig } from '../utils/config';
 import { UserService } from './user/user.service';
 import { environment } from '../environments/environment';
 import { map, retryWhen, delay, take, catchError } from "rxjs/operators";
+import { AuthService } from "src/services/auth.service";
+import CONSTANTS from "../utils/constants";
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable()
@@ -12,7 +15,8 @@ export class ApiHandlerService extends ApiConfig{
 
   public static API_BASE_URL = environment.API_BASE_URL;
 
-  constructor(private http: HttpClient, userService: UserService) {
+  constructor(private http: HttpClient, userService: UserService, 
+    private authService:AuthService, private toastr:ToastrService) {
     super(userService);
   }
 
@@ -175,13 +179,26 @@ export class ApiHandlerService extends ApiConfig{
    * @returns {any}
    */
   private errorHandler(err) {
-
+    this.checkLogout(err);
     try{
       return Observable.throw(err || 'Server error');
     }catch(e){
       return Observable.from([ ])
     }
 
+  }
+
+  /**
+   * 
+   * @param err 
+   */
+  private checkLogout = (err) => {
+    const { status } = err;
+    if(status == CONSTANTS.HTTP_STATUS_FORBIDDEN || status == CONSTANTS.HTTP_STATUS_UNAUTHENTICATED){
+      const logoutMsg = status == CONSTANTS.HTTP_STATUS_FORBIDDEN ? "Access forbidden":"Session Expired"
+      this.authService.logoutUser();
+      this.toastr.error(`${logoutMsg}! Please login again.`);
+    }
   }
 
 }

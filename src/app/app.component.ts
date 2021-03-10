@@ -155,6 +155,7 @@ export class AppComponent {
 
   private dummyMenu = () :any[] => {
 
+    return [];
     return environment.production ? [] : [
       {
         name: "Calendar",
