@@ -155,8 +155,8 @@ export class AppComponent {
 
   private dummyMenu = () :any[] => {
 
-    return [];
-    return environment.production ? [] : [
+    // environment.production 
+    return true ? [] : [
       {
         name: "Calendar",
         routeOrFunction: "/apps/calendar",

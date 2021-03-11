@@ -50,12 +50,8 @@ export class UserService {
    * This is used to get authenticated user object from cache
    */
   public getAuthUser() {
-    return {
-      first_name:"Test",
-      last_name:"User",
-      email:"test.user@codeiq.ng",
-    }
-
+    const authUser = localStorage.getItem('userData');
+    return authUser ? JSON.parse(authUser) : null;
   }
 
     /**

@@ -8,6 +8,7 @@ import { saveAs } from "file-saver/FileSaver";
 import * as fileSaver from "file-saver";
 import { environment } from "../environments/environment";
 import { buildUrlParams } from "../utils/helpers";
+import { UserService } from "./user/user.service";
 
 
 export interface IBearerToken {
@@ -20,8 +21,12 @@ export class AppService {
   appBaseUrl = environment.backend;
 
   user = null;
-
-  constructor(private http: HttpClient, private authService: AuthService, private apiHandler:ApiHandlerService) {}
+  authUser;
+  isAdmin;
+  constructor(private http: HttpClient, private authService: AuthService, private userService:UserService, private apiHandler:ApiHandlerService) {
+    this.authUser = this.userService.getAuthUser();
+    this.isAdmin = (this.authUser && !this.authUser.merchantId);
+  }
 
   getUsers_old(pageNumber, pageSize, filterData): Observable<any>  {
     const { fullName, username } = filterData;
@@ -216,7 +221,8 @@ export class AppService {
   }
 
   getPlatformCost(pageNumber: string, pageSize: string, filterData: any): any {
-    const { reportType, merchantId, endDate, startDate } = filterData;
+    let { reportType, merchantId, endDate, startDate } = filterData;
+    merchantId = this.getMerchantId(merchantId);
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/transaction/platform-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&reportType=${reportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
@@ -237,6 +243,7 @@ export class AppService {
   ): any {
     let pageNumber: number = 1;
     let pageSize: number = 1;
+    merchantId = this.getMerchantId(merchantId);
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/transaction/download/platform-cost?merchantId=${merchantId}&reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
@@ -250,8 +257,8 @@ export class AppService {
   }
 
   getRefundCost(pageNumber: string, pageSize: string, filterData: any): any {
-    const { reportType, merchantId, endDate, startDate } = filterData;
-
+    let { reportType, merchantId, endDate, startDate } = filterData;
+    merchantId = this.getMerchantId(merchantId);
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/transaction/refund-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&reportType=${reportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
@@ -272,6 +279,7 @@ export class AppService {
   ): any {
     let pageNumber: number = 1;
     let pageSize: number = 1;
+    merchantId = this.getMerchantId(merchantId);
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/transaction/download/refund-cost?merchantId=${merchantId}&reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
@@ -289,7 +297,8 @@ export class AppService {
     pageSize: string,
     filterData: any
   ): any {
-    const { reportType, merchantId, endDate, startDate } = filterData;
+    let { reportType, merchantId, endDate, startDate } = filterData;
+    merchantId = this.getMerchantId(merchantId);
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/transaction/charge-back-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&reportType=${reportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
@@ -303,9 +312,10 @@ export class AppService {
   }
 
   downloadChargebackCost(filterData: any): any {
-    const { reportType, merchantId, endDate, startDate } = filterData;
+    let { reportType, merchantId, endDate, startDate } = filterData;
     let pageNumber: number = 1;
     let pageSize: number = 1000;
+    merchantId = this.getMerchantId(merchantId);
     return this.http.get(
       this.appBaseUrl +
         `/api/v1/transaction/download/charge-back-cost?merchantId=${merchantId}&reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
@@ -388,7 +398,7 @@ export class AppService {
   private getToken(): string {
     let bearerToken: IBearerToken = this.initEmptyData();
     const accessToken = this.authService.user;
-    console.log({accessToken })
+    // console.log({ accessToken })
     Object.assign(bearerToken, accessToken);
     let token = "Bearer " + bearerToken.access_token;
     return token;
@@ -406,6 +416,10 @@ export class AppService {
     const fileName = parts[1].split("=")[1];
     let blob = new Blob([response.body], {type: response.type});
     fileSaver.saveAs(blob, fileName);
+  }
+
+  private getMerchantId = (merchantId) =>{
+    return this.isAdmin ? merchantId : this.authUser?.merchantId;
   }
   
 }

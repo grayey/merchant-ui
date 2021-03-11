@@ -36,9 +36,15 @@ export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
  */
 export const buildUrlParams = (paramData):string | void => {
     if(!paramData) return;
+    const authUser = JSON.parse(localStorage.getItem('userData'));
+    const isAdmin = !authUser?.merchantId;
     let urlParams = "?";
     for(const param in paramData){
-      urlParams +=`${param}=${paramData[param]}&`;
+      let paramValue = paramData[param];
+      if(param=='merchantId'){
+        paramValue = isAdmin ? paramValue : authUser.merchantId;
+      }
+      urlParams +=`${param}=${paramValue}&`;
     }
     return urlParams;
 }

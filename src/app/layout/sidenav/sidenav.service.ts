@@ -10,11 +10,14 @@ import { SidenavItem } from './sidenav-item/sidenav-item.interface';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { componentDestroyed } from '../../../@fury/shared/component-destroyed';
 import { MediaObserver } from '@angular/flex-layout';
+import { UserService } from 'src/services/user/user.service';
 
 @Injectable()
 export class SidenavService implements OnDestroy {
 
   mobileBreakpoint = 'lt-md';
+  appUser:any;
+  isAdmin:boolean = false;
 
   /**
    * Sidenav Items
@@ -61,7 +64,8 @@ export class SidenavService implements OnDestroy {
   expanded$ = this._expandedSubject.asObservable();
 
   constructor(private router: Router,
-              private mediaObserver: MediaObserver) {
+              private mediaObserver: MediaObserver,
+              private userService:UserService) {
     this.router.events.pipe(
       filter<NavigationEnd>(event => event instanceof NavigationEnd),
       takeUntil(componentDestroyed(this))
@@ -87,6 +91,10 @@ export class SidenavService implements OnDestroy {
         this._modeSubject.next('side');
       }
     });
+
+    this.appUser = this.userService.getAuthUser();
+    // console.log('APP USER', this.appUser);
+    this.isAdmin = (this.appUser && !this.appUser.merchantId)
   }
 
   open() {
@@ -118,6 +126,7 @@ export class SidenavService implements OnDestroy {
   }
 
   addItem(item: SidenavItem) {
+    if(!this.itemCanDisplay(item)) return;
     const foundIndex = this.items.findIndex((existingItem) => isEqual(existingItem, item));
     if (foundIndex === -1) {
       this.setParentRecursive(item);
@@ -215,5 +224,10 @@ export class SidenavService implements OnDestroy {
         this.setParentRecursive(subItem);
       });
     }
+  }
+
+  private itemCanDisplay = (item):boolean => {
+    const { name } = item;
+    return this.isAdmin || (name !== 'Merchants' && name !== 'Uploads');
   }
 }

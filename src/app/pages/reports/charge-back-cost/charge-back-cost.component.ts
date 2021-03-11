@@ -17,6 +17,7 @@ import { AppService } from "src/services/app.service";
 import { IChargebackCostReport } from "../model";
 // import { saveAs } from "src/services/node_modules/file-saver/FileSaver";
 import { saveAs } from "file-saver/FileSaver";
+import { getToday } from "src/utils/helpers";
 
 @Component({
   selector: "fury-charge-back-cost",
@@ -64,7 +65,7 @@ export class ChargeBackCostComponent
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private appService: AppService) {}
+  constructor(private dialog: MatDialog, private appService: AppService,) {}
 
   get visibleColumns() {
     return this.columns
@@ -132,8 +133,8 @@ export class ChargeBackCostComponent
     this.filterData = {
       merchantId: 1,
       reportType: "",
-      startDate: "2021-01-16",
-      endDate: "2021-01-16",
+      startDate: getToday(),
+      endDate: getToday(),
     };
   }
 

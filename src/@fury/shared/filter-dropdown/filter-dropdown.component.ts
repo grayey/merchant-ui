@@ -12,6 +12,7 @@ import {
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { AppService } from "src/services/app.service";
+import { UserService } from "src/services/user/user.service";
 
 @Component({
   selector: "filter-dropdown",
@@ -42,15 +43,23 @@ export class FilterDropdownComponent implements OnInit {
   reportTypes = [];
   types = [];
   merchants = [];
+  
+  appUser;
+  isAdmin;
 
   model: NgbDateStruct;
 
-  constructor(private fb: FormBuilder, private appService: AppService) {}
+  constructor(private fb: FormBuilder, private appService: AppService, private userService:UserService) {
+    this.appUser = this.userService.getAuthUser();
+    this.isAdmin = (this.appUser && !this.appUser.merchantId)
+  }
 
   ngOnInit() {
     this.initForm();
     this.getUploadStatuses();
-    this.getMerchants();
+    if(this.isAdmin){
+      this.getMerchants();
+    }
     this.getReportTypes();
     this.types = [
       {

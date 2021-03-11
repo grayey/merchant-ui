@@ -12,6 +12,7 @@ import { fromEvent } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { ListColumn } from "./list-column.model";
 
+
 @Component({
   selector: "fury-list",
   templateUrl: "./list.component.html",
@@ -45,6 +46,7 @@ export class ListComponent implements AfterViewInit {
   @Output() filterChange = new EventEmitter<string>();
 
   @Input() hideHeader: boolean;
+
 
   constructor() {}
 
