@@ -26,6 +26,7 @@ export class AppService {
   constructor(private http: HttpClient, private authService: AuthService, private userService:UserService, private apiHandler:ApiHandlerService) {
     this.authUser = this.userService.getAuthUser();
     this.isAdmin = (this.authUser && !this.authUser.merchantId);
+    
   }
 
   getUsers_old(pageNumber, pageSize, filterData): Observable<any>  {

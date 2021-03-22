@@ -42,6 +42,15 @@ export class MerchantService{
         return this.apiHandler.post(url, data);
     }
 
+          /**
+     * this method updates a merchant's portal information
+     */
+           public updateMerchant = (data):Observable<any> => {
+            const url = `merchant/update`;
+            return this.apiHandler.post(url, data);
+        }
+
+     
 
     /**
      * 

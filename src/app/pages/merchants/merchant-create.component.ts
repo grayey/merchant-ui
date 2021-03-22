@@ -37,10 +37,11 @@ export class MerchantCreateComponent implements OnInit {
   public registrationVerifiied:boolean = false;
   public allBanks:any[] = [];
   public allBusinessCategories:any[] = [];
+  public allGateways:any[] = [];
+  public allCountries:any[] = [];
+
   public allCurrencies:any[] = [];
   public allRegions:any[] = [];
-  public allCountries:any[] = [];
-  public allGateways:any[] = [];
   public userRoles:any[] = [];
   public userTypes:any[] = [];
 
@@ -77,16 +78,16 @@ export class MerchantCreateComponent implements OnInit {
     return {
       email: ['', Validators.compose([Validators.required, Validators.email])],
       developerEmailAddress: ['', Validators.compose([Validators.required, Validators.email])],
-      developerMobileNumber: ['', Validators.compose([Validators.required])],
-      phoneNumber: ['', Validators.compose([Validators.required])],
+      developerMobileNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
+      phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
       primaryContactEmail: ['', Validators.compose([Validators.required])],
       primaryContactName: ['', Validators.compose([Validators.required])],
-      primaryContactPhoneNumber: ['', Validators.compose([Validators.required])],
-      primaryContactTelephone: ['', Validators.compose([Validators.required])],
+      primaryContactPhoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
+      primaryContactTelephone: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
       secondaryContactEmail: ['', Validators.compose([Validators.required])],
       secondaryContactName: ['', Validators.compose([Validators.required])],
-      secondaryContactPhoneNumber: ['', Validators.compose([Validators.required])],
-      secondaryContactTelephone: ['', Validators.compose([Validators.required])],
+      secondaryContactPhoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
+      secondaryContactTelephone: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
       websiteLink: ['', Validators.compose([Validators.required])],
       address: ['', Validators.compose([Validators.required])],
     }
@@ -183,10 +184,11 @@ export class MerchantCreateComponent implements OnInit {
   ngOnInit() {
     this.getAllBanks();
     this.getAllBusinessCategories();
-    this.getAllCurrencies();
-    this.getAllRegions();
     this.getAllCountries();
     this.getAllGateways();
+    
+    this.getAllCurrencies();
+    this.getAllRegions();
     this.getUserRoles();
     this.getUserTypes();
    
@@ -218,7 +220,9 @@ export class MerchantCreateComponent implements OnInit {
     }
    
      this.registrationData = { ...this.merchantDetailsForm.value, ...this.merchantContactForm.value,
-       authData: { ...this.authenticationForm.value } };
+      //  authData: { ...this.authenticationForm.value } 
+      };
+       this.registrationData.applicationID = this.registrationData.agid //because of applicationID/agid mismatch error
     this.loaders.registering = true;
     this.merchantService.registerMerchant(this.registrationData).subscribe(
       (registrationResponse) =>{
@@ -229,6 +233,7 @@ export class MerchantCreateComponent implements OnInit {
         console.log({ registrationResponse })
       },
       (error) =>{
+      //  document.getElementById('register-merchant').click();// remove later
        this.loaders.registering = false;
        this.toastr.error(processErrors(error))
 
@@ -249,10 +254,10 @@ export class MerchantCreateComponent implements OnInit {
     }
    
     const { password } = this.merchantUserForm.value;
-    const { agid } = this.merchantDetailsForm.value;
+    const { agid, processingGatewayId } = this.merchantDetailsForm.value;
     const { email } = this.merchantContactForm.value;
 
-    const verificationData = {...this.OTPForm.value, authData:{...this.authenticationForm.value}, email, password, agid }
+    const verificationData = {...this.OTPForm.value, processingGatewayId,  email, password, agid }
     this.loaders.verifying = true;
 
     this.merchantService.verifyRegistration(verificationData).subscribe(

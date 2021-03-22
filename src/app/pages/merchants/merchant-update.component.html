@@ -1,1 +1,126 @@
-<p>merchant-update works!</p>
+<form [formGroup]="merchantDetailsForm" (ngSubmit)="updateMerchant()">
+
+    <div class='card-header mb-2'>
+        <h3> Update <em>{{editedMerchant?.merchantName}}</em></h3>
+    </div>
+    
+    <div class="content" fxLayout="column" fxLayoutGap="8px">
+
+      <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+          <mat-form-field fxFlex="auto">
+          <mat-label>Company Name</mat-label>
+          <input formControlName="merchantName" matInput required>
+          <mat-hint>Merchant's business name.</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="auto">
+          <mat-label>Business Category</mat-label>
+          <mat-select formControlName="businessCategoryId" required>
+            <mat-option *ngFor="let category of allBusinessCategories" [value]="category.id">{{ category?.name }}</mat-option>
+          </mat-select>
+          <mat-hint>Business type.</mat-hint>
+          </mat-form-field>
+      </div>
+
+      <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+
+          <mat-form-field fxFlex="auto">
+              <mat-label>Bank</mat-label>
+              <mat-select formControlName="bankId">
+                <mat-option *ngFor="let bank of allBanks" [value]="bank.id">{{ bank?.name }}</mat-option>
+              </mat-select>
+              <mat-hint align="end"></mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="2 1 auto">
+                <mat-label>Processing Gateway</mat-label>
+                <mat-select formControlName="processingGatewayId">
+                  <mat-option *ngFor="let gateway of allGateways" [value]="gateway.id">{{ gateway?.name }}</mat-option>
+                </mat-select>
+                <mat-hint align="end"></mat-hint>
+            </mat-form-field>
+                   
+            <mat-form-field fxFlex="1 1 auto">
+              <mat-label>Account No.</mat-label>
+              <input formControlName="accountNumber" matInput required>
+            </mat-form-field>
+
+      </div>
+
+       <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+          
+          <mat-form-field fxFlex="2 1 auto">
+              <mat-label>Developer Email</mat-label>
+              <input formControlName="developerEmail" matInput>
+              <mat-hint align="end"></mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="2 1 auto">
+              <mat-label>Developer Mobile</mat-label>
+              <input formControlName="developerMobileNumber" matInput>
+              <mat-hint align="end"></mat-hint>
+            </mat-form-field>
+          
+       </div>
+
+       
+       <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+          
+        <mat-form-field fxFlex="2 1 auto">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="countryId">
+              <mat-option  *ngFor="let country of allCountries" [value]="country.id">{{ country?.name }}</mat-option>
+            </mat-select>
+            <mat-hint align="end"></mat-hint>
+          </mat-form-field>
+
+
+          <mat-form-field fxFlex="2 1 auto">
+            <mat-label>City</mat-label>
+            <input formControlName="city" type="text" matInput>
+            <mat-hint align="end"></mat-hint>
+          </mat-form-field>
+        
+     </div>
+<!-- 
+       <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+          <mat-form-field fxFlex="2 1 auto">
+              <mat-label>Region</mat-label>
+              <mat-select formControlName="region">
+                <mat-option *ngFor="let region of allRegions" [value]="region.key">{{ region?.value }}</mat-option>
+              </mat-select>
+              <mat-hint align="end"></mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="2 1 auto">
+              <mat-label>Currency</mat-label>
+              <mat-select formControlName="currency">
+                <mat-option *ngFor="let currency of allCurrencies" [value]="currency.key">{{ currency?.value }}</mat-option>
+              </mat-select>
+              <mat-hint align="end"></mat-hint>
+            </mat-form-field>
+       </div> -->
+
+       <!-- <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+          <mat-form-field fxFlex="2 1 auto">
+              <mat-label>Merchant Code</mat-label>
+              <input formControlName="merchantCode" matInput>
+              <mat-hint align="end"></mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="2 1 auto">
+              <mat-label>Processing Gateway</mat-label>
+              <mat-select formControlName="processingGatewayId">
+                <mat-option *ngFor="let gateway of allGateways" [value]="gateway.id">{{ gateway?.name }}</mat-option>
+              </mat-select>
+              <mat-hint align="end"></mat-hint>
+            </mat-form-field>
+       </div> -->
+    </div>
+
+    <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+      <button [disabled]="merchantDetailsForm.invalid" type="submit" color="primary" mat-raised-button>SAVE 
+        <small class='loader' *ngIf="loaders?.updating"></small>
+      </button>
+    </div>
+  </form>

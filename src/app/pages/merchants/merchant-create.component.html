@@ -181,7 +181,7 @@
               </div>
   
               <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-                <button (click)="stepper.reset()" *ngIf="!merchantRegistered" [disabled]="merchantDetailsForm.pristine" color="primary" mat-button
+                <button (click)="merchantDetailsForm.reset()" *ngIf="!merchantRegistered" [disabled]="merchantDetailsForm.pristine" color="primary" mat-button
                         type="button">RESET
                 </button>
                 <button [disabled]="merchantDetailsForm.invalid" color="primary" mat-raised-button matStepperNext>NEXT
@@ -303,7 +303,7 @@
              
   
               <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-                <button (click)="stepper.reset()" *ngIf="!merchantRegistered" [disabled]="merchantContactForm.pristine" color="primary" mat-button
+                <button (click)="merchantContactForm.reset()" *ngIf="!merchantRegistered" [disabled]="merchantContactForm.pristine" color="primary" mat-button
                         type="button">RESET
                 </button>
                 <button [disabled]="merchantContactForm.invalid || loaders?.registering" color="primary" mat-raised-button matStepperNext>NEXT <small class='loader' *ngIf="loaders?.registering"></small>
@@ -357,15 +357,63 @@
               </div>
   
               <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-                <button (click)="stepper.reset()" *ngIf="!merchantRegistered" [disabled]="feeSetUpForm.pristine" color="primary" mat-button
+                <button class='d-none' id='register-merchant' matStepperNext></button>
+                <button (click)="feeSetUpForm.reset()" *ngIf="!merchantRegistered" [disabled]="feeSetUpForm.pristine" color="primary" mat-button
                         type="button">RESET
                 </button>
-                <button [disabled]="feeSetUpForm.invalid" color="primary" mat-raised-button matStepperNext>NEXT
+                <button [disabled]="feeSetUpForm.invalid || loaders?.registering" color="{{feeSetUpForm?.invalid ? 'primary':'btn-success'}}"  mat-raised-button (click)="registerMerchant()">SAVE
+                  <small class='loader' *ngIf="loaders?.registering"></small>
                 </button>
               </div>
             </form>
           </mat-step>
 
+          <mat-step [stepControl]="OTPForm">
+            <form [formGroup]="OTPForm">
+              <ng-template matStepLabel>OTP</ng-template>
+
+              <div class="subheading">Enter the OTP that was just sent to you.</div>
+  
+              <div class="content" fxLayout="column" fxLayoutGap="8px">
+                <mat-form-field fxFlex="auto">
+                  <mat-label>OTP</mat-label>
+                  <input [type]="passwordInputType" formControlName="otp" matInput required>
+                  <button (click)="showPassword()" *ngIf="passwordInputType === 'password'" mat-icon-button matSuffix
+                          type="button">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+                  <button (click)="hidePassword()" *ngIf="passwordInputType === 'text'" mat-icon-button matSuffix
+                          type="button">
+                    <mat-icon>visibility_off</mat-icon>
+                  </button>
+                  <mat-hint>Your OTP should be at least 6 characters long.</mat-hint>
+                </mat-form-field>
+  
+                <!-- <mat-form-field fxFlex="auto">
+                  <mat-label>Confirm Password</mat-label>
+                  <input [type]="passwordInputType" formControlName="passwordConfirm" matInput required>
+                  <button (click)="showPassword()" *ngIf="passwordInputType === 'password'" mat-icon-button matSuffix
+                          type="button">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+                  <button (click)="hidePassword()" *ngIf="passwordInputType === 'text'" mat-icon-button matSuffix
+                          type="button">
+                    <mat-icon>visibility_off</mat-icon>
+                  </button>
+                  <mat-hint>Please type in your password again.</mat-hint>
+                </mat-form-field> -->
+              </div>
+  
+              <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                <button class='d-none' matStepperNext id='verify-registration'></button>
+                <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
+                <button [disabled]="OTPForm.invalid || loaders?.verifying" color="primary" mat-raised-button (click)="verifyRegistration()">NEXT 
+                  <small class='loader' *ngIf="loaders?.verifying"></small>
+                </button>
+              </div>
+            </form>
+          </mat-step>
+<!-- 
           <mat-step [stepControl]="authenticationForm">
             <form [formGroup]="authenticationForm">
               <ng-template matStepLabel>Authentication</ng-template>
@@ -424,9 +472,9 @@
                 </button>
               </div>
             </form>
-          </mat-step>
+          </mat-step> -->
 
-          
+<!--           
           <mat-step [stepControl]="encryptionForm">
             <form [formGroup]="encryptionForm">
               <ng-template matStepLabel>Encryption</ng-template>
@@ -478,7 +526,7 @@
               </div>
   
               <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-                <button class='d-none' id='register-merchant' matStepperNext></button>
+                
                 <button (click)="stepper.reset()" *ngIf="!merchantRegistered" [disabled]="encryptionForm.pristine" color="primary" mat-button
                         type="button">RESET
                 </button>
@@ -488,52 +536,8 @@
               </div>
             </form>
           </mat-step>
-  
-          <mat-step [stepControl]="OTPForm">
-            <form [formGroup]="OTPForm">
-              <ng-template matStepLabel>OTP</ng-template>
-
-              <div class="subheading">Enter the OTP that was just sent to you.</div>
-  
-              <div class="content" fxLayout="column" fxLayoutGap="8px">
-                <mat-form-field fxFlex="auto">
-                  <mat-label>OTP</mat-label>
-                  <input [type]="passwordInputType" formControlName="otp" matInput required>
-                  <button (click)="showPassword()" *ngIf="passwordInputType === 'password'" mat-icon-button matSuffix
-                          type="button">
-                    <mat-icon>visibility</mat-icon>
-                  </button>
-                  <button (click)="hidePassword()" *ngIf="passwordInputType === 'text'" mat-icon-button matSuffix
-                          type="button">
-                    <mat-icon>visibility_off</mat-icon>
-                  </button>
-                  <mat-hint>Your OTP should be at least 6 characters long.</mat-hint>
-                </mat-form-field>
-  
-                <!-- <mat-form-field fxFlex="auto">
-                  <mat-label>Confirm Password</mat-label>
-                  <input [type]="passwordInputType" formControlName="passwordConfirm" matInput required>
-                  <button (click)="showPassword()" *ngIf="passwordInputType === 'password'" mat-icon-button matSuffix
-                          type="button">
-                    <mat-icon>visibility</mat-icon>
-                  </button>
-                  <button (click)="hidePassword()" *ngIf="passwordInputType === 'text'" mat-icon-button matSuffix
-                          type="button">
-                    <mat-icon>visibility_off</mat-icon>
-                  </button>
-                  <mat-hint>Please type in your password again.</mat-hint>
-                </mat-form-field> -->
-              </div>
-  
-              <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-                <button class='d-none' matStepperNext id='verify-registration'></button>
-                <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
-                <button [disabled]="OTPForm.invalid || loaders?.verifying" color="primary" mat-raised-button (click)="verifyRegistration()">NEXT 
-                  <small class='loader' *ngIf="loaders?.verifying"></small>
-                </button>
-              </div>
-            </form>
-          </mat-step>
+   -->
+        
   
           <mat-step [stepControl]="previewForm">
             <form [formGroup]="previewForm">
@@ -756,7 +760,7 @@
 
 
 
-                  <li class="list-group-item">
+                  <!-- <li class="list-group-item">
                     <div class="card-header">
                       <h4>AUTHENTICATION</h4>
                     </div>
@@ -783,17 +787,17 @@
                         <b>KEY: </b> <code>{{previewData?.authData?.key }} </code>
                       </div>
                       <div class='col-md-4'>
-                        <!-- <b>Init Vector: </b> {{previewData?.initVector }}  -->
+                      
                         <b>URL: </b> <a href="javascript:void(0)">{{previewData?.authData?.url }} </a>
                       </div>
                       <div class='col-md-4'>
                         <b>Merchant Registration URL: </b> <a href="javascript:void(0)">{{previewData?.authData?.registerMerchantUrl }}</a> 
                       </div>
                     </div>
-                  </li>
+                  </li> -->
 
                   
-                  <li class="list-group-item">
+                  <!-- <li class="list-group-item">
                     <div class="card-header">
                       <h4>ENCRYPTION</h4>
                     </div>
@@ -806,7 +810,7 @@
                         <b>Cipher Transformation: </b> <code>{{previewData?.cipherTransformation }}</code> 
                       </div>
                       <div class='col-md-4'>
-                        <!-- <b>Init Vector: </b> {{previewData?.initVector }}  -->
+             
                         <b>Iteration Count: </b> {{previewData?.iterationCount }} 
                       </div>
                       <div class='col-md-4'>
@@ -838,12 +842,12 @@
                       <div class='col-md-4'>
                         <b>Expiry Date: </b> {{previewData?.expiryDate }} 
                       </div>
-                      <!-- <div class='col-md-4'>
+                      <div class='col-md-4'>
                         <b>Salt: </b> {{previewData?.salt }} 
-                      </div> -->
+                      </div> 
                   
                     </div>
-                  </li>
+                  </li> -->
 
          
                   </ul>
