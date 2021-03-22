@@ -50,21 +50,24 @@ export class UploadsCreateUpdateComponent implements OnInit {
     );
   }
 
-  upload(files: File[]) {
+  upload(event) {
+    // .target.files
     //pick from one of the 4 styles of file uploads below
-    this.uploadAndProgress(files);
+    this.uploadAndProgress(event.target);
   }
 
-  uploadAndProgress(files: File[]) {
+  uploadAndProgress(files: File) {
     console.log(files);
     var formData = new FormData();
     // formData.append()
-    Array.from(files).forEach((f) => formData.append("fileName", f));
+    // Array.from(files).forEach((f) => formData.append("fileName", f));
     if (this.form.value.uploadType == "SETTLEMENT") {
-      this.uploadSettlement(formData);
+      // this.uploadSettlement(formData);
+      this.uploadSettlement(files);
     }
     if (this.form.value.uploadType == "CHARGE_BACK") {
-      this.uploadChargeBack(formData);
+      // this.uploadChargeBack(formData);
+      this.uploadChargeBack(files);
     }
   }
 

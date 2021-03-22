@@ -376,11 +376,13 @@ export class AppService {
         Authorization: this.getToken(),
       },
     };
-    return this.http.post(
-      this.appBaseUrl + "/api/v1/settlement/upload",
-      data,
-      config
-    );
+    // return this.http.post(
+    //   this.appBaseUrl + "/api/v1/settlement/upload",
+    //   data,
+    //   config
+    // );
+
+    return this.apiHandler.postFile({},data,'settlement/upload');
   }
 
   uploadChargeBackItem(data: any): Observable<any> {
@@ -389,11 +391,13 @@ export class AppService {
         Authorization: this.getToken(),
       },
     };
-    return this.http.post(
-      this.appBaseUrl + "/api/v1/charge-back/upload",
-      data,
-      config
-    );
+    // return this.http.post(
+    //   this.appBaseUrl + "/api/v1/charge-back/upload",
+    //   data,
+    //   config
+    // );
+
+    return this.apiHandler.postFile({},data,'charge-back/upload');
   }
 
   private getToken(): string {

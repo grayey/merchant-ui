@@ -1,6 +1,6 @@
 <div mat-dialog-title>Upload</div>
 
-<form [formGroup]="form" (ngSubmit)="save()">
+<form [formGroup]="form" (ngSubmit)="save()" enctype="multipart/form-data">
   <mat-dialog-content>
     <!-- <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
       <mat-form-field fxFlex>
@@ -24,7 +24,7 @@
       [disabled]="!form.value.uploadType"
       type="file"
       accept='.xls,.csv'
-      (change)="upload($event.target.files)"
+      (change)="upload($event)"
     />
     Upload Percent: {{ percentDone }}% <br />
   </mat-dialog-content>
