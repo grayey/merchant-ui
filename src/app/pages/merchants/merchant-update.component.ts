@@ -31,8 +31,8 @@ export class MerchantUpdateComponent implements OnInit {
     this.getAllCountries();
     this.getAllGateways();
     const { developerMobile } = this.editedMerchant;
-    this.merchantDetailsForm.patchValue({...this.editedMerchant,developerMobileNumber:developerMobile});
-      console.log('DEFAULTS', this.editedMerchant)
+    this.merchantDetailsForm.patchValue({ ...this.editedMerchant, developerMobileNumber:developerMobile });
+      // console.log('DEFAULTS', this.editedMerchant)
 
   }
 
@@ -86,10 +86,13 @@ export class MerchantUpdateComponent implements OnInit {
    */
 
     private getAllCountries = () => {
-    
+      
+      let { countryId, countryName } = this.editedMerchant;
       this.merchantService.getAllCountries().subscribe(
         (countriesResponse) =>{
           this.allCountries = countriesResponse.data;
+          countryId =  this.allCountries.find(country => country.name == countryName)?.id || countryId;
+          this.merchantDetailsForm.patchValue({ countryId })
         },
         (error) =>{
         this.loaders.verifying = false;
@@ -147,16 +150,19 @@ export class MerchantUpdateComponent implements OnInit {
     this.loaders.updating = true;
     this.merchantService.updateMerchant(merchantObject).subscribe(
       (merchantUpdateResponse) =>{
-      this.loaders.updating = false;
-
+        this.loaders.updating = false;
         this.toastr.success(`${this.merchantDetailsForm.value?.merchantName} successfully updated.`)
-        this.dialogRef.close();
+        this.toggleModal();
       },
       (error) =>{
       this.loaders.updating = false;
         this.toastr.error(`${processErrors(error)}`)
       }
     )
+  }
+
+  public toggleModal = (action='close') =>{
+    if(['close', 'open'].includes(action)) this.dialogRef[action]();
   }
 
 }

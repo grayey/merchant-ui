@@ -11,6 +11,8 @@ import { getToday, processErrors } from 'src/utils/helpers';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
+// ACCESSNG000017
+
 
 @Component({
   selector: 'fury-merchant-create',
@@ -89,6 +91,7 @@ export class MerchantCreateComponent implements OnInit {
       secondaryContactPhoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
       secondaryContactTelephone: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
       websiteLink: ['', Validators.compose([Validators.required])],
+      url: ['', Validators.compose([Validators.required])],
       address: ['', Validators.compose([Validators.required])],
     }
   }
@@ -496,12 +499,12 @@ export class MerchantCreateComponent implements OnInit {
        code: merchantCode, ...authData, aesConfig:this.encryptionForm.value, mobileNumber:mergedData.phoneNumber, name:mergedData.companyName,
     };
 
-    const merchantProcessingGatewayAppInfo:IMerchantProcessingGatewayAppInfo = {
-      applicationId:authData.applicationId,
-      ivKey:mergedData.iv,
-      aesKey:mergedData.aesKey,
-      expiryDate:mergedData.expiryDate,
-    };
+    // const merchantProcessingGatewayAppInfo:IMerchantProcessingGatewayAppInfo = {
+    //   applicationId:authData.applicationId,
+    //   ivKey:mergedData.iv,
+    //   aesKey:mergedData.aesKey,
+    //   expiryDate:mergedData.expiryDate,
+    // };
  
     const portalUserInfo:IMerchantUser = {
       ...this.merchantUserForm.value,
@@ -511,7 +514,7 @@ export class MerchantCreateComponent implements OnInit {
    return {
     merchantFeeInfo,
     merchantInfo,
-    merchantProcessingGatewayAppInfo,
+    // merchantProcessingGatewayAppInfo,
     portalUserInfo
    };
 

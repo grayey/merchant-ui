@@ -119,6 +119,9 @@
     </div>
 
     <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+      <button  class='btn btn-secondary' type='button' (click)="toggleModal()" mat-raised-button>Close 
+      </button>
+
       <button [disabled]="merchantDetailsForm.invalid" type="submit" color="primary" mat-raised-button>SAVE 
         <small class='loader' *ngIf="loaders?.updating"></small>
       </button>
