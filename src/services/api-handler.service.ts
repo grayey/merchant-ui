@@ -9,6 +9,8 @@ import { AuthService } from "src/services/auth.service";
 import CONSTANTS from "../utils/constants";
 import { ToastrService } from 'ngx-toastr';
 
+declare const $:any;
+
 
 @Injectable()
 export class ApiHandlerService extends ApiConfig{
@@ -69,13 +71,7 @@ export class ApiHandlerService extends ApiConfig{
     ).pipe(
       catchError(this.errorHandler)
     ).pipe(
-      map((res) => {
-        const X_JWT_TOKEN = res['headers'].get('x-jwt-token');
-        if(X_JWT_TOKEN){
-          localStorage.setItem('X_JWT_TOKEN', X_JWT_TOKEN)
-        }
-        return res['body'];
-      })
+      map((res) => res['body'])
     )
       // retryWhen((errors) => {
       //   return errors
@@ -168,6 +164,35 @@ export class ApiHandlerService extends ApiConfig{
       .map((res) => res);
       ApiConfig.EXPECT_FILE = null;
       return fileResponse;
+  }
+
+  /**
+   *
+   * @param {Object} data
+   * @param formFile without header
+   * @param {string} urlLink
+   * @returns {Observable<any>}
+   */
+   public postFile(data, formFile, urlLink: string, file_key = 'image_file'): Observable<any> {
+    const formData = new FormData();
+    const file = formFile.files[0];
+    const path = $.param(data);
+    const urlPath = (Object.keys(data).length > 0) ? `${urlLink}?${path}` : urlLink;
+    formData.append(file_key, file, file.name);
+    const url = `${ApiHandlerService.API_BASE_URL}${urlPath}`;
+    ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
+    return this.http.post(url, data || {}, this.headers).pipe(
+      retryWhen((errors) => {
+        return errors
+          .mergeMap((error) => this.errorHandler(error))
+          .delay(1000)
+          .take(2);
+      })
+    ).pipe(
+      catchError(this.errorHandler)
+    ).pipe(
+      map((res) => res['body'])
+    )
   }
 
  
