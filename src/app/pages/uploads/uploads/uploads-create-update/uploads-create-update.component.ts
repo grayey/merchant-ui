@@ -95,7 +95,7 @@ export class UploadsCreateUpdateComponent implements OnInit {
       } else if (event instanceof HttpResponse) {
         this.uploadSuccess = true;
       }
-      this.toastr.success(`File uploaded. Please check upload information.`);
+      this.toastr.info(`File uploaded. Please check upload information.`);
 
     },
     (error) =>{
