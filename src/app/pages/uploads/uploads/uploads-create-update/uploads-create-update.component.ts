@@ -2,7 +2,9 @@ import { HttpEventType, HttpResponse } from "@angular/common/http";
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { ToastrService } from "ngx-toastr";
 import { AppService } from "src/services/app.service";
+import { processErrors } from "src/utils/helpers";
 import { Customer } from "./customer.model";
 
 @Component({
@@ -23,7 +25,8 @@ export class UploadsCreateUpdateComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public defaults: any,
     private dialogRef: MatDialogRef<UploadsCreateUpdateComponent>,
     private fb: FormBuilder,
-    private appService: AppService
+    private appService: AppService,
+    private toastr:ToastrService
   ) {}
 
   ngOnInit() {
@@ -74,7 +77,8 @@ export class UploadsCreateUpdateComponent implements OnInit {
   uploadSettlement(formData) {
     this.appService.uploadSettlementItem(formData).subscribe((event) => {
       this.dialogRef.close();
-      if (event.type === HttpEventType.UploadProgress) {
+      console.log({ event })
+      if (event && event.type === HttpEventType.UploadProgress) {
         this.percentDone = Math.round((100 * event.loaded) / event.total);
       } else if (event instanceof HttpResponse) {
         this.uploadSuccess = true;
@@ -83,14 +87,21 @@ export class UploadsCreateUpdateComponent implements OnInit {
   }
 
   uploadChargeBack(formData) {
-    this.appService.uploadChargeBackItem(formData).subscribe((event) => {
+    this.appService.uploadChargeBackItem(formData).subscribe(
+      (event) => {
       this.dialogRef.close();
-      if (event.type === HttpEventType.UploadProgress) {
+      if (event && event.type === HttpEventType.UploadProgress) {
         this.percentDone = Math.round((100 * event.loaded) / event.total);
       } else if (event instanceof HttpResponse) {
         this.uploadSuccess = true;
       }
-    });
+      this.toastr.success(`File uploaded. Please check upload information.`);
+
+    },
+    (error) =>{
+      this.toastr.error(processErrors(error))
+    }
+    );
   }
 
   private upsertUser(user) {

@@ -29,9 +29,7 @@ export class ApiInterceptorService implements HttpInterceptor {
     }
       
     if(req.body instanceof FormData){ //file upload hack
-      req.headers.delete('Content-Type')
-      req = req.clone({headers: req.headers.set('Accept','multipart/form-data')})
-      // req = req.clone({headers: req.headers.set('Accept','application/octet-stream')})
+      req = req.clone({headers: req.headers.delete('Content-Type')})
     }
     
 

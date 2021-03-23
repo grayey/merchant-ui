@@ -23,7 +23,7 @@
     <input
       [disabled]="!form.value.uploadType"
       type="file"
-      accept='.xls,.csv'
+      accept='.xls,.csv,.xlsx'
       (change)="upload($event)"
     />
     Upload Percent: {{ percentDone }}% <br />

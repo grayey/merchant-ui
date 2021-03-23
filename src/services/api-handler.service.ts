@@ -173,7 +173,7 @@ export class ApiHandlerService extends ApiConfig{
    * @param {string} urlLink
    * @returns {Observable<any>}
    */
-   public postFile(data, formFile, urlLink: string, file_key = 'image_file'): Observable<any> {
+   public postFile(data, formFile, urlLink: string, file_key = 'fileName'): Observable<any> {
     ApiConfig.EXPECT_FILE = "blob";
     const formData = new FormData();
     const file = formFile.files[0];
@@ -185,7 +185,7 @@ export class ApiHandlerService extends ApiConfig{
     const url = `${ApiHandlerService.API_BASE_URL}${urlPath}`;
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
 
-    return this.http.post(url, (formData || {})).pipe(
+    return this.http.post<Blob>(url, (formData || {})).pipe(
       retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
