@@ -18,7 +18,7 @@ export class ApiInterceptorService implements HttpInterceptor {
 
     req = req.clone({headers: req.headers.set('Accept', `application/${REQUEST_CONTENT}`)});
 
-   console.log({ req })
+  //  console.log({ req })
     // if (this.userService.isLoggedIn()) {
     req = req.clone({headers: req.headers.set('Authorization', this.userService.getAuthUserToken(req.url))});
 

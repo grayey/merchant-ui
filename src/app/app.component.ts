@@ -15,6 +15,7 @@ import { environment } from "src/environments/environment";
   templateUrl: "./app.component.html",
 })
 export class AppComponent {
+
   constructor(
     private sidenavService: SidenavService,
     private iconRegistry: MatIconRegistry,
@@ -26,6 +27,8 @@ export class AppComponent {
     private authService: AuthService,
     private splashScreenService: SplashScreenService
   ) {
+    this.checkRefresh();
+
     this.route.queryParamMap
       .pipe(filter((queryParamMap) => queryParamMap.has("style")))
       .subscribe((queryParamMap) =>
@@ -151,6 +154,16 @@ export class AppComponent {
 
       
     ].concat(this.dummyMenu()));
+  }
+
+  private checkRefresh = () => {
+    
+    if(localStorage.getItem('REFRESH_APP') !==  'FALSE'){
+      localStorage.setItem('REFRESH_APP','FALSE'); 
+     window.location.reload();
+    }else{
+      localStorage.setItem('REFRESH_APP', null);
+    }
   }
 
   private dummyMenu = () :any[] => {

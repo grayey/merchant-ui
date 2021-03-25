@@ -14,7 +14,7 @@ import { Customer } from "./customer.model";
 })
 export class UploadsCreateUpdateComponent implements OnInit {
   static id = 100;
-  uploadTypes = [];
+  uploadTypes = [{key: "SETTLEMENT", value: "Settlement"}, {key: "CHARGE_BACK", value: "Charge Back"}];
   percentDone: number;
   uploadSuccess: boolean;
 
@@ -47,8 +47,12 @@ export class UploadsCreateUpdateComponent implements OnInit {
     this.appService.getUploadTypes().subscribe(
       (response) => {
         this.uploadTypes = response.data;
+        // this.uploadTypes = [{key: "SETTLEMENT", value: "Settlement"}, {key: "CHARGE_BACK", value: "Charge Back"}]; // hard-coded hack. Remove later.
       },
-      (err) => {},
+      (err) => {
+        this.uploadTypes = [{key: "SETTLEMENT", value: "Settlement"}, {key: "CHARGE_BACK", value: "Charge Back"}]; // hard-coded hack. Remove later.
+
+      },
       () => {}
     );
   }
