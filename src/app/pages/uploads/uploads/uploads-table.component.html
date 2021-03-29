@@ -91,12 +91,12 @@
               yPosition="below"
               xPosition="before"
             >
-              <button mat-menu-item>
-                <span>Modify</span>
+              <button mat-menu-item (click)="viewContent(row)">
+                <span>View Content</span>
               </button>
-              <button (click)="deleteCustomer(row)" mat-menu-item>
+              <!-- <button (click)="deleteCustomer(row)" mat-menu-item>
                 <span>Delete</span>
-              </button>
+              </button> -->
             </mat-menu>
           </td>
         </ng-container>

@@ -11,6 +11,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatInputModule } from "@angular/material/input";
 import { UploadsTableComponent } from "./uploads-table.component";
 import { UploadsCreateUpdateModule } from "./uploads-create-update/uploads-create-update.module";
+import { UploadsDetailComponent } from '../uploads-detail.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,7 @@ import { UploadsCreateUpdateModule } from "./uploads-create-update/uploads-creat
     BreadcrumbsModule,
     UploadsTableRoutingModule,
   ],
-  declarations: [UploadsTableComponent],
-  exports: [UploadsTableComponent],
+  declarations: [UploadsTableComponent, UploadsDetailComponent],
+  exports: [UploadsTableComponent, UploadsDetailComponent],
 })
 export class UploadsTableModule {}

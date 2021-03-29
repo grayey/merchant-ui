@@ -41,31 +41,37 @@ export class ChargeBacksTableComponent
   columns: ListColumn[] = [
     { name: "Checkbox", property: "checkbox", visible: false },
     // { name: "Name", property: "name", visible: true, isModelProperty: true },
+    { name: "Masked Pan", property: "maskedPan", visible: true, isModelProperty: true },
+
     {
-      name: "Username",
-      property: "username",
+      name: "Amount",
+      property: "amount",
       visible: true,
       isModelProperty: true,
     },
     {
-      name: "Full Name",
-      property: "fullName",
+      name: "Currency",
+      property: "currency",
       visible: true,
       isModelProperty: true,
     },
     {
-      name: "Status",
-      property: "activeStatus",
+      name: "Request Ref.",
+      property: "merchantRequestReference",
       visible: true,
       isModelProperty: true,
     },
-    // {
-    //   name: "Zipcode",
-    //   property: "zipcode",
-    //   visible: true,
-    //   isModelProperty: true,
-    // },
-    // { name: "City", property: "city", visible: true, isModelProperty: true },
+    {
+      name: "Transaction Ref.",
+      property: "merchantTransactionReference",
+      visible: true,
+      isModelProperty: true,
+    },
+    { name: "Started", property: "transactionStartDate", visible: true, isModelProperty: true },
+    { name: "Ended", property: "transactionEndDate", visible: true, isModelProperty: true },
+    { name: "Processing Fee", property: "processingFee", visible: true, isModelProperty: true },
+    { name: "Settlement Status", property: "settlementStatus", visible: true, isModelProperty: true },
+    // { name: "Masked Pan", property: "maskedPan", visible: true, isModelProperty: true },
     // {
     //   name: "Phone",
     //   property: "phoneNumber",
@@ -113,6 +119,14 @@ export class ChargeBacksTableComponent
     this.filterData = {
       type: "",
       status: "",
+      startDate: "",
+      endDate: "",
+      currency:"",
+      processingGatewayId:"",
+      bankId:"",
+      merchantId:"",
+      settlementStatus:""
+
     };
   }
 

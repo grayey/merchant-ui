@@ -29,7 +29,13 @@ export class LoginComponent implements OnInit {
     private appService: AppService,
     private authService: AuthService,
     private toastr: ToastrService
-  ) {}
+  ) {
+    const user = localStorage.getItem("userData");
+    if (user) {
+      const userData = JSON.parse(user);
+      this.authService.loginUser(userData);
+    }
+  }
   
   /**
    * 
@@ -43,6 +49,7 @@ export class LoginComponent implements OnInit {
       username: ["", Validators.required],
       password: ["", Validators.required],
     });
+  
   }
 
   send() {

@@ -343,10 +343,10 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    const user = localStorage.getItem("userData");
-    if (user) {
-      const userData = JSON.parse(user);
-      this.authService.loginUser(userData);
-    }
+    // const user = localStorage.getItem("userData");
+    // if (user) {
+    //   const userData = JSON.parse(user);
+    //   this.authService.loginUser(userData);
+    // }
   }
 }

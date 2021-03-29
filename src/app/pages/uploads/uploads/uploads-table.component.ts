@@ -18,6 +18,7 @@ import { Customer } from "./uploads-create-update/customer.model";
 import { fadeInRightAnimation } from "../../../../@fury/animations/fade-in-right.animation";
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
 import { AppService } from "src/services/app.service";
+import { UploadsDetailComponent } from '../uploads-detail.component';
 
 @Component({
   selector: "fury-uploads-table",
@@ -48,6 +49,31 @@ export class UploadsTableComponent implements OnInit, AfterViewInit, OnDestroy {
       visible: true,
       isModelProperty: true,
     },
+    {
+      name: "Total Records",
+      property: "totalNumberOfRecord",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Total Processed",
+      property: "noOfRecordsProcessed",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Reference",
+      property: "requestUniqueReference",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Upload Date",
+      property: "dateOfUpload",
+      visible: true,
+      isModelProperty: true,
+    },
+
     {
       name: "Status",
       property: "status",
@@ -210,6 +236,22 @@ export class UploadsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     value = value.trim();
     value = value.toLowerCase();
     this.dataSource.filter = value;
+  }
+
+  public viewContent = (data) => {
+    this.dialog.open(UploadsDetailComponent, { 
+      data,
+      panelClass:'dialog-lg'
+     }).afterOpened().subscribe(
+      (transResponse) =>{
+
+        console.log({ transResponse })
+
+      },
+      (error) =>{
+        console.log({ error })
+      })
+
   }
 
   ngOnDestroy() {}

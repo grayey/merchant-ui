@@ -72,12 +72,12 @@ export class SettlementsTableComponent
     { name: "Processing Fee", property: "processingFee", visible: true, isModelProperty: true },
     { name: "Settlement Status", property: "settlementStatus", visible: true, isModelProperty: true },
     // { name: "Masked Pan", property: "maskedPan", visible: true, isModelProperty: true },
-    {
-      name: "Phone",
-      property: "phoneNumber",
-      visible: true,
-      isModelProperty: true,
-    },
+    // {
+    //   name: "Phone",
+    //   property: "phoneNumber",
+    //   visible: true,
+    //   isModelProperty: true,
+    // },
     { name: "Actions", property: "actions", visible: true },
   ] as ListColumn[];
   pageSize = 10;
@@ -111,7 +111,13 @@ export class SettlementsTableComponent
       status: "",
       startDate: "",
       endDate: "",
+      currency:"",
+      processingGatewayId:"",
+      bankId:"",
+      merchantId:"",
+      settlementStatus:""
     };
+  
   }
 
   getSettlements(pageEvent?: PageEvent) {
