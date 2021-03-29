@@ -68,8 +68,8 @@ export class TransactionsTableComponent
       isModelProperty: true,
     },
     {
-      name: "Currency",
-      property: "currency",
+      name: "Masked PAN",
+      property: "maskedPan",
       visible: true,
       isModelProperty: true,
     },

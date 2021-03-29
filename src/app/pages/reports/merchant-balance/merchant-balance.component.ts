@@ -67,7 +67,7 @@ export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestro
     {
       name: "Sum to Merchant",
       property: "sumToMerchant",
-      visible: false,
+      visible: true,
       isModelProperty: true,
     }
   ] as ListColumn[];
@@ -119,9 +119,9 @@ export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestro
       this.reportService.getMerchantBalances().subscribe(
           (merchantBalancesResponse)=>{
               const refineMerchantBalances = (merchantBalance:any) => {
-                merchantBalance.sumToMerchant = formatCurrency(merchantBalance.sumToMerchant, this.locale,getCurrencySymbol('USD', 'wide'));
-                merchantBalance.totalProcessingCost = formatCurrency(merchantBalance.totalProcessingCost, this.locale,getCurrencySymbol('USD', 'wide'));
-                merchantBalance.transactionSum = formatCurrency(merchantBalance.transactionSum, this.locale,getCurrencySymbol('USD', 'wide'));
+                merchantBalance.sumToMerchant = formatCurrency(merchantBalance.sumToMerchant, this.locale,getCurrencySymbol(merchantBalance.currency, 'wide'));
+                merchantBalance.totalProcessingCost = formatCurrency(merchantBalance.totalProcessingCost, this.locale,getCurrencySymbol(merchantBalance.currency, 'wide'));
+                merchantBalance.transactionSum = formatCurrency(merchantBalance.transactionSum, this.locale,getCurrencySymbol(merchantBalance.currency, 'wide'));
                 merchantBalance.transactionCount = formatNumber(merchantBalance.transactionCount, this.locale);
                 return merchantBalance;
               }

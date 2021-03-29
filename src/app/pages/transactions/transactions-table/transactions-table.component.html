@@ -70,6 +70,14 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="maskedPan">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell>
+            Masked PAN
+          </th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            {{ row?.maskedPan }}
+          </td>
+        </ng-container>
         <!-- <ng-container matColumnDef="merchantRequestReference">
           <th *matHeaderCellDef class="image-cell" mat-header-cell>
             Merchant Request Reference
@@ -103,13 +111,6 @@
           </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
             {{ row.transactionDate }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="currency">
-          <th *matHeaderCellDef class="image-cell" mat-header-cell>Currency</th>
-          <td *matCellDef="let row" class="image-cell" mat-cell>
-            {{ row.currency }}
           </td>
         </ng-container>
 
