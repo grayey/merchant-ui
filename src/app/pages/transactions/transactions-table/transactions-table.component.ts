@@ -190,12 +190,12 @@ export class TransactionsTableComponent
   setFilterData() {
     this.filterData = {
       gatewayTransactionReference: "",
-      transactionDate: "",
+      transactionDate: getToday(),
       transactionStatus: "",
       amount: 0,
       merchantTransactionReference: "",
-      startDate: "", //getToday()
-      endDate: ""//getToday(),
+      startDate: getToday(), //getToday()
+      endDate: getToday()//getToday(),
     };
   }
 

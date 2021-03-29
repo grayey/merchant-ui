@@ -15,6 +15,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatDialog } from "@angular/material/dialog";
 import { AppService } from "src/services/app.service";
 import { IPlatformCostReport } from "../model";
+import { getToday } from "src/utils/helpers"
 
 @Component({
   selector: "fury-platform-cost",
@@ -130,8 +131,8 @@ export class PlatformCostComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filterData = {
       merchantId: 0,
       reportType: "",
-      startDate: "2021-01-16",
-      endDate: "2021-01-16",
+      startDate: getToday(),
+      endDate: getToday(),
     };
   }
 
@@ -140,8 +141,8 @@ export class PlatformCostComponent implements OnInit, AfterViewInit, OnDestroy {
     const { reportType, merchantId, endDate, startDate } = payload;
     this.filterData.reportType = reportType || "";
     this.filterData.merchantId = merchantId || 0;
-    this.filterData.startDate = startDate || "2021-01-16";
-    this.filterData.endDate = endDate || "2021-01-16";
+    this.filterData.startDate = startDate || "";
+    this.filterData.endDate = endDate || "";
 
     this.getPlatformCost();
   }
