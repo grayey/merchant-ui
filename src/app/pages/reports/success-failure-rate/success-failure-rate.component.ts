@@ -124,9 +124,9 @@ export class SuccessFailureRateComponent implements OnInit, AfterViewInit, OnDes
       this.reportService.getSuccessFailureRates().subscribe(
           (successFailureRatesResponse)=>{
               const refineSuccessFailureRates = (successFailureRate:any) => {
-                successFailureRate.totalSuccessfulSum = formatCurrency(successFailureRate.totalSuccessfulSum, this.locale,getCurrencySymbol('USD', 'wide'));
-                successFailureRate.totalFailedSum = formatCurrency(successFailureRate.totalFailedSum, this.locale,getCurrencySymbol('USD', 'wide'));
-                successFailureRate.totalTransactionSum = formatCurrency(successFailureRate.totalTransactionSum, this.locale,getCurrencySymbol('USD', 'wide'));
+                successFailureRate.totalSuccessfulSum = formatCurrency(successFailureRate.totalSuccessfulSum, this.locale,getCurrencySymbol(successFailureRate.currency, 'wide'));
+                successFailureRate.totalFailedSum = formatCurrency(successFailureRate.totalFailedSum, this.locale,getCurrencySymbol(successFailureRate.currency, 'wide'));
+                successFailureRate.totalTransactionSum = formatCurrency(successFailureRate.totalTransactionSum, this.locale,getCurrencySymbol(successFailureRate.currency, 'wide'));
                 successFailureRate.totalSuccessfulCount = formatNumber(successFailureRate.totalSuccessfulCount, this.locale);
                 successFailureRate.totalFailedCount = formatNumber(successFailureRate.totalFailedCount, this.locale);
                 return successFailureRate;

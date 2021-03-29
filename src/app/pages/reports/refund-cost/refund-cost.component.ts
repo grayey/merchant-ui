@@ -52,7 +52,7 @@ export class RefundCostComponent implements OnInit, AfterViewInit, OnDestroy {
       property: "totalRefundCost",
       visible: true,
       isModelProperty: true,
-    },
+    }
   ] as ListColumn[];
 
   pageSize = 10;
