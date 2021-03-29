@@ -42,7 +42,7 @@ export class ApiHandlerService extends ApiConfig{
           .take(2);
       })
     ).pipe(
-      catchError(this.errorHandler)
+      catchError((err) => this.errorHandler(err))
     ).pipe(
       map((res) => {
         return res['body'];
@@ -69,7 +69,7 @@ export class ApiHandlerService extends ApiConfig{
           .take(2);
       })
     ).pipe(
-      catchError(this.errorHandler)
+      catchError((err) => this.errorHandler(err))
     ).pipe(
       map((res) => res['body'])
     )
@@ -110,7 +110,7 @@ export class ApiHandlerService extends ApiConfig{
           .take(2);
       })
     ).pipe(
-      catchError(this.errorHandler)
+      catchError((err) => this.errorHandler(err))
     ).pipe(
       map((res) => {
         return res['body'];
@@ -136,7 +136,7 @@ export class ApiHandlerService extends ApiConfig{
           .delay(1000)
           .take(2);
       })
-      .catch(this.errorHandler)
+      .catch((err) => this.errorHandler(err))
       .map((res) => {
         console.log(res['body'],'RESSS');
         return res;
@@ -160,7 +160,7 @@ export class ApiHandlerService extends ApiConfig{
           .delay(1000)
           .take(2);
       })
-      .catch(this.errorHandler)
+      .catch((err) => this.errorHandler(err))
       .map((res) => res);
       ApiConfig.EXPECT_FILE = null;
       return fileResponse;
@@ -193,7 +193,7 @@ export class ApiHandlerService extends ApiConfig{
           .take(2);
       })
     ).pipe(
-      catchError(this.errorHandler)
+      catchError((err) => this.errorHandler(err))
     ).pipe(
       map((res) =>{
       ApiConfig.EXPECT_FILE = null;
@@ -226,6 +226,7 @@ export class ApiHandlerService extends ApiConfig{
    * @param err 
    */
   private checkLogout = (err) => {
+
     const { status } = err;
     if(status == CONSTANTS.HTTP_STATUS_FORBIDDEN || status == CONSTANTS.HTTP_STATUS_UNAUTHENTICATED){
       const logoutMsg = status == CONSTANTS.HTTP_STATUS_FORBIDDEN ? "Access forbidden":"Session Expired"

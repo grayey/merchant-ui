@@ -80,14 +80,19 @@ export const getToday = () =>{
 export const processErrors = (error): string => {
   let errorBody = '';
   let errorError = error['error'] || {msg: error['message'] };
-  const errors = errorError ? errorError['error_description'] || errorError['error'] || errorError['msg'] : {};
-  if (Object.keys(errors).length) {
-    for (const key in errors) {
-      errorBody += errors[key].toString();
+  const errors = errorError['error_description'] || errorError['error'] || errorError['message'] || errorError['msg'] || {};
+  if(typeof errors =='string'){
+    errorBody = errors;
+  }else{
+    if (Object.keys(errors).length) {
+      for (const key in errors) {
+        errorBody += errors[key].toString();
+      }
+    }else if (errorError?.message) {
+      errorBody = error?.error_description|| error?.message;
     }
-  }else if (errorError?.message) {
-    errorBody = error?.error_description|| error?.message;
   }
+ 
   return errorBody;
 }
 
