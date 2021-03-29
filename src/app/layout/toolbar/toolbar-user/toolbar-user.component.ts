@@ -9,7 +9,9 @@ import { AuthService } from "src/services/auth.service";
 export class ToolbarUserComponent implements OnInit {
   isOpen: boolean;
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService) {
+    this.checkRefresh();
+  }
 
   ngOnInit() {
     //console.log(this.authService.user);
@@ -26,4 +28,15 @@ export class ToolbarUserComponent implements OnInit {
   onClickOutside() {
     this.isOpen = false;
   }
+
+  private checkRefresh = () => {
+    
+    if(localStorage.getItem('REFRESH_APP') !==  'FALSE'){
+      localStorage.setItem('REFRESH_APP','FALSE'); 
+      window.location.reload();
+    }else{
+      localStorage.setItem('REFRESH_APP', null);
+    }
+  }
+
 }

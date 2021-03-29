@@ -27,7 +27,7 @@ export class AppComponent {
     private authService: AuthService,
     private splashScreenService: SplashScreenService
   ) {
-    this.checkRefresh();
+    // this.checkRefresh();
 
     this.route.queryParamMap
       .pipe(filter((queryParamMap) => queryParamMap.has("style")))
@@ -156,15 +156,6 @@ export class AppComponent {
     ].concat(this.dummyMenu()));
   }
 
-  private checkRefresh = () => {
-    
-    if(localStorage.getItem('REFRESH_APP') !==  'FALSE'){
-      localStorage.setItem('REFRESH_APP','FALSE'); 
-     window.location.reload();
-    }else{
-      localStorage.setItem('REFRESH_APP', null);
-    }
-  }
 
   private dummyMenu = () :any[] => {
 
