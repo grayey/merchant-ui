@@ -83,3 +83,19 @@ $dark-theme: mat-dark-theme((
   @import "./pages/coming-soon/coming-soon.component.theme";
   @import "./layout/config-panel/config-panel.component.theme";
 }
+
+
+.inactive-banner{
+  background-color: rgb(248,239,167) !important;
+  color: black !important;
+  width: 50%;
+  height: 60px;
+  position: absolute;
+  top: 0;
+  left:30%;
+  z-index: 10000;
+  border-left: 2px solid goldenrod;
+  border-right: 2px solid goldenrod;
+  border-bottom: 2px solid goldenrod;
+  border-radius: 5px;
+}

@@ -9,7 +9,8 @@ import { AuthService } from "src/services/auth.service";
 export class ToolbarUserComponent implements OnInit {
   isOpen: boolean;
 
-  constructor(public authService: AuthService) {
+
+  constructor(public authService: AuthService,) {
     this.checkRefresh();
   }
 
@@ -38,5 +39,8 @@ export class ToolbarUserComponent implements OnInit {
       localStorage.setItem('REFRESH_APP', null);
     }
   }
+
+ 
+
 
 }

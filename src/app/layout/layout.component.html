@@ -14,8 +14,13 @@
   <fury-config-panel></fury-config-panel>
 </fury-sidebar>
 <!-- END QUICKPANEL -->
+<div class='inactive-banner toolbar-user font-weight-bold text-center pt-3' *ngIf="showInactivityBanner">
+  You have been inactive. If you remain idle you'll be logged out in <span class="text-danger">{{timeDifference / 1000}} seconds.</span>
+</div>
+
 
 <div class="fury-layout-container" fxLayout="column">
+
   <ng-container *ngIf="(toolbarPosition$ | async) === 'above-fixed'">
     <ng-container *ngTemplateOutlet="toolbar"></ng-container>
   </ng-container>

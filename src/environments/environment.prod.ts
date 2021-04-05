@@ -6,6 +6,8 @@ export const environment = {
   // API_BASE_URL:"http://34.240.160.43:8085/api/v1/",
   // backend: 'http://34.240.160.43:8085',
   API_KEY:"",
-  BASIC_TOKEN:"Basic Y29kZWlxLXBheW1lbnQtZ2F0ZXdheTpzZWNyZXQ="
+  BASIC_TOKEN:"Basic Y29kZWlxLXBheW1lbnQtZ2F0ZXdheTpzZWNyZXQ=",
+  MAX_INACTIVE_TIME:5*60*1000, // 5 minutes
+  NOTIFY_INACTIVITY:30*1000 //30 seconds
 
 };

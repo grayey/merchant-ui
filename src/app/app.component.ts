@@ -9,12 +9,14 @@ import { Platform } from "@angular/cdk/platform";
 import { SplashScreenService } from "../@fury/services/splash-screen.service";
 import { AuthService } from "../services/auth.service";
 import { environment } from "src/environments/environment";
+import { APP_TASKS } from "src/appTasks";
 
 @Component({
   selector: "fury-root",
   templateUrl: "./app.component.html",
 })
 export class AppComponent {
+
 
   constructor(
     private sidenavService: SidenavService,
@@ -28,6 +30,7 @@ export class AppComponent {
     private splashScreenService: SplashScreenService
   ) {
     // this.checkRefresh();
+  
 
     this.route.queryParamMap
       .pipe(filter((queryParamMap) => queryParamMap.has("style")))
@@ -157,6 +160,11 @@ export class AppComponent {
   }
 
 
+  private buildMenuFromTasks = () =>{
+    const allTasks = APP_TASKS
+  }
+
+  
   private dummyMenu = () :any[] => {
 
     // environment.production 
@@ -342,11 +350,15 @@ export class AppComponent {
     ]
   }
 
+
+  
+
   ngOnInit() {
     // const user = localStorage.getItem("userData");
     // if (user) {
     //   const userData = JSON.parse(user);
     //   this.authService.loginUser(userData);
     // }
+   
   }
 }

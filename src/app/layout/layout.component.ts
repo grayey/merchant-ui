@@ -1,10 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from "@angular/common";
+import { Component, OnDestroy, OnInit, Inject, ViewChild } from '@angular/core';
 import { SidebarDirective } from '../../@fury/shared/sidebar/sidebar.directive';
 import { SidenavService } from './sidenav/sidenav.service';
 import { filter, map, startWith } from 'rxjs/operators';
 import { ThemeService } from '../../@fury/services/theme.service';
+import { AuthService } from "src/services/auth.service";
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { checkRouterChildsData } from '../../@fury/utils/check-router-childs-data';
+import { environment } from "src/environments/environment";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'fury-layout',
@@ -14,6 +18,13 @@ import { checkRouterChildsData } from '../../@fury/utils/check-router-childs-dat
 export class LayoutComponent implements OnInit, OnDestroy {
 
   @ViewChild('configPanel', { static: true }) configPanel: SidebarDirective;
+
+  private intervalTimer;
+  private maxInactiveTime = environment.MAX_INACTIVE_TIME;
+  private notifyInactivity = environment.NOTIFY_INACTIVITY;
+  private idleTime = 0;
+  public showInactivityBanner:boolean = false;
+  public timeDifference:number;
 
   sidenavOpen$ = this.sidenavService.open$;
   sidenavMode$ = this.sidenavService.mode$;
@@ -36,9 +47,15 @@ export class LayoutComponent implements OnInit, OnDestroy {
   constructor(private sidenavService: SidenavService,
               private themeService: ThemeService,
               private route: ActivatedRoute,
-              private router: Router) {}
+              private router: Router,
+              private authService: AuthService,
+              private toasterService:ToastrService,
+              @Inject(DOCUMENT) private document: Document,) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.inactivityTimer();
+
+  }
 
   openQuickPanel() {
     this.quickPanelOpen = true;
@@ -56,6 +73,41 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.sidenavService.open();
   }
 
-  ngOnDestroy(): void {}
+  private resetTimer  = () => {
+    this.idleTime = 0; 
+    clearInterval(this.intervalTimer);
+    this.intervalTimer = setInterval(this.checkInactiveLogout, 1000);    
+}
+
+private checkInactiveLogout = () => {
+  this.idleTime += 1000;
+  this.showInactivityBanner = false;
+  this.timeDifference = this.maxInactiveTime - this.idleTime;
+  if(this.timeDifference <= 0){
+    this.idleTime = 0;
+    this.logout();
+    this.toasterService.error('You were logged out due to inactivity.')
+  }else if(this.timeDifference <= this.notifyInactivity){
+    this.showInactivityBanner = true;
+  }
+
+}
+
+
+
+private inactivityTimer = () => {
+  this.resetTimer();
+  this.document.onclick = this.resetTimer;
+  this.document.onkeypress = this.resetTimer;
+  this.document.ontouchstart = this.resetTimer;
+}
+
+private logout() {
+  this.authService.logoutUser();
+}
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalTimer);
+  }
 }
 
