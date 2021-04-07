@@ -84,7 +84,6 @@ private checkInactiveLogout = () => {
   this.showInactivityBanner = false;
   this.timeDifference = this.maxInactiveTime - this.idleTime;
   if(this.timeDifference <= 0){
-    this.idleTime = 0;
     this.logout();
     this.toasterService.error('You were logged out due to inactivity.')
   }else if(this.timeDifference <= this.notifyInactivity){

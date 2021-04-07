@@ -6,18 +6,17 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { fadeInRightAnimation } from "src/@fury/animations/fade-in-right.animation";
+import { fadeInUpAnimation } from "src/@fury/animations/fade-in-up.animation";
+import { ListColumn } from "src/@fury/shared/list/list-column.model";
+import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { Observable, of, ReplaySubject } from "rxjs";
-import { filter } from "rxjs/operators";
-import { ListColumn } from "../../../../@fury/shared/list/list-column.model";
-import { CustomerCreateUpdateComponent } from "./customer-create-update/customer-create-update.component";
-import { Customer } from "./customer-create-update/customer.model";
-import { fadeInRightAnimation } from "../../../../@fury/animations/fade-in-right.animation";
-import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
+import { MatDialog } from "@angular/material/dialog";
 import { AppService } from "src/services/app.service";
+import { IPlatformCostReport } from "../../reports/model";
+import { getToday } from "src/utils/helpers"
+
 
 @Component({
   selector: "fury-settlements-table",
@@ -25,27 +24,22 @@ import { AppService } from "src/services/app.service";
   styleUrls: ["./settlements-table.component.scss"],
   animations: [fadeInRightAnimation, fadeInUpAnimation],
 })
-export class SettlementsTableComponent
-  implements OnInit, AfterViewInit, OnDestroy {
-  /**
-   * Simulating a service with HTTP that returns Observables
-   * You probably want to remove this and do all requests in a service with HTTP
-   */
-  subject$: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1);
-  data$: Observable<Customer[]> = this.subject$.asObservable();
-  customers: Customer[];
-  settlements = [];
+export class SettlementsTableComponent implements OnInit, AfterViewInit, OnDestroy {
+  transactions = [];
   dataLenght: number = 10;
+  filterData: any;
 
   @Input()
   columns: ListColumn[] = [
-    { name: "Checkbox", property: "checkbox", visible: false },
-    // { name: "Name", property: "name", visible: true, isModelProperty: true },
-    { name: "Masked Pan", property: "maskedPan", visible: true, isModelProperty: true },
-
     {
-      name: "Amount",
-      property: "amount",
+      name: "Merchant",
+      property: "merchant",
+      visible: true,
+      isModelProperty: true,
+    },
+    {
+      name: "Merchant Account Number",
+      property: "merchantAccountNumber",
       visible: true,
       isModelProperty: true,
     },
@@ -56,33 +50,27 @@ export class SettlementsTableComponent
       isModelProperty: true,
     },
     {
-      name: "Request Ref.",
-      property: "merchantRequestReference",
+      name: "Amount To Merchant",
+      property: "amountToMerchant",
       visible: true,
       isModelProperty: true,
     },
     {
-      name: "Transaction Ref.",
-      property: "merchantTransactionReference",
+      name: "Amount To Bank",
+      property: "amountToBank",
       visible: true,
       isModelProperty: true,
     },
-    { name: "Started", property: "transactionStartDate", visible: true, isModelProperty: true },
-    { name: "Ended", property: "transactionEndDate", visible: true, isModelProperty: true },
-    { name: "Processing Fee", property: "processingFee", visible: true, isModelProperty: true },
-    { name: "Settlement Status", property: "settlementStatus", visible: true, isModelProperty: true },
-    // { name: "Masked Pan", property: "maskedPan", visible: true, isModelProperty: true },
-    // {
-    //   name: "Phone",
-    //   property: "phoneNumber",
-    //   visible: true,
-    //   isModelProperty: true,
-    // },
-    { name: "Actions", property: "actions", visible: true },
+    {
+      name: "Amount To Platform",
+      property: "amountToPlatform",
+      visible: true,
+      isModelProperty: true,
+    },
   ] as ListColumn[];
+
   pageSize = 10;
-  filterData: any;
-  dataSource: MatTableDataSource<Customer> | null;
+  dataSource: MatTableDataSource<IPlatformCostReport> | null;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -98,29 +86,15 @@ export class SettlementsTableComponent
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
     this.setFilterData();
-    this.getSettlements();
+    this.getPlatformCost();
   }
 
   ngAfterViewInit() {
+    // this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  setFilterData() {
-    this.filterData = {
-      type: "",
-      status: "",
-      startDate: "",
-      endDate: "",
-      currency:"",
-      processingGatewayId:"",
-      bankId:"",
-      merchantId:"",
-      settlementStatus:""
-    };
-  
-  }
-
-  getSettlements(pageEvent?: PageEvent) {
+  getPlatformCost(pageEvent?: PageEvent) {
     let pageNumber, pageSize;
     if (pageEvent) {
       pageSize = pageEvent.pageSize;
@@ -132,75 +106,23 @@ export class SettlementsTableComponent
 
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
     this.appService
-      .getSettlements(pageNumber, pageSize, this.filterData)
+      .getPlatformCost(pageNumber, pageSize, this.filterData)
       .subscribe(
         (response) => {
-          this.settlements = response.data;
-          this.dataSource.data = this.settlements;
+          this.transactions = response.data;
+          this.dataSource.data = this.transactions;
           this.dataLenght = response.rows;
         },
-        (err) => {},
-        () => {}
+        (err: any) => {
+          // this.toastrService.error(
+          //   "An unknown error was encountered.Please try again",
+          //   "Unknown Error"
+          // );
+        },
+        () => {
+          // this.hmoService.hideSpinner();
+        }
       );
-  }
-
-  createCustomer() {
-    this.dialog
-      .open(CustomerCreateUpdateComponent)
-      .afterClosed()
-      .subscribe((customer: Customer) => {
-        /**
-         * Customer is the updated customer (if the user pressed Save - otherwise it's null)
-         */
-        this.getSettlements();
-        // if (customer) {
-        //   /**
-        //    * Here we are updating our local array.
-        //    * You would probably make an HTTP request here.
-        //    */
-        //   this.customers.unshift(new Customer(customer));
-        //   this.subject$.next(this.customers);
-        // }
-      });
-  }
-
-  updateCustomer(customer) {
-    this.dialog
-      .open(CustomerCreateUpdateComponent, {
-        data: customer,
-      })
-      .afterClosed()
-      .subscribe((customer) => {
-        /**
-         * Customer is the updated customer (if the user pressed Save - otherwise it's null)
-         */
-        this.getSettlements();
-        // if (customer) {
-        //   /**
-        //    * Here we are updating our local array.
-        //    * You would probably make an HTTP request here.
-        //    */
-        //   const index = this.customers.findIndex(
-        //     (existingCustomer) => existingCustomer.id === customer.id
-        //   );
-        //   this.customers[index] = new Customer(customer);
-        //   this.subject$.next(this.customers);
-        // }
-      });
-  }
-
-  deleteCustomer(customer) {
-    /**
-     * Here we are updating our local array.
-     * You would probably make an HTTP request here.
-     */
-    this.customers.splice(
-      this.customers.findIndex(
-        (existingCustomer) => existingCustomer.id === customer.id
-      ),
-      1
-    );
-    this.subject$.next(this.customers);
   }
 
   onFilterChange(value) {
@@ -212,13 +134,24 @@ export class SettlementsTableComponent
     this.dataSource.filter = value;
   }
 
+  setFilterData() {
+    this.filterData = {
+      merchantId: 0,
+      reportType: "",
+      startDate: getToday(),
+      endDate: getToday(),
+    };
+  }
+
   onFilterClick(payload: any): void {
     console.log(payload);
-    const { endDate, startDate } = payload;
-    this.filterData.startDate = startDate;
-    this.filterData.endDate = endDate;
+    const { reportType, merchantId, endDate, startDate } = payload;
+    this.filterData.reportType = reportType || "";
+    this.filterData.merchantId = merchantId || 0;
+    this.filterData.startDate = startDate || "";
+    this.filterData.endDate = endDate || "";
 
-    this.getSettlements();
+    this.getPlatformCost();
   }
 
   ngOnDestroy() {}
