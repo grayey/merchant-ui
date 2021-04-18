@@ -20,6 +20,7 @@ import { saveAs } from "file-saver/FileSaver";
 import { refineData, getToday } from "../../../../utils/helpers";
 import { formatCurrency, getCurrencySymbol, formatNumber } from '@angular/common';
 import { ISFRFilter } from "src/interfaces/sfr-filter.interface";
+import { Permissions } from "src/utils/permissions";
 
 @Component({
   selector: 'fury-success-failure-rate',
@@ -27,7 +28,7 @@ import { ISFRFilter } from "src/interfaces/sfr-filter.interface";
   styleUrls: ['./success-failure-rate.component.scss'],
   animations: [fadeInUpAnimation,fadeInRightAnimation ]
 })
-export class SuccessFailureRateComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SuccessFailureRateComponent extends Permissions implements OnInit, AfterViewInit, OnDestroy {
   transactions = [];
   dataLength: number = 10;
   REPORT = "SFR";
@@ -91,7 +92,9 @@ export class SuccessFailureRateComponent implements OnInit, AfterViewInit, OnDes
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private reportService: ReportsService, @Inject(LOCALE_ID) private locale: string) {}
+  constructor(private dialog: MatDialog, private reportService: ReportsService, @Inject(LOCALE_ID) private locale: string) {
+    super("Success & Failure Rate")
+  }
 
   get visibleColumns() {
     return this.columns

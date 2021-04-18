@@ -63,6 +63,13 @@ export class UserService {
 
   }
 
+     /**
+   * This is used to get authenticated user tasks from cache
+   */
+      public getAuthUserTasks() {
+        return JSON.parse(localStorage.getItem('USER_TASKS'));
+      }
+    
 
 
   /**

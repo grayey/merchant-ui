@@ -6,6 +6,11 @@ export const APP_TASKS = [
       actions:["CAN_VIEW_ALL", "CAN_CREATE", "CAN_EDIT","CAN_FILTER"]
     },
     {
+      functionName:"Roles",
+      functionType:"BOTH",
+      actions:["CAN_VIEW_ALL", "CAN_CREATE", "CAN_EDIT","CAN_FILTER", "CAN_VIEW_DETAIL"]
+    },
+    {
       functionName:"Merchants",
       functionType:"ADMIN",
       actions:["CAN_VIEW_ALL", "CAN_CREATE", "CAN_EDIT","CAN_FILTER"]
@@ -35,27 +40,27 @@ export const APP_TASKS = [
       functionType:"BOTH",
       subModules:[
         {
-          functionName:"PlatformCost",
+          functionName:"Platform Cost",
           functionType:"BOTH",
           actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
         }, 
          {
-          functionName:"RefundCost",
+          functionName:"Refund Cost",
           functionType:"BOTH",
           actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
         },
         {
-          functionName:"ChargeBackCost",
+          functionName:"Charge Back Cost",
           functionType:"BOTH",
           actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
         },
         {
-          functionName:"SuccessFailureRate",
+          functionName:"Success & Failure Rate",
           functionType:"BOTH",
           actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
         },
         {
-          functionName:"MerchantsBalance",
+          functionName:"Merchants' Balance",
           functionType:"BOTH",
           actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
         },
@@ -63,7 +68,7 @@ export const APP_TASKS = [
       ]
     },
     {
-      functionName:"Transaction",
+      functionName:"Transactions",
       functionType:"BOTH",
       actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
     },

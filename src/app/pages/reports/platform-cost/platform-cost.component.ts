@@ -15,7 +15,9 @@ import { MatSort } from "@angular/material/sort";
 import { MatDialog } from "@angular/material/dialog";
 import { AppService } from "src/services/app.service";
 import { IPlatformCostReport } from "../model";
-import { getToday } from "src/utils/helpers"
+import { getToday } from "src/utils/helpers";
+import { Permissions } from "src/utils/permissions";
+
 
 @Component({
   selector: "fury-platform-cost",
@@ -23,7 +25,7 @@ import { getToday } from "src/utils/helpers"
   styleUrls: ["./platform-cost.component.scss"],
   animations: [fadeInRightAnimation, fadeInUpAnimation],
 })
-export class PlatformCostComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PlatformCostComponent extends Permissions implements OnInit, AfterViewInit, OnDestroy {
   transactions = [];
   dataLenght: number = 10;
   filterData: any;
@@ -68,7 +70,9 @@ export class PlatformCostComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private appService: AppService) {}
+  constructor(private dialog: MatDialog, private appService: AppService) {
+    super("Platform Cost");
+  }
 
   get visibleColumns() {
     return this.columns

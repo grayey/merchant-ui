@@ -15,6 +15,7 @@ import { fadeInUpAnimation } from "src/@fury/animations/fade-in-up.animation";
 import { ListColumn } from "src/@fury/shared/list/list-column.model";
 import { AppService } from "src/services/app.service";
 import { IRefundCostReport } from "../model";
+import { Permissions } from "src/utils/permissions";
 
 @Component({
   selector: "fury-refund-cost",
@@ -22,7 +23,7 @@ import { IRefundCostReport } from "../model";
   styleUrls: ["./refund-cost.component.scss"],
   animations: [fadeInRightAnimation, fadeInUpAnimation],
 })
-export class RefundCostComponent implements OnInit, AfterViewInit, OnDestroy {
+export class RefundCostComponent extends Permissions implements OnInit, AfterViewInit, OnDestroy {
   transactions = [];
   dataLenght: number = 10;
   filterData: any;
@@ -61,7 +62,9 @@ export class RefundCostComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private appService: AppService) {}
+  constructor(private dialog: MatDialog, private appService: AppService) {
+    super("Refund Cost")
+  }
 
   get visibleColumns() {
     return this.columns

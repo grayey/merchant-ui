@@ -10,6 +10,7 @@ import { SplashScreenService } from "../@fury/services/splash-screen.service";
 import { AuthService } from "../services/auth.service";
 import { environment } from "src/environments/environment";
 import { APP_TASKS } from "src/appTasks";
+import { UserService } from "src/services/user/user.service";
 
 @Component({
   selector: "fury-root",
@@ -51,7 +52,7 @@ export class AppComponent {
       this.renderer.addClass(this.document.body, "is-blink");
     }
 
-    this.sidenavService.addItems([
+    const appSideBarItems = [
       // {
       //   name: "APPS",
       //   position: 5,
@@ -164,7 +165,11 @@ export class AppComponent {
       },
 
       
-    ].concat(this.dummyMenu()));
+    ];
+
+    
+
+    this.sidenavService.addItems(appSideBarItems.concat(this.dummyMenu()));
   }
 
 

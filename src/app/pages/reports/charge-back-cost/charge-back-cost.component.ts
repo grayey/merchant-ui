@@ -18,6 +18,7 @@ import { IChargebackCostReport } from "../model";
 // import { saveAs } from "src/services/node_modules/file-saver/FileSaver";
 import { saveAs } from "file-saver/FileSaver";
 import { getToday } from "src/utils/helpers";
+import { Permissions } from "src/utils/permissions";
 
 @Component({
   selector: "fury-charge-back-cost",
@@ -25,7 +26,7 @@ import { getToday } from "src/utils/helpers";
   styleUrls: ["./charge-back-cost.component.scss"],
   animations: [fadeInRightAnimation, fadeInUpAnimation],
 })
-export class ChargeBackCostComponent
+export class ChargeBackCostComponent extends Permissions 
   implements OnInit, AfterViewInit, OnDestroy {
   transactions = [];
   dataLenght: number = 10;
@@ -65,7 +66,9 @@ export class ChargeBackCostComponent
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private appService: AppService,) {}
+  constructor(private dialog: MatDialog, private appService: AppService,) {
+    super('Charge Back Cost');
+  }
 
   get visibleColumns() {
     return this.columns

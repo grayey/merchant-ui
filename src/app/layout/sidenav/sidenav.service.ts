@@ -18,6 +18,8 @@ export class SidenavService implements OnDestroy {
   mobileBreakpoint = 'lt-md';
   appUser:any;
   isAdmin:boolean = false;
+  userTasks:any[] = [];
+  userModules:any[] = [];
 
   /**
    * Sidenav Items
@@ -94,7 +96,14 @@ export class SidenavService implements OnDestroy {
 
     this.appUser = this.userService.getAuthUser();
     // console.log('APP USER', this.appUser);
-    this.isAdmin = (this.appUser && !this.appUser.merchantId)
+    this.isAdmin = (this.appUser && !this.appUser.merchantId);
+    this.userTasks = this.userService.getAuthUserTasks();
+    this.userTasks.forEach((task) => {
+      if(task.parentModule){
+        this.userModules.push(task.parentModule)
+      }
+      this.userModules.push(task.moduleName)
+    });
   }
 
   open() {
@@ -130,6 +139,9 @@ export class SidenavService implements OnDestroy {
     const foundIndex = this.items.findIndex((existingItem) => isEqual(existingItem, item));
     if (foundIndex === -1) {
       this.setParentRecursive(item);
+      if(item.subItems){
+        item.subItems = item.subItems.filter(sub => this.itemCanDisplay(sub))
+      }
       this.items = [...this.items, item];
     }
   }
@@ -228,6 +240,13 @@ export class SidenavService implements OnDestroy {
 
   private itemCanDisplay = (item):boolean => {
     const { name } = item;
-    return this.isAdmin || (name !== 'Merchants' && name !== 'Uploads');
+    // this.isAdmin || (name !== 'Merchants' && name !== 'Uploads') ||
+    return this.userModules.includes(name) //|| this.isAdmin;
+    
+    
   }
+
+
+
+
 }

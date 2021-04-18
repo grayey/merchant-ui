@@ -71,14 +71,35 @@ export class LoginComponent implements OnInit {
     // );
   }
 
+  public async getUserRoleById(user){
+    const { roleId } = user;
+    return this.appService.getUserRoleById(roleId).subscribe(
+        (roleResponse) => {
+          console.log({ roleResponse });
+          const { roleFunctionsJson } = roleResponse.data;
+          const userTasks = roleFunctionsJson || "[]";
+          localStorage.setItem('USER_TASKS', userTasks);
+          this.router.navigateByUrl('/transactions');
+          // this.authService.performLogin(user);
+        },
+        (error) => {
+          this.loaders.processing = false;
+          this.toastr.error(`Could not resolve system permissions`);
+
+        });
+
+  }
+
   private login(data: any) {
     const { username, password } = data;
     this.loaders.processing = true;
     this.appService.loginUser(username, password).subscribe(
       (response) => {
         const user = response;
+        this.authService.performLogin(user, () => {
+          this.getUserRoleById(user)
+        })
         // this.loaders.processing = false;
-        this.authService.performLogin(user);
       },
       (err) => {
         console.log("Could not login because of wrong credentials", err);

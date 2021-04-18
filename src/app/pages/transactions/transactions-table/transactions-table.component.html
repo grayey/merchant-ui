@@ -12,10 +12,10 @@
       [transactionStatus]="true"
       [amount]="true"
       [merchantTransactionReference]="true"
-      [showFilter]="true"
+      [showFilter]="CAN_FILTER"
       [startDate]="true"
       [endDate]="true"
-      [showDownloadFilter]="true"
+      [showDownloadFilter]="CAN_DOWNLOAD"
       (filterClick)="onFilterClick($event)"
       [startDate]="true"
       [endDate]="true"
@@ -213,7 +213,7 @@
               yPosition="below"
               xPosition="before"
             >
-            <button (click)="viewTransaction(row)" mat-menu-item>
+            <button (click)="viewTransaction(row)" *ngIf="CAN_VIEW_DETAIL" mat-menu-item>
               <span>View</span>
             </button>
 

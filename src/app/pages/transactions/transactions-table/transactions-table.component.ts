@@ -23,6 +23,7 @@ import { AppService } from "src/services/app.service";
 import { DatePipe, formatCurrency, getCurrencySymbol, formatNumber  } from "@angular/common";
 import { ViewTransactionComponent } from "./view-transaction.component";
 import { getToday } from "src/utils/helpers"
+import { Permissions } from "src/utils/permissions";
 
 
 @Component({
@@ -31,7 +32,7 @@ import { getToday } from "src/utils/helpers"
   styleUrls: ["./transactions-table.component.scss"],
   animations: [fadeInRightAnimation, fadeInUpAnimation],
 })
-export class TransactionsTableComponent
+export class TransactionsTableComponent extends Permissions 
   implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Simulating a service with HTTP that returns Observables
@@ -151,7 +152,9 @@ export class TransactionsTableComponent
     private appService: AppService,
     private datePipe: DatePipe,
     @Inject(LOCALE_ID) private locale: string
-  ) {}
+  ) {
+    super("Transactions");
+  }
 
   get visibleColumns() {
     return this.columns

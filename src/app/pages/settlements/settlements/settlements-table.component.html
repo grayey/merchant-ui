@@ -11,11 +11,11 @@
       name="Settlements"
       [columns]="columns"
       (filterChange)="onFilterChange($event)"
-      [showFilter]="true"
+      [showFilter]="CAN_FILTER"
       [merchantId]="true"
       [reportType]="true"
       (filterClick)="onFilterClick($event)"
-      [showDownloadFilter]="true"
+      [showDownloadFilter]="CAN_DOWNLOAD"
       [startDate]="true"
       [endDate]="true"
     >

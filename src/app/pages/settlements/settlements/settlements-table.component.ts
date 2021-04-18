@@ -15,7 +15,10 @@ import { MatSort } from "@angular/material/sort";
 import { MatDialog } from "@angular/material/dialog";
 import { AppService } from "src/services/app.service";
 import { IPlatformCostReport } from "../../reports/model";
-import { getToday } from "src/utils/helpers"
+import { getToday } from "src/utils/helpers";
+
+import { Permissions } from "src/utils/permissions";
+
 
 
 @Component({
@@ -24,7 +27,7 @@ import { getToday } from "src/utils/helpers"
   styleUrls: ["./settlements-table.component.scss"],
   animations: [fadeInRightAnimation, fadeInUpAnimation],
 })
-export class SettlementsTableComponent implements OnInit, AfterViewInit, OnDestroy {
+export class SettlementsTableComponent extends Permissions implements OnInit, AfterViewInit, OnDestroy {
   transactions = [];
   dataLenght: number = 10;
   filterData: any;
@@ -75,7 +78,9 @@ export class SettlementsTableComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private appService: AppService) {}
+  constructor(private dialog: MatDialog, private appService: AppService) {
+    super("Settlements");
+  }
 
   get visibleColumns() {
     return this.columns

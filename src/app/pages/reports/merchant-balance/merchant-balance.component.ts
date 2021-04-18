@@ -20,6 +20,7 @@ import { saveAs } from "file-saver/FileSaver";
 import { refineData, getToday } from "../../../../utils/helpers";
 import { formatCurrency, getCurrencySymbol, formatNumber } from '@angular/common';
 import { IMerchantBalanceFilter } from "src/interfaces/merchant-balance-filter.interface";
+import { Permissions } from "src/utils/permissions";
 
 @Component({
   selector: 'fury-merchant-balance',
@@ -27,7 +28,7 @@ import { IMerchantBalanceFilter } from "src/interfaces/merchant-balance-filter.i
   styleUrls: ['./merchant-balance.component.scss'],
   animations: [fadeInUpAnimation,fadeInRightAnimation ]
 })
-export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MerchantBalanceComponent extends Permissions implements OnInit, AfterViewInit, OnDestroy {
   transactions = [];
   dataLength: number = 10;
   REPORT = "MERCHANT_BALANCE";
@@ -86,7 +87,9 @@ export class MerchantBalanceComponent implements OnInit, AfterViewInit, OnDestro
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private reportService: ReportsService, @Inject(LOCALE_ID) private locale: string) {}
+  constructor(private dialog: MatDialog, private reportService: ReportsService, @Inject(LOCALE_ID) private locale: string) {
+    super("Merchants' Balance")
+  }
 
   get visibleColumns() {
     return this.columns
