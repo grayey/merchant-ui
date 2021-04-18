@@ -99,3 +99,7 @@ $dark-theme: mat-dark-theme((
   border-bottom: 2px solid goldenrod;
   border-radius: 5px;
 }
+
+button:disabled{
+  cursor: not-allowed !important;
+}

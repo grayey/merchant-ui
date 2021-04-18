@@ -13,6 +13,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Observable, of, ReplaySubject } from "rxjs";
 import { filter } from "rxjs/operators";
 import { ListColumn } from "src/@fury/shared/list/list-column.model";
+
 import { MerchantCreateComponent } from "./merchant-create.component";
 import { MerchantUpdateComponent } from "./merchant-update.component";
 import { IMerchant } from "src/interfaces/merchant.interface";

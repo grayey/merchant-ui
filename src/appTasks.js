@@ -1,75 +1,75 @@
 
 export const APP_TASKS = [
     {
-      name:"Users",
-      taskType:"ADMIN",
+      functionName:"Users",
+      functionType:"ADMIN",
       actions:["CAN_VIEW_ALL", "CAN_CREATE", "CAN_EDIT","CAN_FILTER"]
     },
     {
-      name:"Merchants",
-      taskType:"ADMIN",
+      functionName:"Merchants",
+      functionType:"ADMIN",
       actions:["CAN_VIEW_ALL", "CAN_CREATE", "CAN_EDIT","CAN_FILTER"]
     },
     {
-      name:"Uploads",
-      taskType:"ADMIN",
+      functionName:"Uploads",
+      functionType:"ADMIN",
       actions:["CAN_VIEW_ALL", "CAN_CREATE", "CAN_VIEW_DETAIL","CAN_FILTER"]
     },
     {
-      name:"Settlements",
-      taskType:"BOTH",
+      functionName:"Settlements",
+      functionType:"BOTH",
       actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
     },
     {
-      name:"Chargebacks",
-      taskType:"BOTH",
+      functionName:"Chargebacks",
+      functionType:"BOTH",
       actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
     },
     {
-      name:"Refunds",
-      taskType:"BOTH",
+      functionName:"Refunds",
+      functionType:"BOTH",
       actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
     },
     {
-      name:"Reports",
-      taskType:"BOTH",
+      functionName:"Reports",
+      functionType:"BOTH",
       subModules:[
         {
-          name:"PlatformCost",
-          taskType:"BOTH",
+          functionName:"PlatformCost",
+          functionType:"BOTH",
           actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
         }, 
          {
-          name:"RefundCost",
-          taskType:"BOTH",
+          functionName:"RefundCost",
+          functionType:"BOTH",
           actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
         },
         {
-          name:"ChargeBackCost",
-          taskType:"BOTH",
+          functionName:"ChargeBackCost",
+          functionType:"BOTH",
           actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
         },
         {
-          name:"SuccessFailureRate",
-          taskType:"BOTH",
+          functionName:"SuccessFailureRate",
+          functionType:"BOTH",
           actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
         },
         {
-          name:"MerchantsBalance",
-          taskType:"BOTH",
+          functionName:"MerchantsBalance",
+          functionType:"BOTH",
           actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
         },
   
       ]
     },
     {
-      name:"Transaction",
-      taskType:"BOTH",
+      functionName:"Transaction",
+      functionType:"BOTH",
       actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
     },
     // {
-    //   name:"Transaction",
-    //   taskType:"BOTH",
+    //   functionName:"Transaction",
+    //   functionType:"BOTH",
     //   actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
     // }
 

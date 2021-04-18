@@ -35,6 +35,12 @@ export class LoginComponent implements OnInit {
       const userData = JSON.parse(user);
       this.authService.loginUser(userData);
     }
+
+    // const INACTIVE_INTERVAL = localStorage.getItem('INACTIVE_INTERVAL');
+    // const interval = INACTIVE_INTERVAL ? +INACTIVE_INTERVAL : null;
+    // console.log({interval}, 'cleared')
+    // clearInterval(interval);
+    // localStorage.setItem('INACTIVE_INTERVAL','')
   }
   
   /**

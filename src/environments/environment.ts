@@ -11,6 +11,6 @@ export const environment = {
   API_BASE_URL:"http://34.240.160.43:8085/api/v1/",
   API_KEY:"",
   BASIC_TOKEN:"Basic Y29kZWlxLXBheW1lbnQtZ2F0ZXdheTpzZWNyZXQ=",
-  MAX_INACTIVE_TIME:60*1000, //60 seconds,
+  MAX_INACTIVE_TIME:5*60*1000, //5 X 60 seconds,
   NOTIFY_INACTIVITY:30*1000 //30 seconds
 };

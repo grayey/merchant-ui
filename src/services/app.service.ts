@@ -58,7 +58,46 @@ export class AppService {
     const url = `user/${urlParams}`;
     return this.apiHandler.get(url);
   }
+
+
+  public getRoles(pageNumber, pageSize, filterData): Observable<any> {
+    const merchantId = this.getMerchantId() || 0;
+    console.log({ filterData })
+    const paramData = {...{pageNumber, pageSize,
+      merchantId
+    }, ...filterData};
+    const urlParams = buildUrlParams(paramData);
+    const url = `role/${urlParams}`;
+    return this.apiHandler.get(url);
+  }
   
+  public getUserRoleById = (roleId) =>{
+    const url = `role/${roleId}`;
+    return this.apiHandler.get(url);
+  }
+
+  public assignTasksToRole = (roleId, functions) =>{
+    const url = `role/assign-function`;
+    const data = {
+      roleId,
+      functions
+    }
+    return this.apiHandler.post(url,data);
+  }
+
+  
+  public createRole(data){
+    const url = `role`;
+    data.merchantId =  this.getMerchantId();
+    return this.apiHandler.post(url,data);
+  }
+
+  public updateRole(data, roleId){
+    const url = `role`;
+    data.merchantId =  this.getMerchantId();
+    data.id = roleId;
+    return this.apiHandler.post(url,data);
+  }
   //0bsolete
   getUploads_old(pageNumber, pageSize, filterData): any {
     const { type, status } = filterData;
@@ -423,7 +462,7 @@ export class AppService {
     fileSaver.saveAs(blob, fileName);
   }
 
-  private getMerchantId = (merchantId) =>{
+  public getMerchantId = (merchantId = null) =>{
     return this.isAdmin ? merchantId : this.authUser?.merchantId;
   }
   

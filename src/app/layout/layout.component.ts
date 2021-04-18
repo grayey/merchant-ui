@@ -103,10 +103,14 @@ private inactivityTimer = () => {
 
 private logout() {
   this.authService.logoutUser();
+  // this.document.onclick = ()=>{};
+  // this.document.onkeypress = ()=>{};
+  // this.document.ontouchstart = ()=>{};
 }
 
   ngOnDestroy(): void {
     clearInterval(this.intervalTimer);
+    localStorage.setItem('INACTIVE_INTERVAL',this.intervalTimer);
   }
 }
 

@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
   Inject,
+  LOCALE_ID
 } from "@angular/core";
 import { MatDialog, } from "@angular/material/dialog";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
@@ -19,7 +20,7 @@ import { Customer } from "./customer-create-update/customer.model";
 import { fadeInRightAnimation } from "../../../../@fury/animations/fade-in-right.animation";
 import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.animation";
 import { AppService } from "src/services/app.service";
-import { DatePipe } from "@angular/common";
+import { DatePipe, formatCurrency, getCurrencySymbol, formatNumber  } from "@angular/common";
 import { ViewTransactionComponent } from "./view-transaction.component";
 import { getToday } from "src/utils/helpers"
 
@@ -148,7 +149,8 @@ export class TransactionsTableComponent
   constructor(
     private dialog: MatDialog,
     private appService: AppService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    @Inject(LOCALE_ID) private locale: string
   ) {}
 
   get visibleColumns() {
@@ -240,6 +242,10 @@ export class TransactionsTableComponent
       .getTransactions(pageNumber, pageSize, this.filterData)
       .subscribe(
         (response) => {
+          response.data.forEach((row) =>{
+            const { currency, amount } = row;
+            row.amount = formatCurrency(amount, this.locale,getCurrencySymbol(currency, 'wide'))
+          })
           this.transactions = response.data;
           this.dataSource.data = this.transactions;
           this.dataLenght = response.rows;

@@ -82,6 +82,14 @@ export class AppComponent {
         position: 2,
       },
       {
+        name: "Roles",
+        routeOrFunction: "/roles",
+        icon: "lock",
+        // badge: "22",
+        badgeColor: "#2196F3",
+        position: 2,
+      },
+      {
         name: "Merchants",
         routeOrFunction: "/merchants",
         icon: "supervisor_account",
