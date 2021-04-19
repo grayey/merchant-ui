@@ -53,7 +53,9 @@ export class AppService {
    * This method return an observable list of users
    */
   public getUsers(pageNumber, pageSize, filterData): Observable<any> {
-    const paramData = {...{pageNumber, pageSize}, ...filterData};
+    const merchantId = this.getMerchantId() || 0;
+
+    const paramData = {...{pageNumber, pageSize, merchantId}, ...filterData};
     const urlParams = buildUrlParams(paramData);
     const url = `user/${urlParams}`;
     return this.apiHandler.get(url);
@@ -464,7 +466,7 @@ export class AppService {
     fileSaver.saveAs(blob, fileName);
   }
 
-  public getMerchantId = (merchantId = null) =>{
+  public getMerchantId = (merchantId = 0) =>{
     return this.isAdmin ? merchantId : this.authUser?.merchantId;
   }
   
