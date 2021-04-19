@@ -27,6 +27,8 @@ export class Permissions {
           this.CAN_DOWNLOAD = isPermitted("CAN_DOWNLOAD");
           this.CAN_VIEW_DETAIL = isPermitted("CAN_VIEW_DETAIL");
 
+          
+
     }
 
 }
