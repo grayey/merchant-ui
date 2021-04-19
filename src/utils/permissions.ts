@@ -12,10 +12,10 @@ export class Permissions {
 
     constructor(public entity:string){
         
-        const userTasks = JSON.parse(localStorage.getItem('USER_TASKS'));
+        const userTasks = JSON.parse(localStorage.getItem('USER_TASKS')) || [];
         this.permittedUser = this.permittedUser ? JSON.parse(this.permittedUser) : null;
         const isAdmin = (this.permittedUser && !this.permittedUser?.merchantId); // we should apply this to super admin only
-        const isPermitted = (action:string):boolean => {
+        const isPermitted = (action:string):boolean => { //closure
            return  !!userTasks.filter((task) => ( (task.moduleName == entity) && (task.action == action) ) 
             || isAdmin  //we should apply this to super admin only
            ).length;

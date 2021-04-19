@@ -97,7 +97,7 @@ export class SidenavService implements OnDestroy {
     this.appUser = this.userService.getAuthUser();
     // console.log('APP USER', this.appUser);
     this.isAdmin = (this.appUser && !this.appUser.merchantId);
-    this.userTasks = this.userService.getAuthUserTasks();
+    this.userTasks = this.userService.getAuthUserTasks() || [];
     this.userTasks.forEach((task) => {
       if(task.parentModule){
         this.userModules.push(task.parentModule)
