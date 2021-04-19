@@ -1,0 +1,147 @@
+<fury-page-layout>
+
+    <fury-page-layout-header>
+      <fury-breadcrumbs [crumbs]="['Roles']" current="{{viewedRole?.name}}"></fury-breadcrumbs>
+    </fury-page-layout-header>
+  
+    <fury-page-layout-content class="padding-0">
+      <mat-tab-group>
+        <mat-tab label="Role">
+            <div class="padding">
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="card shadow-sm">
+                          <div class="card-header">
+                            <h3>General</h3>
+                          </div>
+                          <div class="card-body">
+                            <mat-list class="list mat-elevation-z1">
+          
+                                <mat-list-item>
+                          
+                                  <h3 matLine><b>Name</b></h3>
+                                  <p matLine>
+                                    <span>{{viewedRole?.name}}</span>
+                          
+                                  </p>
+                                </mat-list-item>
+                                <mat-list-item>
+                                  <h3 matLine><b>Code</b></h3>
+                                  <p matLine>
+                                    <span>{{viewedRole?.code}}</span>
+                                    
+                                  </p>
+                                </mat-list-item>
+                                <mat-list-item>
+                                  <h3 matLine><b>Description</b></h3>
+                                  <p matLine>
+                                    <span>{{viewedRole?.description || "----"}}</span>
+                                  </p>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <h3 matLine><b>Date Created</b></h3>
+                                    <p matLine>
+                                      <span>{{viewedRole?.created_at || "----"}}</span>
+                                    </p>
+                                  </mat-list-item>
+                                
+                                  <mat-list-item>
+                                    <h3 matLine><b>Date Updated</b></h3>
+                                    <p matLine>
+                                      <span>{{viewedRole?.updated_at || "----"}}</span>
+                                    </p>
+                                  </mat-list-item>
+                                
+                              </mat-list>
+                          </div>
+            
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="card shadow-sm">
+                          <div class="card-header">
+                              <h3>
+                                  {{viewedRole?.name}} Staff
+                              </h3>
+                          </div>
+                          <div class="card-body">
+
+          <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Date Created</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                          </div>
+            
+                      </div>
+                    </div>
+      
+                </div>
+                </div>
+        </mat-tab>
+        <mat-tab label="Permissions">
+            <div class="padding">
+                <div class="card">
+                    <div class="card-header">
+                      <button class="btn btn-primary float-right" mat-button [disabled]="loaders?.processing" (click)="saveAssigment()">
+                        SAVE <small *ngIf="loaders?.processing"> &nbsp;&nbsp; <i class='loader'></i></small>
+                      </button>
+                        <h3 class="text-centerc">
+                            Manage <em>{{viewedRole?.name}}'s</em> Permissions
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Entity</th>
+                                        <th>Task</th>
+                                        <th>Parent module</th>
+                                   
+                                        <th>Select &nbsp;&nbsp;
+                                          <span class="mt-4">
+                                            <mat-checkbox (change)="toggleAll()" color="accent" [checked]="allChecked">{{allChecked? 'Uncheck' : 'Check'}} all </mat-checkbox>
+                                          </span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let task of allTasks; let i=index">
+                                        <td><b>{{i+1}}.</b></td>
+                                        <td>{{task?.moduleName}}</td>
+                                        <td>{{task?.displayName}}</td>
+                                        <td>{{task?.parentModule || "----"}}</td>
+                                       
+                                        <td>
+                                          <mat-checkbox (change)="setSelection(task?.pseudoId)" color="accent" [checked]="assignedTaskIds.includes(task?.pseudoId)">{{assignedTaskIds.includes(task?.pseudoId) ? 'Remove' : 'Add'}}</mat-checkbox>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </mat-tab>
+      </mat-tab-group>
+    </fury-page-layout-content>
+  
+  </fury-page-layout>
+  

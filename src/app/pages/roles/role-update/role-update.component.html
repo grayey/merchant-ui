@@ -1,0 +1,34 @@
+<div mat-dialog-title>Update Role</div>
+
+<form [formGroup]="updateRoleForm" (ngSubmit)="updateRole()">
+  <mat-dialog-content>
+    <div class="person">
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+        <mat-form-field fxFlex>
+          <mat-label>Name</mat-label>
+          <input type="text" formControlName="name" matInput />
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <mat-label>Code</mat-label>
+          <input type="text" formControlName="code" matInput />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field fxFlex>
+        <mat-label>Description</mat-label>
+        <input type="text" formControlName="roleFunctionsJson" matInput />
+      </mat-form-field>
+    </div>
+
+  
+
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button class="btn btn-primary text-white"  mat-button [disabled]="updateRoleForm.invalid || loaders.processing">
+      UPDATE ROLE <small *ngIf="loaders?.processing"> &nbsp;&nbsp; <i class='loader'></i></small>
+    </button>
+  </mat-dialog-actions>
+</form>
