@@ -237,6 +237,30 @@ export class AppService {
     );
   }
 
+  downloadPlatformCostReport( filterData): Observable<HttpResponse<Blob>> {
+    const {
+      startDate,
+      endDate,
+      reportType,
+      merchantId
+    } = filterData;
+    // const merchantId = this.getMerchantId();
+    return this.http.get(
+      this.appBaseUrl +
+        `/api/v1/transaction/download/platform-cost?reportType=${reportType}&startDate=${startDate}&endDate=${endDate}&merchantId=${merchantId}`,
+      {
+        headers: {
+          Authorization: this.getToken(),
+          "Content-Type": "application/json",
+        },
+        observe: 'response',
+        responseType: "blob",
+      }
+    );
+  }
+
+  
+
   getSettlements(pageNumber, pageSize, filterData): any {
     const { startDate, endDate } = filterData;
     return this.http.get(

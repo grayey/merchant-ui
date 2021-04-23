@@ -15,9 +15,10 @@ import { MatSort } from "@angular/material/sort";
 import { MatDialog } from "@angular/material/dialog";
 import { AppService } from "src/services/app.service";
 import { IPlatformCostReport } from "../../reports/model";
-import { getToday } from "src/utils/helpers";
+import { getToday, processErrors } from "src/utils/helpers";
 
 import { Permissions } from "src/utils/permissions";
+import { ToastrService } from "ngx-toastr";
 
 
 
@@ -78,7 +79,7 @@ export class SettlementsTableComponent extends Permissions implements OnInit, Af
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private appService: AppService) {
+  constructor(private dialog: MatDialog, private appService: AppService, private toaster:ToastrService) {
     super("Settlements");
   }
 
@@ -157,6 +158,26 @@ export class SettlementsTableComponent extends Permissions implements OnInit, Af
     this.filterData.endDate = endDate || "";
 
     this.getPlatformCost();
+  }
+
+  onDownloadClick(reportType: string): void {
+    this.filterData.reportType = reportType;
+    this.downloadPlatformCostReport();
+  }
+
+  downloadPlatformCostReport() {
+    this.appService.downloadPlatformCostReport(this.filterData).subscribe(
+      (response) => {
+        this.appService.handleDownload(response);
+        this.toaster.success('File downloading shortly...')
+      },
+      (err: any) => {
+        console.log(err);
+        this.toaster.error(processErrors(err))
+
+      },
+      () => {}
+    );
   }
 
   ngOnDestroy() {}

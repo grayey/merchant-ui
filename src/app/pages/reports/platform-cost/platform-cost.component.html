@@ -15,6 +15,7 @@
       [showDownloadFilter]="CAN_DOWNLOAD"
       [startDate]="true"
       [endDate]="true"
+      (downloadClick)="onDownloadClick($event)"
     >
       <table [dataSource]="dataSource" mat-table matSort>
         <!--- Note that these columns can be defined in any order.
