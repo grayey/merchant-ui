@@ -235,6 +235,34 @@ export class ApiHandlerService extends ApiConfig{
     }
   }
 
+  // EXTERNAL CALLS
+
+  /**
+   *
+   * This is used to make get requests outside the portal
+   * @param path
+   * @param data
+   * @returns {Observable<R>}
+   *
+   */
+   public ext_get(url: string): Observable<any> {
+    return this.http.get(url, this.headers).pipe(
+      retryWhen((errors) => {
+        return errors
+          .mergeMap((error) => this.errorHandler(error))
+          .delay(1000)
+          .take(2);
+      })
+    ).pipe(
+      catchError((err) => this.errorHandler(err))
+    ).pipe(
+      map((res) => {
+        return res['body'];
+      })
+      )
+  }
+
+
 }
 
 

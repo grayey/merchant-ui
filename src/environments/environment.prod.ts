@@ -8,6 +8,10 @@ export const environment = {
   API_KEY:"",
   BASIC_TOKEN:"Basic Y29kZWlxLXBheW1lbnQtZ2F0ZXdheTpzZWNyZXQ=",
   MAX_INACTIVE_TIME:5*60*1000, // 5 minutes
-  NOTIFY_INACTIVITY:30*1000 //30 seconds
+  NOTIFY_INACTIVITY:30*1000, //30 seconds
+  IPIFY_URL:"https://ipgeolocation.abstractapi.com/v1/?api_key=6f73766c9d8a467092b3d00a2d310e37",
+  MAX_LOGIN_ATTEMPTS:5,
+  LOCKOOUT_MINUTES:5,
+
 
 };
