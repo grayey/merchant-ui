@@ -467,6 +467,11 @@ export class AppService {
     return this.apiHandler.postFile({},data,'charge-back/upload');
   }
 
+  public getSecureRedirect = (gatewaySecureTransactionId) =>{
+    const url = `transaction/secure-transaction-id/${gatewaySecureTransactionId}`;
+    return this.apiHandler.get(url);
+  }
+
   private getToken(): string {
     let bearerToken: IBearerToken = this.initEmptyData();
     const accessToken = this.authService.user;

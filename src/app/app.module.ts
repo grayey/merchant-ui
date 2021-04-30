@@ -45,7 +45,7 @@ import { MerchantService } from "src/services/merchant/merchant.service";
     // Register a Service Worker (optional)
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, ],
   bootstrap: [AppComponent],
   providers: [
     {

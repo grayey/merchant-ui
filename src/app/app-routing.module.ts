@@ -12,6 +12,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "xref",
+    loadChildren: () =>
+      import(
+        "./pages/authentication/secure-redirect/secure-redirect.module"
+      ).then((m) => m.SecureRedirectModule),
+  },
+  {
     path: "register",
     loadChildren: () =>
       import("./pages/authentication/register/register.module").then(
@@ -165,6 +172,7 @@ const routes: Routes = [
             "./pages/roles/roles.module"
           ).then((m) => m.RolesModule),
       },
+ 
       {
         path: "drag-and-drop",
         loadChildren: () =>
