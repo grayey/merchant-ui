@@ -51,6 +51,7 @@ export class FilterDropdownComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private appService: AppService, private userService:UserService) {
     this.appUser = this.userService.getAuthUser();
+    console.log("APP USER", this.appUser)
     this.isAdmin = (this.appUser && !this.appUser.merchantId)
   }
 
