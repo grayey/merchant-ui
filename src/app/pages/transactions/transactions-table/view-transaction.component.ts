@@ -26,7 +26,7 @@ export class ViewTransactionComponent implements OnInit{
   
     ngOnInit ():void {
   
-    //   console.log('DEFAULTS', this.transaction)
+      // console.log('DEFAULTS', this.transaction)
   
     }
 

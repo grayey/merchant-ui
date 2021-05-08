@@ -46,13 +46,14 @@ export class FilterDropdownComponent implements OnInit {
   
   appUser;
   isAdmin;
-
+  today;
   model: NgbDateStruct;
 
   constructor(private fb: FormBuilder, private appService: AppService, private userService:UserService) {
     this.appUser = this.userService.getAuthUser();
-    console.log("APP USER", this.appUser)
-    this.isAdmin = (this.appUser && !this.appUser.merchantId)
+    // console.log("APP USER", this.appUser)
+    this.isAdmin = (this.appUser && !this.appUser.merchantId);
+    this.today = new Date().toISOString()?.split('T')[0];
   }
 
   ngOnInit() {
@@ -139,19 +140,27 @@ export class FilterDropdownComponent implements OnInit {
   formatDate(date) {
     let formatedDate = "";
     const { day, month, year } = date;
-    formatedDate =
+    if(day && month && year){
+      formatedDate =
       year.toString() + "-" + month.toString() + "-" + day.toString();
+    }
+    
     return formatedDate;
   }
 
   onSubmit() {
     const payLoad = this.form.value;
     const { startDate, endDate } = payLoad;
+    
     if (startDate) {
       payLoad.startDate = this.formatDate(startDate);
+    }else{
+      payLoad.startDate = this.today;
     }
     if (endDate) {
       payLoad.endDate = this.formatDate(endDate);
+    }else{
+      payLoad.endDate = this.today;
     }
     this.filterClick.emit(payLoad);
   }

@@ -199,10 +199,13 @@ export class AppService {
       merchantTransactionReference,
       startDate,
       endDate,
+      merchantId
     } = filterData;
+    let url =  `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}&gatewayTransactionReference=${gatewayTransactionReference}&transactionStartDate=${startDate}&transactionEndDate=${endDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`;
+    url += merchantId ? `&merchantId=${merchantId}`:"";
     return this.http.get(
-      this.appBaseUrl +
-        `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}&gatewayTransactionReference=${gatewayTransactionReference}&transactionStartDate=${startDate}&transactionEndDate=${endDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
+      this.appBaseUrl + url
+        ,
       {
         headers: {
           Authorization: this.getToken(),
@@ -210,6 +213,10 @@ export class AppService {
         },
       }
     );
+  }
+
+  confirmRefund(data){
+    return this.apiHandler.post('transaction/refund',data);
   }
 
   downloadTransactions(pageNumber, pageSize, filterData): Observable<HttpResponse<Blob>> {
@@ -222,10 +229,12 @@ export class AppService {
       startDate,
       endDate,
       reportType,
+      merchantId
     } = filterData;
+    let url = `/api/v1/transaction/download?pageNumber=${pageNumber}&pageSize=${pageSize}&reportType=${reportType}&gatewayTransactionReference=${gatewayTransactionReference}&transactionStartDate=${startDate}&transactionEndDate=${endDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`;
+    url += merchantId ? `&merchantId=${merchantId}`:"";
     return this.http.get(
-      this.appBaseUrl +
-        `/api/v1/transaction/download?pageNumber=${pageNumber}&pageSize=${pageSize}&reportType=${reportType}&gatewayTransactionReference=${gatewayTransactionReference}&transactionStartDate=${startDate}&transactionEndDate=${endDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`,
+      this.appBaseUrl +url,
       {
         headers: {
           Authorization: this.getToken(),
@@ -437,7 +446,7 @@ export class AppService {
     return this.http.post(this.appBaseUrl + "/api/v1/user", data);
   }
 
-  uploadSettlementItem(data: any): Observable<any> {
+  uploadSettlementItem(data: any, date?:string): Observable<any> {
     const config = {
       headers: {
         Authorization: this.getToken(),
@@ -448,11 +457,13 @@ export class AppService {
     //   data,
     //   config
     // );
+    let url = 'settlement/upload';
+    if(date) url +=`?beginCountDate=${date}`;
 
-    return this.apiHandler.postFile({},data,'settlement/upload');
+    return this.apiHandler.postFile({},data,url);
   }
 
-  uploadChargeBackItem(data: any): Observable<any> {
+  uploadChargeBackItem(data: any, date?:string): Observable<any> {
     const config = {
       headers: {
         Authorization: this.getToken(),
@@ -463,8 +474,9 @@ export class AppService {
     //   data,
     //   config
     // );
-
-    return this.apiHandler.postFile({},data,'charge-back/upload');
+    let url = 'charge-back/upload';
+    if(date) url +=`?beginCountDate=${date}`;
+    return this.apiHandler.postFile({},data,url);
   }
 
   public getSecureRedirect = (gatewaySecureTransactionId) =>{

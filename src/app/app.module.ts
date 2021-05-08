@@ -24,6 +24,7 @@ import { ReportsService } from "../services/reports/reports.service";
 import { ToastrModule } from "ngx-toastr";
 import { UserService } from "../services/user/user.service";
 import { MerchantService } from "src/services/merchant/merchant.service";
+import { RefundTransactionsComponent } from './pages/transactions/refund-transactions/refund-transactions.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,7 @@ import { MerchantService } from "src/services/merchant/merchant.service";
     // Register a Service Worker (optional)
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  declarations: [AppComponent, ],
+  declarations: [AppComponent, RefundTransactionsComponent, ],
   bootstrap: [AppComponent],
   providers: [
     {

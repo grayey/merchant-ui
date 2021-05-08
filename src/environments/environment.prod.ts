@@ -13,5 +13,4 @@ export const environment = {
   MAX_LOGIN_ATTEMPTS:5,
   LOCKOOUT_MINUTES:5,
 
-
 };

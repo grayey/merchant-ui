@@ -22,6 +22,7 @@ import { refineData, getToday } from "../../../utils/helpers";
 import { formatCurrency, getCurrencySymbol, formatDate } from '@angular/common';
 import { IRefundsFilter } from "src/interfaces/refund-filter.interface";
 
+
 @Component({
     selector: 'app-refunds',
     templateUrl: './refunds.component.html',
@@ -214,6 +215,8 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
       value = value.toLowerCase();
       this.dataSource.filter = value;
     }
+
+    
   
     ngOnDestroy() {}
 }

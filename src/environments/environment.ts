@@ -16,6 +16,4 @@ export const environment = {
   IPIFY_URL:"https://ipgeolocation.abstractapi.com/v1/?api_key=6f73766c9d8a467092b3d00a2d310e37",
   MAX_LOGIN_ATTEMPTS:5,
   LOCKOOUT_MINUTES:5,
-
-
 };

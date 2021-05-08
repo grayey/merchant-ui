@@ -70,7 +70,7 @@ export const APP_TASKS = [
     {
       functionName:"Transactions",
       functionType:"BOTH",
-      actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
+      actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER", "CAN_REFUND"]
     },
     // {
     //   functionName:"Transaction",

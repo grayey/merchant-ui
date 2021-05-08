@@ -8,7 +8,7 @@
       name="Transactions"
       [columns]="columns"
       (filterChange)="onFilterChange($event)"
-      [gatewayTransactionReference]="true"
+      [gatewayTransactionReference]="false"
       [transactionStatus]="true"
       [merchantId]="true"
       [amount]="true"
@@ -120,7 +120,7 @@
             Transaction Date
           </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
-            {{ row.transactionDate }}
+            {{ row?.transactionDate | date:'yyyy-MM-dd HH:mm:ss UTC' }}
           </td>
         </ng-container>
 
@@ -218,7 +218,9 @@
               <span>View</span>
             </button>
 
-            
+            <button (click)="refundTransaction(row)" *ngIf="row?.transactionStatus=='SUCCESSFUL'" mat-menu-item>
+              <span>Refund</span>
+            </button>
             </mat-menu>
           </td>
         </ng-container>

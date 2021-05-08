@@ -11,6 +11,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatInputModule } from "@angular/material/input";
 import { RefundsComponent } from './refunds.component';
 import { REFUNDS_ROUTES } from './refunds.routing';
+import { CreateRefundsComponent } from './create-refunds/create-refunds.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { REFUNDS_ROUTES } from './refunds.routing';
     ListModule,
     RouterModule.forChild(REFUNDS_ROUTES)
   ],
-  declarations: [RefundsComponent],
+  declarations: [RefundsComponent, CreateRefundsComponent],
 })
 
 export class RefundsModule {

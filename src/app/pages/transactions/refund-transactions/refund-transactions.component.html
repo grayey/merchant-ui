@@ -2,25 +2,22 @@
 <div class='cardx' id="transaction_detail">
 
     <div class='card-header'>
-
-        <div class='float-right '>
-            <button class='btn btn-secondary mt-2' id='print_button' (click)="printTransaction('transaction_detail')"> <small><mat-icon>print</mat-icon></small></button>
-
-        </div>
     
-        <h3 id='transaction_title'><b>Transaction: </b>{{transaction?.transactionReference}}</h3>
+        <h3 id='transaction_title'><b> Confirm refund for  transaction: </b>{{transaction?.transactionReference}}</h3>
     </div>
     <div class='card-body'>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><b>Amount: </b> {{transaction?.amount}}</li>
             <li class="list-group-item"><b>Transaction Date: </b> {{transaction?.transactionDate  | date:'yyyy-MM-dd HH:mm:ss UTC'}}</li>
             <li class="list-group-item"><b>Transaction Status: </b> {{transaction?.transactionStatus}}</li>
-            <li class="list-group-item"><b>Transaction Fee: </b> {{transaction?.transactionFee}}</li>
             <li class="list-group-item"><b>Merchant Name: </b> {{transaction?.merchant?.name}}</li>
             <li class="list-group-item"><b>Merchant Number: </b> {{transaction?.merchant?.accountNumber}}</li>
             <li class="list-group-item"><b>Merchant Due Amount: </b> {{transaction?.merchantAmountDue}}</li>
             <li class="list-group-item"><b>Merchant Transaction Ref.: </b> {{transaction?.merchantTransactionReference}}</li>
             <li class="list-group-item"><b>Bank: </b> {{transaction?.bank?.name}}</li>
+            <!-- <li class="list-group-item"><b>Transaction Fee: </b> {{transaction?.transactionFee}}</li>
+            
+
             <li class="list-group-item"><b>Bank Amount Due: </b> {{transaction?.bank?.bankAmountDue | number}}</li>
             <li class="list-group-item"><b>Bank Commision: </b> {{transaction?.bankMdrCommission | number}}</li>
             <li class="list-group-item"><b>Charge Back Date: </b> {{transaction?.chargeBackDate}}</li>
@@ -39,8 +36,15 @@
             <li class="list-group-item"><b>Card Scheme: </b> {{transaction?.cardScheme }}</li>
             <li class="list-group-item"><b>Masked PAN: </b> {{transaction?.maskedPan  }}</li>
             <li class="list-group-item"><b>Description: </b> {{transaction?.description  }}</li>
-            <li class="list-group-item"><b>Webhook URL: </b> {{transaction?.webhookUrl  }}</li>
-
+            <li class="list-group-item"><b>Webhook URL: </b> {{transaction?.webhookUrl  }}</li> -->
+            <li class="list-group-item">
+                <div class="float-right">
+                    <button class="btn btn-success" (click)="confirmRefund()" [disabled]="loaders?.processing">Confirm
+                        <small *ngIf="loaders?.processing"> &nbsp;&nbsp; <i class='loader'></i></small>
+                    </button>
+                    <button class="btn btn-secondary ml-3" (click)="closeDialog()">Cancel</button>
+                </div>
+            </li>
           </ul>
     </div>
 

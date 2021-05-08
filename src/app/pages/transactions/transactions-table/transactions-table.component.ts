@@ -22,7 +22,8 @@ import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.anima
 import { AppService } from "src/services/app.service";
 import { DatePipe, formatCurrency, getCurrencySymbol, formatNumber  } from "@angular/common";
 import { ViewTransactionComponent } from "./view-transaction.component";
-import { getToday } from "src/utils/helpers"
+import { RefundTransactionsComponent } from "../refund-transactions/refund-transactions.component";
+import { getToday } from "src/utils/helpers";
 import { Permissions } from "src/utils/permissions";
 
 
@@ -198,6 +199,7 @@ export class TransactionsTableComponent extends Permissions
       transactionDate: getToday(),
       transactionStatus: "",
       amount: 0,
+      merchantId:0,
       merchantTransactionReference: "",
       startDate: getToday(), //getToday()
       endDate: getToday()//getToday(),
@@ -214,6 +216,7 @@ export class TransactionsTableComponent extends Permissions
       merchantTransactionReference,
       startDate,
       endDate,
+      merchantId
     } = payload;
     this.filterData.gatewayTransactionReference =
       gatewayTransactionReference || "";
@@ -226,6 +229,7 @@ export class TransactionsTableComponent extends Permissions
       this.datePipe.transform(startDate, "yyyy-MM-dd") || "";
     this.filterData.endDate =
       this.datePipe.transform(endDate, "yyyy-MM-dd") || "";
+      this.filterData.merchantId = merchantId;
     this.getTransactions();
   }
 
@@ -304,6 +308,21 @@ export class TransactionsTableComponent extends Permissions
       },
       () => {}
     );
+  }
+
+  refundTransaction = (data) =>{
+    this.dialog.open(RefundTransactionsComponent, { 
+      data,
+      panelClass:'dialog-lg'
+     }).afterOpened().subscribe(
+      (transResponse) =>{
+
+        console.log({ transResponse })
+
+      },
+      (error) =>{
+        console.log({ error })
+      })
   }
 
   ngOnDestroy() {}

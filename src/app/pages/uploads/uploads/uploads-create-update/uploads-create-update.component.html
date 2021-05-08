@@ -18,6 +18,14 @@
           >
         </mat-select>
       </mat-form-field>
+    
+    </div>
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field fxFlex>
+        <mat-label>Begin 180-day count on</mat-label>
+        <input type="date" [min]="today" formControlName="beginCountDate" matInput />
+    
+      </mat-form-field>
     </div>
 
     <input

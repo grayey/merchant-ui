@@ -20,6 +20,7 @@ export class UploadsCreateUpdateComponent implements OnInit {
 
   form: FormGroup;
   mode: "create" | "update" = "create";
+  today;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: any,
@@ -27,7 +28,10 @@ export class UploadsCreateUpdateComponent implements OnInit {
     private fb: FormBuilder,
     private appService: AppService,
     private toastr:ToastrService
-  ) {}
+  ) {
+    this.today = new Date().toISOString()?.split('T')[0];
+
+  }
 
   ngOnInit() {
     this.getUploadTypes();
@@ -40,6 +44,7 @@ export class UploadsCreateUpdateComponent implements OnInit {
     this.form = this.fb.group({
       // fullName: [this.defaults.fullName || ""],
       uploadType: [""],
+      beginCountDate:[""]
     });
   }
 
@@ -60,6 +65,9 @@ export class UploadsCreateUpdateComponent implements OnInit {
   upload(event) {
     // .target.files
     //pick from one of the 4 styles of file uploads below
+    if(!this.form.value.beginCountDate){
+      return this.toastr.error("Please provide a date!");
+    }
     this.uploadAndProgress(event.target);
   }
 
@@ -79,7 +87,7 @@ export class UploadsCreateUpdateComponent implements OnInit {
   }
 
   uploadSettlement(formData) {
-    this.appService.uploadSettlementItem(formData).subscribe((event) => {
+    this.appService.uploadSettlementItem(formData, this.form.value.beginCountDate).subscribe((event) => {
       this.dialogRef.close();
       console.log({ event })
       if (event && event.type === HttpEventType.UploadProgress) {
@@ -98,7 +106,7 @@ export class UploadsCreateUpdateComponent implements OnInit {
   }
 
   uploadChargeBack(formData) {
-    this.appService.uploadChargeBackItem(formData).subscribe(
+    this.appService.uploadChargeBackItem(formData,this.form.value.beginCountDate).subscribe(
       (event) => {
       this.dialogRef.close();
       if (event && event.type === HttpEventType.UploadProgress) {
