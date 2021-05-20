@@ -219,6 +219,10 @@ export class AppService {
     return this.apiHandler.post('transaction/refund',data);
   }
 
+  confirmRequery(data){
+    return this.apiHandler.post('transaction/re-query',data);
+  }
+
   downloadTransactions(pageNumber, pageSize, filterData): Observable<HttpResponse<Blob>> {
     const {
       gatewayTransactionReference,

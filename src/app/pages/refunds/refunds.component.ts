@@ -132,7 +132,7 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
           pageSize = pageEvent.pageSize;
           pageNumber = pageEvent.pageIndex + 1;
         } 
-        ReportsService.REFUNDS_LIST_FILTER = { pageSize, pageNumber, ...this.filterData };
+        ReportsService.REFUNDS_LIST_FILTER = { ...this.filterData, pageSize, pageNumber, };
         
         this.reportService.getAllRefunds().subscribe(
             (refundsResponse)=>{
@@ -147,7 +147,6 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.allRefunds = refineData(refundsResponse.data, refineRefunds);
                 this.dataSource.data = this.allRefunds;
                 this.dataLength = refundsResponse.rows;
-                console.log({ refundsResponse })
         },
         (error)=>{
 
@@ -180,7 +179,7 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
         merchantTransactionReference || "";
       this.filterData.startDate = formatDate(startDate, "yyyy-MM-dd", this.locale) || "";
       this.filterData.endDate = formatDate(endDate, "yyyy-MM-dd", this.locale)
-   
+      this.getAllRefunds();
  
     }
 

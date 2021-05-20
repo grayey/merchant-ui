@@ -1,0 +1,44 @@
+[debug] [2021-05-09T00:04:29.193Z] ----------------------------------------------------------------------
+[debug] [2021-05-09T00:04:29.224Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Treal's\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2021-05-09T00:04:29.226Z] CLI Version:   8.10.0
+[debug] [2021-05-09T00:04:29.226Z] Platform:      win32
+[debug] [2021-05-09T00:04:29.227Z] Node Version:  v12.18.3
+[debug] [2021-05-09T00:04:29.313Z] Time:          Sun May 09 2021 01:04:29 GMT+0100 (West Africa Standard Time)
+[debug] [2021-05-09T00:04:29.316Z] ----------------------------------------------------------------------
+[debug] [2021-05-09T00:04:29.317Z] 
+[debug] [2021-05-09T00:04:29.399Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-05-09T00:04:29.402Z] > authorizing via signed-in user
+[debug] [2021-05-09T00:04:29.403Z] [iam] checking project merchant-portal-70d75 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-05-09T00:04:29.409Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-05-09T00:04:29.410Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-05-09T00:04:41.678Z] [iam] error while checking permissions, command may fail: FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2021-05-09T00:04:41.682Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-05-09T00:04:41.683Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-05-09T00:04:41.704Z] Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2021-05-09T00:04:41.728Z] FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+    at Object.<anonymous> (C:\Users\Treal's\AppData\Roaming\npm\node_modules\firebase-tools\lib\auth.js:23:32)
+    at Module._compile (internal/modules/cjs/loader.js:1137:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1157:10)
+    at Module.load (internal/modules/cjs/loader.js:985:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:878:14)
+    at Module.require (internal/modules/cjs/loader.js:1025:19)
+    at require (internal/modules/cjs/helpers.js:72:18)
+    at Object.<anonymous> (C:\Users\Treal's\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\features\hosting\github.js:20:16)
+    at Module._compile (internal/modules/cjs/loader.js:1137:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1157:10)
+    at Module.load (internal/modules/cjs/loader.js:985:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:878:14)
+    at Module.require (internal/modules/cjs/loader.js:1025:19)
+    at require (internal/modules/cjs/helpers.js:72:18)
+    at Object.<anonymous> (C:\Users\Treal's\AppData\Roaming\npm\node_modules\firebase-tools\lib\init\features\hosting\index.js:7:22)
+    at Module._compile (internal/modules/cjs/loader.js:1137:30)
+[error] 
+[error] Error: Failed to get Firebase project merchant-portal-70d75. Please make sure the project exists and your account has permission to access it.

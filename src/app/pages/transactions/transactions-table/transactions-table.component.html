@@ -219,8 +219,13 @@
             </button>
 
             <button (click)="refundTransaction(row)" *ngIf="row?.transactionStatus=='SUCCESSFUL'" mat-menu-item>
-              <span>Refund</span>
+              <span class="text-success">Refund</span>
             </button>
+
+            <button (click)="requeryTransaction(row)" *ngIf="row?.transactionStatus!=='SUCCESSFUL'" mat-menu-item>
+              <span class="text-warning">Requery</span>
+            </button>
+
             </mat-menu>
           </td>
         </ng-container>

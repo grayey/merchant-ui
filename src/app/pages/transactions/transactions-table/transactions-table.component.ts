@@ -23,6 +23,8 @@ import { AppService } from "src/services/app.service";
 import { DatePipe, formatCurrency, getCurrencySymbol, formatNumber  } from "@angular/common";
 import { ViewTransactionComponent } from "./view-transaction.component";
 import { RefundTransactionsComponent } from "../refund-transactions/refund-transactions.component";
+import { RequeryTransactionsComponent } from "../requery-transactions/requery-transactions.component";
+
 import { getToday } from "src/utils/helpers";
 import { Permissions } from "src/utils/permissions";
 
@@ -306,12 +308,28 @@ export class TransactionsTableComponent extends Permissions
       (err: any) => {
         console.log(err);
       },
-      () => {}
-    );
+      () => {
+        
+      });
   }
 
   refundTransaction = (data) =>{
     this.dialog.open(RefundTransactionsComponent, { 
+      data,
+      panelClass:'dialog-lg'
+     }).afterOpened().subscribe(
+      (transResponse) =>{
+
+        console.log({ transResponse })
+
+      },
+      (error) =>{
+        console.log({ error })
+      })
+  }
+
+  requeryTransaction = (data) =>{
+    this.dialog.open(RequeryTransactionsComponent, { 
       data,
       panelClass:'dialog-lg'
      }).afterOpened().subscribe(
