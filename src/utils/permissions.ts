@@ -9,6 +9,7 @@ export class Permissions {
     public CAN_DOWNLOAD:boolean;
     public CAN_VIEW_DETAIL:boolean;
     public CAN_REFUND:boolean;
+    public CAN_REQUERY:boolean;
     private permittedUser:any = localStorage.getItem('userData');
 
     constructor(public entity:string){
@@ -29,6 +30,7 @@ export class Permissions {
           this.CAN_DOWNLOAD = isPermitted("CAN_DOWNLOAD");
           this.CAN_VIEW_DETAIL = isPermitted("CAN_VIEW_DETAIL");
           this.CAN_REFUND = isPermitted("CAN_REFUND");
+          this.CAN_REQUERY = isPermitted("CAN_REQUERY");
 
 
 

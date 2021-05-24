@@ -23,7 +23,13 @@ export class ReportsService{
      * this method returns an observble list of all refunded transactions
      */
     public getAllRefunds = ():Observable<any> => {
-        const params = buildUrlParams(ReportsService.REFUNDS_LIST_FILTER);
+        const urlData = ReportsService.REFUNDS_LIST_FILTER;
+        const { startDate, endDate } = urlData;
+        urlData.refundStartDate = startDate;
+        urlData.refundEndDate = endDate;
+        // urlData.startDate = undefined
+        // urlData.endDate = undefined
+        const params = buildUrlParams(urlData);
         const url = `transaction/refunded/${params}`;
         return this.apiHandler.get(url);
     }

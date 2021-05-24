@@ -332,9 +332,10 @@ export class TransactionsTableComponent extends Permissions
     this.dialog.open(RequeryTransactionsComponent, { 
       data,
       panelClass:'dialog-lg'
-     }).afterOpened().subscribe(
+     }).afterClosed().subscribe(
       (transResponse) =>{
 
+        this.onFilterClick(this.filterData)
         console.log({ transResponse })
 
       },

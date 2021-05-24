@@ -218,11 +218,11 @@
               <span>View</span>
             </button>
 
-            <button (click)="refundTransaction(row)" *ngIf="row?.transactionStatus=='SUCCESSFUL'" mat-menu-item>
+            <button (click)="refundTransaction(row)" *ngIf="row?.transactionStatus=='SUCCESSFUL' && CAN_REFUND" mat-menu-item>
               <span class="text-success">Refund</span>
             </button>
 
-            <button (click)="requeryTransaction(row)" *ngIf="row?.transactionStatus!=='SUCCESSFUL'" mat-menu-item>
+            <button (click)="requeryTransaction(row)" *ngIf="row?.transactionStatus!=='SUCCESSFUL' && CAN_REQUERY" mat-menu-item>
               <span class="text-warning">Requery</span>
             </button>
 

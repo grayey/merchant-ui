@@ -191,15 +191,7 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.filterData.pageNumber = 1;
       this.filterData.pageSize = 1000;
 
-      this.reportService.downloadReport(this.REPORT, this.filterData).subscribe(
-        (response) => {
-         console.log({ response })
-        },
-        (err: any) => {
-          console.log(err);
-        },
-        () => {}
-      );
+      this.reportService.downloadReport(this.REPORT, this.filterData)
     }
   
     deleteCustomer(customer) {
