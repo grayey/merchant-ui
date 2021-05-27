@@ -84,6 +84,12 @@ export class TransactionsTableComponent extends Permissions
       visible: true,
       isModelProperty: true,
     },
+    {
+      name: "Bank Reference",
+      property: "gatewayTransactionReference",
+      visible: true,
+      isModelProperty: true,
+    },
     // {
     //   name: "Merchant Request Reference",
     //   property: "merchantRequestReference",

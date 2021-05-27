@@ -57,7 +57,7 @@ export const buildUrlParams = (paramData):string | void => {
  * This method takes an array and callback that modifies each item
  */
 export const refineData = (data:any[], processDatum:any):any[] => {
-  return data.map((datum) =>  processDatum(datum));
+  return data.length ? data.map((datum) =>  processDatum(datum)) : [];
 }
 
 

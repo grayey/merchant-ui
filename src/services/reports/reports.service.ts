@@ -27,8 +27,8 @@ export class ReportsService{
         const { startDate, endDate } = urlData;
         urlData.refundStartDate = startDate;
         urlData.refundEndDate = endDate;
-        // urlData.startDate = undefined
-        // urlData.endDate = undefined
+        delete urlData.startDate ;
+        delete urlData.endDate;
         const params = buildUrlParams(urlData);
         const url = `transaction/refunded/${params}`;
         return this.apiHandler.get(url);
@@ -62,9 +62,15 @@ export class ReportsService{
 
     downloadReport(reportType, filterData): any {
         let url = "transaction/download/";
+        const { startDate, endDate } = filterData;
+
         switch(reportType){
             case "REFUNDS":
                 url+="refunded";
+                filterData.refundStartDate = startDate;
+                filterData.refundEndDate = endDate;
+                delete filterData.startDate ;
+                delete filterData.endDate;
                 break;
             case "MERCHANT_BALANCE":
                 url += "merchant-balance"
@@ -73,8 +79,9 @@ export class ReportsService{
                 url +="success-failure-rate";
                 break;
             default:
-                return alert('Unknow report type')
+                return alert('Unknown report type')
         }
+    
         const path = `${url}/${buildUrlParams(filterData)}`;
         return this.apiHandler.getFile(path).subscribe(
             (fileResponse)=>{

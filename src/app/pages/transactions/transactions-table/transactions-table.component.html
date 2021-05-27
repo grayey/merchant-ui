@@ -8,7 +8,7 @@
       name="Transactions"
       [columns]="columns"
       (filterChange)="onFilterChange($event)"
-      [gatewayTransactionReference]="false"
+      [gatewayTransactionReference]="true"
       [transactionStatus]="true"
       [merchantId]="true"
       [amount]="true"
@@ -106,14 +106,14 @@
           </td>
         </ng-container>
 
-        <!-- <ng-container matColumnDef="transactionReference">
+        <ng-container matColumnDef="gatewayTransactionReference">
           <th *matHeaderCellDef class="image-cell" mat-header-cell>
-            Transaction Reference
+            Bank Reference
           </th>
           <td *matCellDef="let row" class="image-cell" mat-cell>
-            {{ row.transactionReference }}
+            {{ row?.gatewayTransactionReference }}
           </td>
-        </ng-container> -->
+        </ng-container>
 
         <ng-container matColumnDef="transactionDate">
           <th *matHeaderCellDef class="image-cell" mat-header-cell>

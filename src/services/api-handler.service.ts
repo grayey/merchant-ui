@@ -154,6 +154,11 @@ export class ApiHandlerService extends ApiConfig{
     const url = `${ApiHandlerService.API_BASE_URL}${path}`;
     ApiConfig.EXPECT_FILE = "blob";
     ApiHandlerService.API_BASE_URL = environment.API_BASE_URL;
+    // observe: 'response',
+    // responseType: "blob",
+    this.headers['observe'] = 'response';
+    this.headers['responseType'] = 'blob';
+
     const fileResponse = this.http.get(`${url}`, this.headers).retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
