@@ -144,8 +144,8 @@ export class SettlementsTableComponent extends Permissions implements OnInit, Af
     this.filterData = {
       merchantId: 0,
       reportType: "",
-      startDate: getToday(),
-      endDate: getToday(),
+      startDate: getToday('start'),
+      endDate: getToday('end'),
     };
   }
 

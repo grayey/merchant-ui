@@ -209,8 +209,8 @@ export class TransactionsTableComponent extends Permissions
       amount: 0,
       merchantId:0,
       merchantTransactionReference: "",
-      startDate: getToday(), //getToday()
-      endDate: getToday()//getToday(),
+      startDate: getToday('start'),
+      endDate: getToday('end'),
     };
   }
 
@@ -233,11 +233,15 @@ export class TransactionsTableComponent extends Permissions
     this.filterData.amount = amount || 0;
     this.filterData.merchantTransactionReference =
       merchantTransactionReference || "";
-    this.filterData.startDate =
-      this.datePipe.transform(startDate, "yyyy-MM-dd") || "";
-    this.filterData.endDate =
-      this.datePipe.transform(endDate, "yyyy-MM-dd") || "";
-      this.filterData.merchantId = merchantId;
+
+    // this.filterData.startDate =
+    //   this.datePipe.transform(startDate, "yyyy-MM-dd") || "";
+    // this.filterData.endDate =
+    //   this.datePipe.transform(endDate, "yyyy-MM-dd") || "";
+      
+      this.filterData.startDate = startDate;
+      this.filterData.endDate = endDate;
+      this.filterData.merchantId = merchantId || 0;
     this.getTransactions();
   }
 
@@ -323,9 +327,9 @@ export class TransactionsTableComponent extends Permissions
     this.dialog.open(RefundTransactionsComponent, { 
       data,
       panelClass:'dialog-lg'
-     }).afterOpened().subscribe(
+     }).afterClosed().subscribe(
       (transResponse) =>{
-
+        this.onFilterClick(this.filterData)
         console.log({ transResponse })
 
       },

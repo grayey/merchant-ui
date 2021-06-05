@@ -80,8 +80,8 @@ export class SuccessFailureRateComponent extends Permissions implements OnInit, 
   ] as ListColumn[];
 
   filterData: ISFRFilter ={
-    startDate:getToday(),
-    endDate:getToday(),
+    startDate:getToday('start'),
+    endDate:getToday('end'),
     pageNumber:1,
     pageSize:10
   };

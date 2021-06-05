@@ -74,8 +74,8 @@ export class MerchantBalanceComponent extends Permissions implements OnInit, Aft
   ] as ListColumn[];
 
   filterData: IMerchantBalanceFilter ={
-    startDate:getToday(),
-    endDate:getToday(),
+    startDate:getToday('start'),
+    endDate:getToday('end'),
     pageNumber:1,
     pageSize:10
   };

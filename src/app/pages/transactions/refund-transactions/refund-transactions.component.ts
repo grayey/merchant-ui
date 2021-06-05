@@ -45,8 +45,12 @@ export class RefundTransactionsComponent implements OnInit {
         this.closeDialog();
       },
       (error) =>{
-    this.loaders.processing = false;
-        this.toastrService.error(processErrors(error))
+        this.loaders.processing = false;
+        console.log({
+          error
+        })
+        // processErrors(error)
+        this.toastrService.error('Refund failed. Please try again later.')
       }
     )
 

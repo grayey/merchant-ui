@@ -202,7 +202,11 @@ export class AppService {
       merchantId
     } = filterData;
     let url =  `/api/v1/transaction?pageNumber=${pageNumber}&pageSize=${pageSize}&gatewayTransactionReference=${gatewayTransactionReference}&transactionStartDate=${startDate}&transactionEndDate=${endDate}&amount=${amount}&transactionStatus=${transactionStatus}&merchantTransactionReference=${merchantTransactionReference}`;
-    url += merchantId ? `&merchantId=${merchantId}`:"";
+
+    const paramData = {...{pageNumber, pageSize}, ...filterData};
+    const urlParams = buildUrlParams(paramData);
+    url = `/api/v1/transaction/${urlParams}`;
+    url += merchantId ? `merchantId=${merchantId}`:"";
     return this.http.get(
       this.appBaseUrl + url
         ,
@@ -216,6 +220,7 @@ export class AppService {
   }
 
   confirmRefund(data){
+    // return this.http.get("https://run.mocky.io/v3/e7bdbe25-0aee-4810-862f-21637d4a3beb");
     return this.apiHandler.post('transaction/refund',data);
   }
 

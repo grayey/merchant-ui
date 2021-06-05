@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
+import { throwError } from 'rxjs';
 import { ApiConfig } from '../utils/config';
 import { UserService } from './user/user.service';
 import { environment } from '../environments/environment';
-import { map, retryWhen, delay, take, catchError } from "rxjs/operators";
+import { map, retryWhen, delay, take, catchError, finalize } from "rxjs/operators";
 import { AuthService } from "src/services/auth.service";
 import CONSTANTS from "../utils/constants";
 import { ToastrService } from 'ngx-toastr';
@@ -159,16 +160,21 @@ export class ApiHandlerService extends ApiConfig{
     this.headers['observe'] = 'response';
     this.headers['responseType'] = 'blob';
 
-    const fileResponse = this.http.get(`${url}`, this.headers).retryWhen((errors) => {
+    const fileResponse = this.http.get(`${url}`, this.headers).pipe(
+      retryWhen((errors) => {
         return errors
           .mergeMap((error) => this.errorHandler(error))
           .delay(1000)
           .take(2);
-      })
-      .catch((err) => this.errorHandler(err))
-      .map((res) => res);
+      })).pipe(
+        catchError((err) => this.errorHandler(err))
+      ).pipe(
+        map((res) => res)
+      )
       ApiConfig.EXPECT_FILE = null;
       return fileResponse;
+     
+      
   }
 
   /**
@@ -218,11 +224,15 @@ export class ApiHandlerService extends ApiConfig{
    */
   private errorHandler(err) {
     this.checkLogout(err);
+    // return throwError(err)
+    // .pipe(finalize(() => console.log('complete!')))
+    return Observable.from([])
     try{
       return Observable.throw(err || 'Server error');
     }catch(e){
-      return Observable.from([ ])
+      return Observable.from([])
     }
+ 
 
   }
 
@@ -231,7 +241,6 @@ export class ApiHandlerService extends ApiConfig{
    * @param err 
    */
   private checkLogout = (err) => {
-
     const { status } = err;
     if(status == CONSTANTS.HTTP_STATUS_FORBIDDEN || status == CONSTANTS.HTTP_STATUS_UNAUTHENTICATED){
       const logoutMsg = status == CONSTANTS.HTTP_STATUS_FORBIDDEN ? "Access forbidden":"Session Expired"

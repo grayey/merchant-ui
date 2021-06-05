@@ -83,9 +83,10 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
       { name: "Actions", property: "actions", visible: true },
     ] as ListColumn[];
     pageSize = 10;
+
     filterData : IRefundsFilter = {
-        startDate: getToday(),
-        endDate:getToday(),
+        startDate: `${getToday()} 00:00:00`,
+        endDate:`${getToday()} 23:59:59`,
         pageNumber:1,
         pageSize:10
 

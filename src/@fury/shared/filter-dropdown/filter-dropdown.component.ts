@@ -9,10 +9,11 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { AppService } from "src/services/app.service";
 import { UserService } from "src/services/user/user.service";
+import { formatDateHelper } from "src/utils/helpers";
 
 @Component({
   selector: "filter-dropdown",
@@ -22,6 +23,7 @@ import { UserService } from "src/services/user/user.service";
 })
 export class FilterDropdownComponent implements OnInit {
   form: FormGroup;
+  public dateTimeFormGroup:FormGroup;
 
   @Input() showType = false;
   @Input() showStatus = false;
@@ -54,6 +56,11 @@ export class FilterDropdownComponent implements OnInit {
     // console.log("APP USER", this.appUser)
     this.isAdmin = (this.appUser && !this.appUser.merchantId);
     this.today = new Date().toISOString()?.split('T')[0];
+    this.dateTimeFormGroup = new FormGroup({
+      activeEndDate: new FormControl(null, {
+        validators: [Validators.required]
+      })
+    });
   }
 
   ngOnInit() {
@@ -71,9 +78,14 @@ export class FilterDropdownComponent implements OnInit {
         name: "CHARGE_BACKS",
       },
     ];
+
+   
   }
 
   private initForm(): void {
+
+  
+
     this.form = this.fb.group({
       status: [""],
       type: [""],
@@ -138,30 +150,39 @@ export class FilterDropdownComponent implements OnInit {
   }
 
   formatDate(date) {
-    let formatedDate = "";
-    const { day, month, year } = date;
-    if(day && month && year){
-      formatedDate =
-      year.toString() + "-" + month.toString() + "-" + day.toString();
-    }
+    // let formatedDate = "";
+    // let { day, month, year } = date;
+    // // day = date.getDay();
+    // // year = date.getYear();
+    // console.log(formatDateHelper(date))
+    // if(day && month && year){
+    //   formatedDate =
+    //   year.toString() + "-" + month.toString() + "-" + day.toString();
+    // }
     
-    return formatedDate;
+    return formatDateHelper(date);
   }
 
   onSubmit() {
     const payLoad = this.form.value;
-    const { startDate, endDate } = payLoad;
-    
-    if (startDate) {
-      payLoad.startDate = this.formatDate(startDate);
-    }else{
-      payLoad.startDate = this.today;
-    }
-    if (endDate) {
-      payLoad.endDate = this.formatDate(endDate);
-    }else{
-      payLoad.endDate = this.today;
-    }
+    let { startDate, endDate } = payLoad;
+    // startDate = startDate ? startDate : this.today;
+    // endDate = endDate ? endDate : this.today;
+    payLoad.startDate = this.formatDate(startDate);
+    payLoad.endDate = this.formatDate(endDate);
+    console.log({
+      payLoad
+    })
+    // if (startDate) {
+      
+    // }else{
+    //   payLoad.startDate = this.today;
+    // }
+    // if (endDate) {
+      
+    // }else{
+    //   payLoad.endDate = this.today;
+    // }
     this.filterClick.emit(payLoad);
   }
 
@@ -170,4 +191,6 @@ export class FilterDropdownComponent implements OnInit {
     // event.stopPropagation();
     // event.preventDefault();
   }
+
+
 }

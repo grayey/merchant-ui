@@ -136,8 +136,8 @@ export class ChargeBackCostComponent extends Permissions
     this.filterData = {
       merchantId: 1,
       reportType: "",
-      startDate: getToday(),
-      endDate: getToday(),
+      startDate: getToday('start'),
+      endDate: getToday('end'),
     };
   }
 

@@ -1,4 +1,5 @@
 import { AbstractControl } from '@angular/forms';
+import * as moment from 'moment';
 declare const $: any;
 
 
@@ -38,11 +39,16 @@ export const buildUrlParams = (paramData):string | void => {
     if(!paramData) return;
     const authUser = JSON.parse(localStorage.getItem('userData'));
     const isAdmin = !authUser?.merchantId;
+    paramData['transactionStartDate'] = paramData['startDate'];
+    paramData['transactionEndDate'] = paramData['endDate'];
     let urlParams = "?";
     for(const param in paramData){
       let paramValue = paramData[param];
       if(param=='merchantId'){
         paramValue = isAdmin ? paramValue : authUser.merchantId;
+      }
+      if(param.toLowerCase().includes('startdate')){
+        paramValue = encodeURI(paramValue);
       }
       urlParams +=`${param}=${paramValue}&`;
     }
@@ -72,10 +78,16 @@ export const  setValidationClass = (formIsValid): string => {
   return formIsValid ? 'btn btn-success' : 'btn btn-primary';
 }
 
-export const getToday = () =>{
-  return new Date().toISOString().split('T')[0]
-
+export const getToday = (dateType?:string) =>{
+  const typeSuffix = {
+    start:' 00:00:00',
+    end:' 23:59:59'
+  }
+  const date = new Date().toISOString().split('T')[0];
+  return dateType ? `${date}${typeSuffix[dateType] || ""}` : date;
 }
+
+export const formatDateHelper = (date) => moment(date).format('yyyy-MM-DD hh:mm:ss');
 
 export const processErrors = (error): string => {
   let errorBody = '';
