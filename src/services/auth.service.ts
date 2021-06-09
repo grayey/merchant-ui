@@ -28,16 +28,7 @@ export class AuthService {
 
   public performLogin(user, callBack:any = null) {
     this.loginUser(user, callBack);
-    if(callBack){
-     const getUserRoleAndLogin = new Promise(resolve => resolve(callBack()));
-    //  getUserRoleAndLogin.then((response) =>{
-    //   console.log("CALLBACK SUCCESS");
-    //   // this.router.navigateByUrl('/transactions');
-    //  }).catch((err) =>{
-    //   console.log("CALLBACK ERROR", { err });
-    //  })
-   
-    }
+    callBack && new Promise(resolve => resolve(callBack()));
   }
 
   loginUser(user, reroute = true) {
@@ -45,7 +36,7 @@ export class AuthService {
     localStorage.setItem("userData", JSON.stringify(user));
     this.user = user;
     this.isAuthenticated = true;
-    if(reroute == true) this.router.navigateByUrl('/transactions');
+    reroute && this.router.navigateByUrl('/transactions');
   }
 
   autoLogout(expirationDuration: number) {
@@ -56,11 +47,8 @@ export class AuthService {
 
   logout() {
     this.user = null;
-
     localStorage.removeItem("userData");
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
+    this.tokenExpirationTimer && clearTimeout(this.tokenExpirationTimer);
     this.tokenExpirationTimer = null;
     this.isAuthenticated = false;
   }

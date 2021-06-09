@@ -224,9 +224,8 @@ export class ApiHandlerService extends ApiConfig{
    */
   private errorHandler(err) {
     this.checkLogout(err);
-    // return throwError(err)
+    return throwError(err)
     // .pipe(finalize(() => console.log('complete!')))
-    return Observable.from([])
     try{
       return Observable.throw(err || 'Server error');
     }catch(e){
@@ -242,6 +241,7 @@ export class ApiHandlerService extends ApiConfig{
    */
   private checkLogout = (err) => {
     const { status } = err;
+    console.log({ status })
     if(status == CONSTANTS.HTTP_STATUS_FORBIDDEN || status == CONSTANTS.HTTP_STATUS_UNAUTHENTICATED){
       const logoutMsg = status == CONSTANTS.HTTP_STATUS_FORBIDDEN ? "Access forbidden":"Session Expired"
       this.authService.logoutUser();

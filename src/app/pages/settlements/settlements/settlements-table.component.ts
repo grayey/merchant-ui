@@ -105,6 +105,8 @@ export class SettlementsTableComponent extends Permissions implements OnInit, Af
     if (pageEvent) {
       pageSize = pageEvent.pageSize;
       pageNumber = pageEvent.pageIndex + 1;
+      this.filterData['pageNumber'] = pageNumber;
+      this.filterData['pageSize'] = pageSize;
     } else {
       pageSize = 10;
       pageNumber = 1;

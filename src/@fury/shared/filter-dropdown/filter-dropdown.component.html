@@ -160,12 +160,13 @@
          <div class="row" *ngIf="transactionStatus || (merchantId && isAdmin)">
            <div class="col-md-6">
             <div class="form-group" *ngIf="transactionStatus">
-              <label>Transaction Status</label>
-              <div class="select-dropdown">
+              <label>Status</label>
+              <div class="select-dropdownx">
                 <select
                   name="transactionStatus"
                   id="transactionStatus"
                   formControlName="transactionStatus"
+                  class="form-control"
                 >
                   <option value="">ALL</option>
                   <option value="FAILED">FAILED</option>
@@ -174,15 +175,17 @@
               </div>
             </div>
            </div>
+     
            <div class="col-md-6">
 
-            <div class="form-group" *ngIf="merchantId && isAdmin">
+            <div class="form-group " *ngIf="merchantId && isAdmin">
               <label>Merchant</label>
-              <div class="select-dropdown">
+              <div class="select-dropdownx">
                 <select
                   name="merchantId"
                   id="merchantId"
                   formControlName="merchantId"
+                  class="form-control"
                 >
                   <option
                     *ngFor="let merchant of merchants"

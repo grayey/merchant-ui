@@ -308,10 +308,13 @@ export class AppService {
 
   getPlatformCost(pageNumber: string, pageSize: string, filterData: any): any {
     let { reportType, merchantId, endDate, startDate } = filterData;
+    const oldParams = `?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&reportType=${reportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+
     merchantId = this.getMerchantId(merchantId);
+    const urlParams = buildUrlParams({...{pageNumber, pageSize, merchantId}, ...filterData})
     return this.http.get(
       this.appBaseUrl +
-        `/api/v1/transaction/platform-cost?merchantId=${merchantId}&startDate=${startDate}&endDate=${endDate}&reportType=${reportType}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        `/api/v1/transaction/platform-cost${urlParams}`,
       {
         headers: {
           Authorization: this.getToken(),

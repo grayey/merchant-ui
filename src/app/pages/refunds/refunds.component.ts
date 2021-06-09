@@ -132,8 +132,10 @@ export class RefundsComponent implements OnInit, AfterViewInit, OnDestroy {
         if (pageEvent) {
           pageSize = pageEvent.pageSize;
           pageNumber = pageEvent.pageIndex + 1;
+          this.filterData['pageNumber'] = pageNumber;
+          this.filterData['pageSize'] = pageSize;
         } 
-        ReportsService.REFUNDS_LIST_FILTER = { ...this.filterData, pageSize, pageNumber, };
+        ReportsService.REFUNDS_LIST_FILTER = { pageSize, pageNumber, ...this.filterData,  };
         
         this.reportService.getAllRefunds().subscribe(
             (refundsResponse)=>{

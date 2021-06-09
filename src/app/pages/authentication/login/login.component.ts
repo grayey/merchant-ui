@@ -109,6 +109,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private login(data: any) {
+  
     this.loginAttempts +=1;
     const now = new Date();
     const expire_at = new Date(this.lockoutInfo?.expire_at);
@@ -129,7 +130,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         // this.loaders.processing = false;
       },
       (err) => {
-
         this.loaders.processing = false;
         // this.toastr.error(processErrors(err));
         if (err.status == 400) {
@@ -153,7 +153,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       },
       () => {
-        // console.log('save enrolle call completed!');
+        console.log('save enrolle call completed!');
       }
     );
   }

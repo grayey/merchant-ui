@@ -250,12 +250,15 @@ export class TransactionsTableComponent extends Permissions
     if (pageEvent) {
       pageSize = pageEvent.pageSize;
       pageNumber = pageEvent.pageIndex + 1;
+      this.filterData['pageNumber'] = pageNumber;
+      this.filterData['pageSize'] = pageSize;
     } else {
       pageSize = 10;
       pageNumber = 1;
     }
 
-    console.log(this.filterData);
+
+    // console.log(this.filterData);
     // const { gender, activeStatus, corporateId, providerId } = this.filterValues;
     this.appService
       .getTransactions(pageNumber, pageSize, this.filterData)
