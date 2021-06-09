@@ -11,7 +11,7 @@ export const environment = {
   API_BASE_URL:"http://34.240.160.43:8085/api/v1/",
   API_KEY:"",
   BASIC_TOKEN:"Basic Y29kZWlxLXBheW1lbnQtZ2F0ZXdheTpzZWNyZXQ=",
-  MAX_INACTIVE_TIME:0.5*60*1000, //5 X 60 seconds,
+  MAX_INACTIVE_TIME:5*60*1000, //5 X 60 seconds,
   NOTIFY_INACTIVITY:30*1000, //30 seconds
   IPIFY_URL:"https://ipgeolocation.abstractapi.com/v1/?api_key=6f73766c9d8a467092b3d00a2d310e37",
   MAX_LOGIN_ATTEMPTS:5,

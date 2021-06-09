@@ -103,7 +103,7 @@ private inactivityTimer = () => {
 
 private logout() {
   this.authService.logoutUser(this.intervalTimer);
-  console.log("Logout", this.intervalTimer)
+  console.log("Log:", this.intervalTimer)
 
 }
 

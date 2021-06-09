@@ -262,8 +262,14 @@ export class TransactionsTableComponent extends Permissions
       .subscribe(
         (response) => {
           response.data.forEach((row) =>{
-            const { currency, amount } = row;
+            const { currency, amount, merchantAmountDue, mdrFee, platformAmountDue, processingFee, transactionFee, fraudPreventionFee } = row;
             row.amount = formatCurrency(amount, this.locale,getCurrencySymbol(currency, 'wide'))
+            row.merchantAmountDue = formatCurrency(merchantAmountDue, this.locale,getCurrencySymbol(currency, 'wide'))
+            row.mdrFee = formatCurrency(mdrFee, this.locale,getCurrencySymbol(currency, 'wide'))
+            row.platformAmountDue = formatCurrency(platformAmountDue, this.locale,getCurrencySymbol(currency, 'wide'))
+            row.processingFee = formatCurrency(processingFee, this.locale,getCurrencySymbol(currency, 'wide'))
+            row.transactionFee = formatCurrency(transactionFee, this.locale,getCurrencySymbol(currency, 'wide'))
+            // row.fraudPreventionFee = formatCurrency(fraudPreventionFee, this.locale,getCurrencySymbol(currency, 'wide'))
           })
           this.transactions = response.data;
           this.dataSource.data = this.transactions;
