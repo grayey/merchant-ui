@@ -85,7 +85,7 @@ private checkInactiveLogout = () => {
   this.timeDifference = this.maxInactiveTime - this.idleTime;
   if(this.timeDifference <= 0){
     this.logout();
-    !this.document.g && this.toasterService.error('You were logged out due to inactivity.');
+    !this.document.getElementById('login_page') && this.toasterService.error('You were logged out due to inactivity.');
   }else if(this.timeDifference <= this.notifyInactivity){
     this.showInactivityBanner = true;
   }
@@ -103,9 +103,8 @@ private inactivityTimer = () => {
 
 private logout() {
   this.authService.logoutUser(this.intervalTimer);
-  // this.document.onclick = ()=>{};
-  // this.document.onkeypress = ()=>{};
-  // this.document.ontouchstart = ()=>{};
+  console.log("Logout", this.intervalTimer)
+
 }
 
   ngOnDestroy(): void {
