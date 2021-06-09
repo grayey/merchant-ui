@@ -65,7 +65,10 @@ export class AuthService {
     this.isAuthenticated = false;
   }
 
-  logoutUser() {
+  logoutUser(INACTIVE_INTERVAL?:number) {
+    if(INACTIVE_INTERVAL){
+      clearInterval(INACTIVE_INTERVAL);
+    }
     this.logout();
     this.router.navigate(["/login"]);
     // const INACTIVE_INTERVAL = localStorage.getItem('INACTIVE_INTERVAL');
