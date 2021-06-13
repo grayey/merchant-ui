@@ -496,6 +496,8 @@ export class AppService {
     return this.apiHandler.get(url);
   }
 
+
+
   private getToken(): string {
     let bearerToken: IBearerToken = this.initEmptyData();
     const accessToken = this.authService.user;

@@ -57,13 +57,15 @@
         <a class="caption" [routerLink]="['/forgot-password']"
           >Forgot Password?</a
         >
+
+        
       </div>
       <button type="button" (click)="send()" [disabled]="loaders?.processing || form?.invalid" color="primary" mat-raised-button>
         SIGN IN <small *ngIf="loaders?.processing"> &nbsp;&nbsp; <i class='loader'></i></small>
       </button>
       <p class="secondary-text text-center">
-        <!-- Don't have an account?<br/>
-        <a [routerLink]="['/register']">Click here to create one</a> -->
+        Don't have an account?<br/>
+        <a href="javascript:void(0)" (click)="toggleSignUp()">Sign Up</a>
         <small *ngIf="lockoutWarning" class="text-danger">{{lockoutWarning}}</small>
       </p>
     </div>

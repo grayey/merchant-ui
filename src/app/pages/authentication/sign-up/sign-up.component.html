@@ -1,0 +1,22 @@
+
+<div class="card">
+    <div class="card-header">
+        <h4>Enter email to get started.</h4>
+        </div>
+
+        
+        <div class="card-body">
+            <form [formGroup]="signUpForm" (ngSubmit)="generateOTP()">
+                <div class="form-group" >
+                    <input placeholder="Enter email" type="text" formControlName="email"  class="form-control" />
+                </div>
+                <small>Further information will be sent to you. </small>
+                <button type="submit" [disabled]="loaders?.processing || signUpForm?.invalid" class="float-right btn btn-primary">
+                    Submit <small *ngIf="loaders?.processing"> &nbsp;&nbsp; <i class='loader'></i></small>
+                </button>
+            </form>
+        </div>
+
+</div>
+
+

@@ -1,0 +1,869 @@
+
+<ng-container *ngIf="loaders?.processing">
+
+    <div class="p-5">
+        <i class='loader'></i>
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="!loaders.processing && !isVerified">
+
+    <div class="card">
+        <div class="card-header text-danger">
+            <h3>
+                Error Notice!
+            </h3>
+        </div>
+
+        <div class="card-body p-5">
+            Email Verification failed. Please retry.
+        </div>
+    </div>
+
+</ng-container>
+
+
+<ng-container *ngIf="!loaders.processing && isVerified">
+    <fury-page>
+        <fury-title class="title">
+          <mat-icon [@scaleIn]>description</mat-icon>
+          <span [@fadeInRight]>Merchant Onboarding</span>
+        </fury-title>
+      
+        <div fxLayout="column"  class="mt-3">
+      
+          <div [@fadeInUp] class="card">
+            <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
+              <mat-step [stepControl]="merchantUserForm">
+                <form [formGroup]="merchantUserForm">
+                  <ng-template matStepLabel>User</ng-template>
+    
+                  <div class="content" fxLayout="column" fxLayoutGap="8px">
+
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                        <mat-form-field fxFlex="auto">
+                          <mat-label>Full Name</mat-label>
+                          <input formControlName="name" matInput >
+                          <mat-hint>First Name + Last Name.</mat-hint>
+                          </mat-form-field>
+                      </div>
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Email</mat-label>
+                        <input type="text" formControlName="email" matInput disabled readonly/>
+                      </mat-form-field>
+    
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Password</mat-label>
+                        <input type="password" formControlName="password" matInput />
+                      </mat-form-field>
+    
+                    </div>
+    
+                   
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+    
+                        <!-- <mat-form-field fxFlex>
+                          <mat-label>User Role</mat-label>
+                          <mat-select formControlName="userRoleId">
+                            <mat-option *ngFor="let role of userRoles" [value]="role.id">
+                              {{ role.name }}</mat-option
+                            >
+                          </mat-select>
+                        </mat-form-field> -->
+                     
+                        
+                        <!-- <mat-form-field fxFlex>
+                          <mat-label>User Type</mat-label>
+                          <mat-select formControlName="userTypeId">
+                            <mat-option *ngFor="let type of userTypes" [value]="type.id">
+                              {{ type.name }}</mat-option
+                            >
+                          </mat-select>
+                        </mat-form-field> -->
+        
+                    </div>
+                  </div>
+      
+                  <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                    <button (click)="stepper.reset()" *ngIf="!merchantRegistered" [disabled]="merchantUserForm.pristine" color="primary" mat-button
+                            type="button">RESET
+                    </button>
+                    <button [disabled]="merchantUserForm.invalid" color="primary" mat-raised-button matStepperNext>NEXT
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+    
+              
+              <mat-step [stepControl]="merchantDetailsForm">
+                <form [formGroup]="merchantDetailsForm">
+                  <ng-template matStepLabel>General</ng-template>
+    
+                  <div class="content" fxLayout="column" fxLayoutGap="8px">
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                        <mat-form-field fxFlex="auto">
+                        <mat-label>Company Name</mat-label>
+                        <input formControlName="companyName" matInput required>
+                        <mat-hint>Merchant's business name.</mat-hint>
+                        </mat-form-field>
+        
+                        <mat-form-field fxFlex="auto">
+                        <mat-label>Business Category</mat-label>
+                        <mat-select formControlName="businessCategoryId" required>
+                          <mat-option *ngFor="let category of allBusinessCategories" [value]="category.id">{{ category?.name }}</mat-option>
+                        </mat-select>
+                        <mat-hint>Business type.</mat-hint>
+                        </mat-form-field>
+                    </div>
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+    
+                        <!-- <mat-form-field fxFlex="auto">
+                            <mat-label>Bank</mat-label>
+                            <mat-select formControlName="bankId">
+                              <mat-option *ngFor="let bank of allBanks" [value]="bank.id">{{ bank?.name }}</mat-option>
+                            </mat-select>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field> -->
+                                 
+                          <!-- <mat-form-field fxFlex="1 1 auto">
+                            <mat-label>Account No.</mat-label>
+                            <input formControlName="accountNumber" matInput required>
+                          </mat-form-field> -->
+        
+                    </div>
+    
+                     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                        
+                
+    
+                          <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Age of Business</mat-label>
+                            <input formControlName="businessYears" type="number" matInput>
+                            <mat-hint align="end">How old (no. of years) is the business?</mat-hint>
+                          </mat-form-field>
+
+                          <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Country</mat-label>
+                            <mat-select formControlName="countryId">
+                              <mat-option  *ngFor="let country of allCountries" [value]="country.id">{{ country?.name }}</mat-option>
+                            </mat-select>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+                        
+                     </div>
+    
+                     
+                     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                        
+                    
+    
+    
+                        <mat-form-field fxFlex="2 1 auto">
+                          <mat-label>City</mat-label>
+                          <input formControlName="city" type="text" matInput>
+                          <mat-hint align="end"></mat-hint>
+                        </mat-form-field>
+                      
+                   </div>
+    
+                     <!-- <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                        <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Region</mat-label>
+                            <mat-select formControlName="region">
+                              <mat-option *ngFor="let region of allRegions" [value]="region.key">{{ region?.value }}</mat-option>
+                            </mat-select>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+    
+                          <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Currency</mat-label>
+                            <mat-select formControlName="currency">
+                              <mat-option *ngFor="let currency of allCurrencies" [value]="currency.key">{{ currency?.value }}</mat-option>
+                            </mat-select>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+                     </div> -->
+    
+                     <!-- <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                        <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Merchant Code</mat-label>
+                            <input formControlName="merchantCode" matInput>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+    
+                          <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Processing Gateway</mat-label>
+                            <mat-select formControlName="processingGatewayId">
+                              <mat-option *ngFor="let gateway of allGateways" [value]="gateway.id">{{ gateway?.name }}</mat-option>
+                            </mat-select>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+                     </div> -->
+                  </div>
+      
+                  <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                    <button (click)="merchantDetailsForm.reset()" *ngIf="!merchantRegistered" [disabled]="merchantDetailsForm.pristine" color="primary" mat-button
+                            type="button">RESET
+                    </button>
+                    <button [disabled]="merchantDetailsForm.invalid" color="primary" mat-raised-button matStepperNext>NEXT
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+    
+              <mat-step [stepControl]="merchantContactForm">
+                <form [formGroup]="merchantContactForm">
+                  <ng-template matStepLabel>Contact</ng-template>
+    
+      
+                  <div class="content" fxLayout="column" fxLayoutGap="8px">
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                        <mat-form-field fxFlex="auto">
+                        <mat-label>Email</mat-label>
+                        <input formControlName="email" matInput required>
+                        <mat-hint>Business email.</mat-hint>
+                        </mat-form-field>
+        
+                        <mat-form-field fxFlex="auto">
+                        <mat-label>Phone No</mat-label>
+                        <input formControlName="phoneNumber" matInput required>
+                        <mat-hint>Business phone number.</mat-hint>
+                        </mat-form-field>
+                    </div>
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                      <mat-form-field fxFlex="auto">
+                      <mat-label>Developer Email</mat-label>
+                      <input formControlName="developerEmail" matInput required>
+                      <mat-hint>Developer email.</mat-hint>
+                      </mat-form-field>
+      
+                      <mat-form-field fxFlex="auto">
+                      <mat-label>Developer Mobile</mat-label>
+                      <input formControlName="developerMobileNumber" matInput required>
+                      <mat-hint>Developer phone number.</mat-hint>
+                      </mat-form-field>
+                  </div>
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+    
+                        
+                          <mat-form-field fxFlex="1 1 auto">
+                            <mat-label>Primary Contact Name</mat-label>
+                            <input formControlName="primaryContactName" matInput required>
+                          </mat-form-field>
+    
+                          <mat-form-field fxFlex="auto">
+                            <mat-label>Primary Contact Email</mat-label>
+                            <input formControlName="primaryContactEmail" matInput required>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+       
+                    </div>
+    
+                     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                        
+                        <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Primary Contact Mobile</mat-label>
+                            <input formControlName="primaryContactPhoneNumber" matInput>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+    
+                          <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Primary Contact Telephone</mat-label>
+                            <input formControlName="primaryContactTelephone" matInput>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+                        
+                     </div>
+    
+                     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                        <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Secondary Contact Name</mat-label>
+                            <input formControlName="secondaryContactName" matInput>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+    
+                          <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Secondary Contact Email</mat-label>
+                            <input formControlName="secondaryContactEmail" matInput>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+                     </div>
+    
+                     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+    
+                      <mat-form-field fxFlex="2 1 auto">
+                        <mat-label>Secondary Contact Mobile</mat-label>
+                        <input formControlName="secondaryContactPhoneNumber" matInput>
+                        <mat-hint align="end"></mat-hint>
+                      </mat-form-field>
+    
+                        <mat-form-field fxFlex="2 1 auto">
+                            <mat-label>Secondary Contact Telephone</mat-label>
+                            <input formControlName="secondaryContactTelephone" matInput>
+                            <mat-hint align="end"></mat-hint>
+                          </mat-form-field>
+    
+                     </div>
+    
+                     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                      <mat-form-field fxFlex="2 1 auto">
+                        <mat-label>Website Link</mat-label>
+                        <input formControlName="websiteLink" matInput>
+                        <mat-hint align="end"></mat-hint>
+                      </mat-form-field>
+    
+                      <!-- <mat-form-field fxFlex="2 1 auto">
+                        <mat-label>Url</mat-label>
+                        <input formControlName="url" matInput>
+                        <mat-hint align="end"></mat-hint>
+                      </mat-form-field> -->
+    
+                     </div>
+    
+                     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                      <mat-form-field fxFlex="2 1 auto">
+                        <mat-label>Address</mat-label>
+                        <input formControlName="address" matInput>
+                        <mat-hint align="end"></mat-hint>
+                      </mat-form-field>
+                     </div>
+                  </div>
+                 
+      
+                  <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                    <button (click)="merchantContactForm.reset()" *ngIf="!merchantRegistered" [disabled]="merchantContactForm.pristine" color="primary" mat-button
+                            type="button">RESET
+                    </button>
+                    <button [disabled]="merchantContactForm.invalid || loaders?.registering" color="primary" mat-raised-button (click)="generatePreview()">NEXT <small class='loader' *ngIf="loaders?.registering"></small>
+                    </button>
+                    <button class='d-none' id='generate-preview' matStepperNext></button>
+                  </div>
+                </form>
+              </mat-step>
+<!--     
+              <mat-step [stepControl]="feeSetUpForm">
+                <form [formGroup]="feeSetUpForm">
+                  <ng-template matStepLabel>Fee Setup</ng-template>
+    
+                  <div class="content" fxLayout="column" fxLayoutGap="8px">
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Bank MDR Commision</mat-label>
+                        <input type="number" formControlName="bank_mdr_commission" matInput />
+                      </mat-form-field>
+    
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Platform MDR Commision</mat-label>
+                        <input type="number" formControlName="platform_mdr_commission" matInput />
+                      </mat-form-field>
+                    </div>
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>MDR Fee Value Type</mat-label>
+                        <input type="text" formControlName="mdrFeeValueType" matInput />
+                      </mat-form-field>
+    
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Transaction Fee Value Type</mat-label>
+                        <input type="text" formControlName="transactionFeeValueType" matInput />
+                      </mat-form-field>
+                    </div>
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+    
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>MDR Fee</mat-label>
+                        <input type="number" formControlName="mdrFee" matInput />
+                      </mat-form-field>
+    
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Transaction Fee</mat-label>
+                        <input type="number" formControlName="transactionFee" matInput />
+                      </mat-form-field>
+                    </div>
+                  </div>
+      
+                  <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                    <button class='d-none' id='register-merchant' matStepperNext></button>
+                    <button (click)="feeSetUpForm.reset()" *ngIf="!merchantRegistered" [disabled]="feeSetUpForm.pristine" color="primary" mat-button
+                            type="button">RESET
+                    </button>
+                    <button [disabled]="feeSetUpForm.invalid || loaders?.registering" color="{{feeSetUpForm?.invalid ? 'primary':'btn-success'}}"  mat-raised-button (click)="registerMerchant()">SAVE
+                      <small class='loader' *ngIf="loaders?.registering"></small>
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+    
+              <mat-step [stepControl]="OTPForm">
+                <form [formGroup]="OTPForm">
+                  <ng-template matStepLabel>OTP</ng-template>
+    
+                  <div class="subheading">Enter the OTP that was just sent to you.</div>
+      
+                  <div class="content" fxLayout="column" fxLayoutGap="8px">
+                    <mat-form-field fxFlex="auto">
+                      <mat-label>OTP</mat-label>
+                      <input [type]="passwordInputType" formControlName="otp" matInput required>
+                      <button (click)="showPassword()" *ngIf="passwordInputType === 'password'" mat-icon-button matSuffix
+                              type="button">
+                        <mat-icon>visibility</mat-icon>
+                      </button>
+                      <button (click)="hidePassword()" *ngIf="passwordInputType === 'text'" mat-icon-button matSuffix
+                              type="button">
+                        <mat-icon>visibility_off</mat-icon>
+                      </button>
+                      <mat-hint>Your OTP should be at least 6 characters long.</mat-hint>
+                    </mat-form-field>
+      
+                    <mat-form-field fxFlex="auto">
+                      <mat-label>Confirm Password</mat-label>
+                      <input [type]="passwordInputType" formControlName="passwordConfirm" matInput required>
+                      <button (click)="showPassword()" *ngIf="passwordInputType === 'password'" mat-icon-button matSuffix
+                              type="button">
+                        <mat-icon>visibility</mat-icon>
+                      </button>
+                      <button (click)="hidePassword()" *ngIf="passwordInputType === 'text'" mat-icon-button matSuffix
+                              type="button">
+                        <mat-icon>visibility_off</mat-icon>
+                      </button>
+                      <mat-hint>Please type in your password again.</mat-hint>
+                    </mat-form-field> 
+                  </div>
+      
+                  <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                    <button class='d-none' matStepperNext id='verify-registration'></button>
+                    <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
+                    <button [disabled]="OTPForm.invalid || loaders?.verifying" color="primary" mat-raised-button (click)="verifyRegistration()">NEXT 
+                      <small class='loader' *ngIf="loaders?.verifying"></small>
+                    </button>
+                  </div>
+                </form>
+              </mat-step> -->
+    <!-- 
+              <mat-step [stepControl]="authenticationForm">
+                <form [formGroup]="authenticationForm">
+                  <ng-template matStepLabel>Authentication</ng-template>
+    
+                  <div class="content" fxLayout="column" fxLayoutGap="8px">
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Application ID</mat-label>
+                        <input type="text" formControlName="applicationId" matInput />
+                      </mat-form-field>
+    
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>API Key</mat-label>
+                        <input type="text" formControlName="apiKey" matInput />
+                      </mat-form-field>
+                    </div>
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Init Vector</mat-label>
+                        <input type="text" formControlName="initVector" matInput />
+                      </mat-form-field>
+    
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Key</mat-label>
+                        <input type="text" formControlName="key" matInput />
+                      </mat-form-field>
+                    </div>
+                  </div>
+    
+                  <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                    <mat-form-field fxFlex="auto">
+                      <mat-label>Call Back URL</mat-label>
+                      <input type="text" formControlName="callbackUrl" matInput />
+                    </mat-form-field>
+                    
+    
+                    <mat-form-field fxFlex="auto">
+                      <mat-label>Merchant Registration URL</mat-label>
+                      <input type="text" formControlName="registerMerchantUrl" matInput />
+                    </mat-form-field>
+    
+                    <mat-form-field fxFlex="auto">
+                      <mat-label>URL</mat-label>
+                      <input type="text" formControlName="url" matInput />
+                    </mat-form-field>
+    
+                  </div>
+      
+                  <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                    <button (click)="stepper.reset()" *ngIf="!merchantRegistered" [disabled]="authenticationForm.pristine" color="primary" mat-button
+                            type="button">RESET
+                    </button>
+                    <button [disabled]="authenticationForm.invalid" color="primary" mat-raised-button matStepperNext>NEXT
+                    </button>
+                  </div>
+                </form>
+              </mat-step> -->
+    
+    <!--           
+              <mat-step [stepControl]="encryptionForm">
+                <form [formGroup]="encryptionForm">
+                  <ng-template matStepLabel>Encryption</ng-template>
+    
+                  <div class="content" fxLayout="column" fxLayoutGap="8px">
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Cypher Transformation</mat-label>
+                        <input type="text" formControlName="cipherTransformation" matInput />
+                      </mat-form-field>
+    
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Iteration Count</mat-label>
+                        <input type="number" formControlName="iterationCount" matInput />
+                      </mat-form-field>
+                    </div>
+    
+                    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>IV</mat-label>
+                        <input type="text" formControlName="iv" matInput />
+                      </mat-form-field>
+    
+                      <mat-form-field fxFlex="auto">
+                        <mat-label>Key Size</mat-label>
+                        <input type="number" formControlName="keySize" matInput />
+                      </mat-form-field>
+                    </div>
+                  </div>
+    
+                  <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                    <mat-form-field fxFlex="auto">
+                      <mat-label>Salt</mat-label>
+                      <input type="text" formControlName="salt" matInput />
+                    </mat-form-field>
+                    
+    
+                    <mat-form-field fxFlex="auto">
+                      <mat-label>AES Key</mat-label>
+                      <input type="text" formControlName="aesKey" matInput />
+                    </mat-form-field>
+    
+                    <mat-form-field fxFlex="auto">
+                      <mat-label>Expiry Date</mat-label>
+                      <input type="date" [min]="today" formControlName="expiryDate" matInput />
+                    </mat-form-field>
+    
+                  </div>
+      
+                  <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                    
+                    <button (click)="stepper.reset()" *ngIf="!merchantRegistered" [disabled]="encryptionForm.pristine" color="primary" mat-button
+                            type="button">RESET
+                    </button>
+                    <button [disabled]="encryptionForm.invalid || loaders?.registering" color="{{encryptionForm?.invalid ? 'primary':'btn-success'}}" mat-raised-button (click)="registerMerchant()">SAVE
+                      <small class='loader' *ngIf="loaders?.registering"></small>
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+       -->
+            
+      
+              <mat-step [stepControl]="previewForm">
+                <form [formGroup]="previewForm">
+                  <ng-template matStepLabel>Preview & Finish</ng-template>
+    
+                  <div class="card-body">
+                    <ul class="list-group list-group-flush">
+    
+                      <li class="list-group-item ">
+                        <div class="card-header">
+                          <h4>GENERAL</h4>
+                        </div>
+    
+                        <div class='row pt-2'>
+
+                            <div class='col-md-4 '>
+                                <b>Full Name: </b> {{previewData?.name}} 
+                              </div>
+    
+                          <div class='col-md-4'>
+                            <b>Company: </b> {{previewData?.companyName}} 
+                          </div>
+    
+                          <div class='col-md-4'>
+                            <b>Business Category: </b> {{previewData?.businessCategoryName}} 
+                          </div>
+    
+                     
+                        </div>
+                      </li>
+    
+                    
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                          <div class='col-md-4'>
+                            <b>Age of Business: </b> {{previewData?.businessYears}} years
+                          </div>
+                         
+                          <div class='col-md-4'>
+                            <b>Country: </b> {{previewData?.countryName}} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>City: </b> {{previewData?.city}} 
+                          </div>
+                          
+                        </div>
+                      </li>
+    
+               
+    
+                      
+                      <li class="list-group-item">
+                        <div class="card-header">
+                          <h4>CONTACT</h4>
+                        </div>
+                      </li>
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                          
+                          <div class='col-md-4'>
+                            <b>Email: </b> {{previewData?.email }} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>Developer Email: </b> {{previewData?.developerEmailAddress }} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>Developer Mobile: </b> {{previewData?.developerMobileNumber }} 
+                          </div>
+                        </div>
+                      </li>
+    
+                      
+                      <li class="list-group-item">
+                        <div class='row'>
+                          <div class='col-md-4'>
+                            <b>Primay Contact: </b> {{previewData?.primaryContactName }} 
+                          </div>
+    
+                          <div class='col-md-4'>
+                            <b>Primary Contact Email: </b> {{previewData?.primaryContactEmail }} 
+                          </div>
+                         
+                          <div class='col-md-4'>
+                            <b>Primary Contact Mobile: </b> {{previewData?.primaryContactPhoneNumber }} 
+                          </div>
+                        </div>
+                      </li>
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                         
+                          <div class='col-md-4'>
+                            <b>Primary Contact Telephone: </b> {{previewData?.primaryContactTelephone }} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>Secondary Contact: </b> {{previewData?.secondaryContactName }} 
+                          </div>
+    
+                          <div class='col-md-4'>
+                            <b>Secondary Contact Email: </b> {{previewData?.secondaryContactEmail}} 
+                          </div>
+                        </div>
+                      </li>
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                           <div class='col-md-4'>
+                            <b>Secondary Contact Mobile: </b> {{previewData?.secondaryContactPhoneNumber }} 
+                          </div>
+    
+                          <div class='col-md-4'>
+                            <b>Secondary Contact Telephone: </b> {{previewData?.secondaryContactTelephone }} 
+                          </div>
+                       
+                          <div class='col-md-4'>
+                            <b>Website: </b> <a href="{{previewData?.websiteLink }}" target="_blank">{{previewData?.websiteLink }} </a>
+                          </div>
+                        </div>
+                      </li>
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                          
+                          <div class='col-md-12'>
+                            <b>Address: </b> {{previewData?.address}} 
+                          </div>
+                         
+                        </div>
+                      </li>
+    
+                                   
+                      <!-- <li class="list-group-item">
+                        <div class="card-header">
+                          <h4>FEE SETUP</h4>
+                        </div>
+                      </li>
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                          <div class='col-md-4'>
+                            <b>Bank MDR Commision: </b> {{previewData?.bank_mdr_commission }} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>MDR Fee: </b> {{previewData?.mdrFee }} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>MDR Fee Value Type: </b> {{previewData?.mdrFeeValueType }} 
+                          </div>
+                        </div>
+                      </li>
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                          <div class='col-md-4'>
+                            <b>Platform MDR Commision: </b> {{previewData?.platform_mdr_commission }} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>Transaction Fee: </b> {{previewData?.transactionFee }} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>Transaction Fee Value Type: </b> {{previewData?.transactionFeeValueType }} 
+                          </div>
+                        </div>
+                      </li> -->
+    
+    
+    
+                      <!-- <li class="list-group-item">
+                        <div class="card-header">
+                          <h4>AUTHENTICATION</h4>
+                        </div>
+                      </li>
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                          
+                          <div class='col-md-4'>
+                            <b>Application ID: </b> <code>{{previewData?.authData?.applicationId }} </code>
+                          </div>
+                          <div class='col-md-4'>
+                            <b>API KEY: </b> <code>{{previewData?.authData?.apiKey }}</code> 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>Call Back URL: </b> <a href="javascript:void(0)">{{previewData?.authData?.callbackUrl }} </a>
+                          </div>
+                        </div>
+                      </li>
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                          <div class='col-md-4'>
+                            <b>KEY: </b> <code>{{previewData?.authData?.key }} </code>
+                          </div>
+                          <div class='col-md-4'>
+                          
+                            <b>URL: </b> <a href="javascript:void(0)">{{previewData?.authData?.url }} </a>
+                          </div>
+                          <div class='col-md-4'>
+                            <b>Merchant Registration URL: </b> <a href="javascript:void(0)">{{previewData?.authData?.registerMerchantUrl }}</a> 
+                          </div>
+                        </div>
+                      </li> -->
+    
+                      
+                      <!-- <li class="list-group-item">
+                        <div class="card-header">
+                          <h4>ENCRYPTION</h4>
+                        </div>
+                      </li>
+    
+                      
+                      <li class="list-group-item">
+                        <div class='row'>
+                          <div class='col-md-4'>
+                            <b>Cipher Transformation: </b> <code>{{previewData?.cipherTransformation }}</code> 
+                          </div>
+                          <div class='col-md-4'>
+                 
+                            <b>Iteration Count: </b> {{previewData?.iterationCount }} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>IV: </b> <code>{{previewData?.iv }}</code> 
+                          </div>
+                        </div>
+                      </li>
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                          <div class='col-md-4'>
+                            <b>Key Size: </b> {{previewData?.keySize }} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>Salt: </b> <code>{{previewData?.salt}} </code>
+                          </div>
+                          <div class='col-md-4'>
+                            <b>AES Key: </b> <code>{{previewData?.aesKey}} </code>
+                          </div>
+                        </div>
+                      </li>
+    
+                      <li class="list-group-item">
+                        <div class='row'>
+                          <div class='col-md-4'>
+                            <b>IV Key: </b> <code>{{previewData?.ivKey }} </code>
+                          </div>
+    
+                          <div class='col-md-4'>
+                            <b>Expiry Date: </b> {{previewData?.expiryDate }} 
+                          </div>
+                          <div class='col-md-4'>
+                            <b>Salt: </b> {{previewData?.salt }} 
+                          </div> 
+                      
+                        </div>
+                      </li> -->
+    
+             
+                      </ul>
+          
+                  </div>
+    
+                  <hr/>
+                  <div class="subheading mt-3 mb-3"><em>To finish merchant set-up, "Authorize" and click on "Save".</em>
+                  </div>
+      
+                  <div class="content" fxLayout="column" fxLayoutGap="8px">
+                    <mat-checkbox class="checkbox" formControlName="authorize">
+                      <b>Authorize</b>
+                    </mat-checkbox>
+                  </div>
+      
+                  <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                    <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
+                    <button (click)="completeMerchantSelfOnboard()" [disabled]="previewForm.invalid || loaders?.creating" color="primary" mat-raised-button
+                            matStepperNext>
+                      Save <small class='loader' *ngIf="loaders?.creating"></small>
+                    </button>
+                  </div>
+                </form>
+      
+              </mat-step>
+              
+            </mat-horizontal-stepper>
+          </div>
+    
+        </div>
+      
+      </fury-page>
+      
+</ng-container>

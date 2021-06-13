@@ -26,6 +26,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: "merchant-validate",
+    loadChildren: () =>
+      import("./pages/authentication/merchant-self-onboarding/merchant-self-onboarding.module").then(
+        (m) => m.MerchantSelfOnboardingModule
+      ),
+  },
+  {
     path: "forgot-password",
     loadChildren: () =>
       import(

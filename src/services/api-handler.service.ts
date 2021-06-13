@@ -241,7 +241,7 @@ export class ApiHandlerService extends ApiConfig{
    */
   private checkLogout = (err) => {
     const { status } = err;
-    console.log({ status })
+    console.log({ status, err })
     if(status == CONSTANTS.HTTP_STATUS_FORBIDDEN || status == CONSTANTS.HTTP_STATUS_UNAUTHENTICATED){
       const logoutMsg = status == CONSTANTS.HTTP_STATUS_FORBIDDEN ? "Access forbidden":"Session Expired"
       this.authService.logoutUser();

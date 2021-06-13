@@ -9,17 +9,15 @@ import { AppService } from 'src/services/app.service';
 import { IMerchantFeeInfo, IMerchantProcessingGatewayAppInfo, IMerchantUser } from "src/interfaces/merchant.interface";
 import { getToday, processErrors } from 'src/utils/helpers';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
-
-
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'fury-merchant-create',
-  templateUrl: './merchant-create.component.html',
-  styleUrls: ['./merchant-create.component.scss']
+  selector: 'fury-merchant-self-onboarding',
+  templateUrl: './merchant-self-onboarding.component.html',
+  styleUrls: ['./merchant-self-onboarding.component.scss']
 })
-export class MerchantCreateComponent implements OnInit {
+export class MerchantSelfOnboardingComponent implements OnInit {
 
   merchantDetailsForm:FormGroup;
   merchantContactForm:FormGroup;
@@ -33,6 +31,8 @@ export class MerchantCreateComponent implements OnInit {
   previewData:any;
   registrationData:any;
   completeRegistrationData:any;
+
+  queryData:any;
 
   
   public merchantRegistered:boolean = false;
@@ -48,11 +48,13 @@ export class MerchantCreateComponent implements OnInit {
   public userTypes:any[] = [];
 
   public today = getToday();
+  public isVerified = false;
 
   public loaders = {
     registering:false,
     verifying:false,
-    creating:false
+    creating:false,
+    processing:false
   }
 
 
@@ -62,24 +64,45 @@ export class MerchantCreateComponent implements OnInit {
     return {
       companyName: ['', Validators.compose([Validators.required])],
       businessCategoryId: ['', Validators.compose([Validators.required])],
-      bankId: ['', Validators.compose([Validators.required])],
+      // bankId: ['', Validators.compose([Validators.required])],
       countryId: ['', Validators.compose([Validators.required])],
-      processingGatewayId: ['', Validators.compose([])],
+      // processingGatewayId: ['', Validators.compose([])],
       city: ['', Validators.compose([Validators.required])],
-      accountNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
-      agid: ['', Validators.compose([Validators.required])],
+      // accountNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
       businessYears: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
-      region: ['', Validators.compose([Validators.required])],
-      currency: ['', Validators.compose([Validators.required])],
-      merchantCode: ['', Validators.compose([Validators.required])],
+      // region: ['', Validators.compose([Validators.required])],
+      // currency: ['', Validators.compose([Validators.required])],
+      // merchantCode: ['', Validators.compose([Validators.required])],
       // callbackUrl: ['', Validators.compose([Validators.required])], obsolete available in authentication form
     }
   }
 
+  // {
+  //   "address": "string",
+  //   "businessCategoryId": 1,
+  //   "businessYear": 3,
+  //   "city": "string",
+  //   "country": "string",
+  //   "developerEmail": "string",
+  //   "developerMobileNumber": "string",
+  //   "email": "string",
+  //   "name": "string",
+  //   "phoneNumber": "string",
+  //   "primaryContactEmail": "string",
+  //   "primaryContactName": "string",
+  //   "primaryContactPhoneNumber": "string",
+  //   "primaryContactTelephone": "string",
+  //   "secondaryContactEmail": "string",
+  //   "secondaryContactName": "string",
+  //   "secondaryContactPhoneNumber": "string",
+  //   "secondaryContactTelephone": "string",
+  //   "websiteLink": "string"
+  // }
+
   private static merchantContactForm = () => {
     return {
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      developerEmailAddress: ['', Validators.compose([Validators.required, Validators.email])],
+      developerEmail: ['', Validators.compose([Validators.required, Validators.email])],
       developerMobileNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
       phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
       primaryContactEmail: ['', Validators.compose([Validators.required])],
@@ -91,7 +114,7 @@ export class MerchantCreateComponent implements OnInit {
       secondaryContactPhoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
       secondaryContactTelephone: ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]\d*$/)])],
       websiteLink: ['', Validators.compose([Validators.required])],
-      url: ['', Validators.compose([Validators.required])],
+      // url: ['', Validators.compose([Validators.required])],
       address: ['', Validators.compose([Validators.required])],
     }
   }
@@ -118,7 +141,7 @@ export class MerchantCreateComponent implements OnInit {
       initVector: ['', Validators.compose([Validators.required])],
       key: ['', Validators.compose([Validators.required])],
       registerMerchantUrl: ['', Validators.compose([Validators.required])],
-      url: ['', Validators.compose([Validators.required])],
+      // url: ['', Validators.compose([Validators.required])],
     }
   }
 
@@ -154,13 +177,13 @@ export class MerchantCreateComponent implements OnInit {
 
   private static merchantUserForm = () => {
      return {
-      fullName: ['', Validators.compose([Validators.required])],
+      name: ['', Validators.compose([Validators.required])],
       //merchantId: ['', Validators.compose([])], obsolete appears merchant Id not available
       password: ['', Validators.compose([Validators.required])],
       // processingGatewayId:['', Validators.compose([Validators.required])], obsolete appears in merchant details
-      userRoleId: ['', Validators.compose([Validators.required])],
-      userTypeId: ['', Validators.compose([Validators.required])],
-      username: ['', Validators.compose([Validators.required])],
+      // userRoleId: ['', Validators.compose([Validators.required])],
+      // userTypeId: ['', Validators.compose([Validators.required])],
+       email: ['',],
      }
   }
 
@@ -171,29 +194,38 @@ export class MerchantCreateComponent implements OnInit {
               private merchantService: MerchantService,
               private appService: AppService,
               private toastr: ToastrService,
+              private activatedRoute:ActivatedRoute,
               private router: Router) {
-                this.merchantDetailsForm = this.fb.group(MerchantCreateComponent.merchantDetailsForm())
-                this.merchantContactForm = this.fb.group(MerchantCreateComponent.merchantContactForm())
-                this.OTPForm = this.fb.group(MerchantCreateComponent.OTPForm());
-                this.previewForm = this.fb.group(MerchantCreateComponent.previewForm());
-                this.authenticationForm = this.fb.group(MerchantCreateComponent.authenticationForm());
-                this.feeSetUpForm = this.fb.group(MerchantCreateComponent.feeSetUpForm());
+                this.merchantDetailsForm = this.fb.group(MerchantSelfOnboardingComponent.merchantDetailsForm())
+                this.merchantContactForm = this.fb.group(MerchantSelfOnboardingComponent.merchantContactForm())
+                this.OTPForm = this.fb.group(MerchantSelfOnboardingComponent.OTPForm());
+                this.previewForm = this.fb.group(MerchantSelfOnboardingComponent.previewForm());
+                this.authenticationForm = this.fb.group(MerchantSelfOnboardingComponent.authenticationForm());
+                this.feeSetUpForm = this.fb.group(MerchantSelfOnboardingComponent.feeSetUpForm());
             
-                this.merchantUserForm = this.fb.group(MerchantCreateComponent.merchantUserForm());
-                this.encryptionForm = this.fb.group(MerchantCreateComponent.encryptionForm());
+                this.merchantUserForm = this.fb.group(MerchantSelfOnboardingComponent.merchantUserForm());
+                this.encryptionForm = this.fb.group(MerchantSelfOnboardingComponent.encryptionForm());
                 this.previewData = {};
+                this.activatedRoute.queryParams.subscribe((params)=>{
+                  this.queryData =  params;
+                  this.verifyOTP(params);
+
+                  console.log({
+                    params
+                  })
+                })
   }
 
   ngOnInit() {
-    this.getAllBanks();
+    // this.getAllBanks();
     this.getAllBusinessCategories();
     this.getAllCountries();
-    this.getAllGateways();
+    // this.getAllGateways();
     
     this.getAllCurrencies();
-    this.getAllRegions();
-    this.getUserRoles();
-    this.getUserTypes();
+    // this.getAllRegions();
+    // this.getUserRoles();
+    // this.getUserTypes();
    
   }
 
@@ -284,14 +316,15 @@ export class MerchantCreateComponent implements OnInit {
   /**
    * This method completes a merchant's registration
    */
-   completeMerchantRegistration = () => {
+   completeMerchantSelfOnboard = () => {
      this.loaders.creating = true;
-    this.merchantService.completeMerchantRegistration(this.completeRegistrationData).subscribe(
+     const data = {...this.merchantUserForm.value, ...this.merchantContactForm.value, ...this.merchantDetailsForm.value, email:this.queryData.em }
+    this.merchantService.completeMerchantSelfOnboard(data).subscribe(
       (completionResponse)=> {
      this.loaders.creating = false;
      const { companyName } = this.merchantDetailsForm.value;
      this.toastr.success(`${companyName} successfully registered.`);
-     this.router.navigateByUrl('/merchants');
+     this.router.navigateByUrl('/login');
 
         console.log({ completionResponse })
       },
@@ -444,37 +477,21 @@ export class MerchantCreateComponent implements OnInit {
    */
   private generatePreview = () =>{
 
-    const getBankName = (bankId) => {
-      return this.allBanks.find((bank) => bank.id == bankId)?.name;
-    }
     const getBusinessCategoryName = (categoryId) => {
       return this.allBusinessCategories.find((category) => category.id == categoryId)?.name;
     }
-    const getGatewayName = (gatewayId) => {
-      return this.allGateways.find((gateway) => gateway.id == gatewayId)?.name;
-    }
+  
     const getCountryName = (countryId) => {
       return this.allCountries.find((country) => country.id == countryId)?.name;
     }
-    const getUserRoleName = (roleId) => {
-      return this.userRoles.find((role) => role.id == roleId)?.name;
-    }
-    const getUserTypeName = (typeId) => {
-      return this.userTypes.find((userType) => userType.id == typeId)?.name;
-    }
-    const getCurrencyName = (currencyKey) => {
-      return this.allCurrencies.find((currency) => currency.key == currencyKey)?.value;
-    }
-    const getRegionName = (regionKey) => {
-      return this.allRegions.find((region) => region.key == regionKey)?.value;
-    }
-    const data = {...this.mergedData};
-    this.previewData  = {...data,
-    bankName:getBankName(data.bankId), businessCategoryName:getBusinessCategoryName(data.businessCategoryId),
-    countryName:getCountryName(data.countryId), gatewayName:getGatewayName(data.processingGatewayId),
-    userRoleId:getUserRoleName(data.userRoleId), userTypeId:getUserTypeName(data.userTypeId), currency:getCurrencyName(data.currency),
-    region:getRegionName(data.region)};
+ 
+ 
+    const data = {...this.merchantUserForm.value, ...this.merchantContactForm.value, ...this.merchantDetailsForm.value };
+    this.previewData  = {...data, businessCategoryName:getBusinessCategoryName(data['businessCategoryId']),
+    countryName:getCountryName(data['countryId'])}
     //do something
+
+    document.getElementById('generate-preview').click();
   
   }
 
@@ -517,6 +534,42 @@ export class MerchantCreateComponent implements OnInit {
     // merchantProcessingGatewayAppInfo,
     portalUserInfo
    };
+
+  }
+
+
+  /** NEW SECTION */
+
+  public verifyOTP = (params) => {
+    let { em, ref } = params;
+    if(!em || !ref){
+      this.loaders.processing = false;
+      this.isVerified = false;
+      return;
+    }
+    const email = em;
+    this.merchantUserForm.patchValue({email})
+    const data = {
+      email,
+      otp:ref,
+      mocked: !environment.production 
+    }
+    this.loaders.processing = true;
+    this.merchantService.verifyOTP(data).subscribe(
+      (verificationResponse) =>{
+        this.isVerified = true;
+        this.loaders.processing = false;
+        console.log({  
+          verificationResponse
+        })
+      },
+      (error) =>{
+        this.toastr.error(processErrors(error));
+        this.isVerified = false;
+        this.loaders.processing = false;
+      }
+    )
+
 
   }
 

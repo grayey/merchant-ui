@@ -26,6 +26,8 @@ import { UserService } from "../services/user/user.service";
 import { MerchantService } from "src/services/merchant/merchant.service";
 import { RefundTransactionsComponent } from './pages/transactions/refund-transactions/refund-transactions.component';
 import { RequeryTransactionsComponent } from './pages/transactions/requery-transactions/requery-transactions.component';
+import { MerchantSelfOnboardingComponent } from './pages/authentication/merchant-self-onboarding/merchant-self-onboarding.component';
+import { SignUpModule } from "./pages/authentication/sign-up/sign-up.module";
 
 @NgModule({
   imports: [
@@ -46,6 +48,7 @@ import { RequeryTransactionsComponent } from './pages/transactions/requery-trans
     MatDialogModule,
     // Register a Service Worker (optional)
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    SignUpModule
   ],
   declarations: [AppComponent, RefundTransactionsComponent, RequeryTransactionsComponent, ],
   bootstrap: [AppComponent],

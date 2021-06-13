@@ -9,6 +9,8 @@ import { fadeInUpAnimation } from "../../../../@fury/animations/fade-in-up.anima
 import {  processErrors } from 'src/utils/helpers';
 import { environment } from "src/environments/environment";
 import { ApiHandlerService } from "src/services/api-handler.service";
+import { MatDialog, } from "@angular/material/dialog";
+import { SignUpComponent } from "../sign-up/sign-up.component";
 
 
 
@@ -36,6 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private toastr: ToastrService,
     private apiService: ApiHandlerService,
+    private dialog: MatDialog,
   ) {
     
     const user = localStorage.getItem("userData");
@@ -188,6 +191,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     })
 
 
+  }
+
+  toggleSignUp = () =>{
+    this.dialog.open(SignUpComponent, { 
+      panelClass:'dialog-lg'
+     }).afterClosed().subscribe(
+      (transResponse) =>{
+
+        console.log({ transResponse })
+
+      },
+      (error) =>{
+        console.log({ error })
+      })
   }
 
   ngOnDestroy(){

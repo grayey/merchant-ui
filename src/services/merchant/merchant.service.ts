@@ -117,7 +117,32 @@ export class MerchantService{
     }
 
     
+  /**
+     * 
+     * @returns 
+     * This method generates OTP for merchant self-onboarding
+    */
+    generateOTP = (data):Observable<any> => {
+        return this.apiHandler.post('merchant/generate-otp',data);
+    }
 
+      /**
+     * @returns 
+     * This method verify OTP for merchant self-onboarding
+    */
+       verifyOTP = (data):Observable<any> => {
+        return this.apiHandler.post('merchant/validate-otp',data);
+    }
+
+    
+      /**
+     * @returns 
+     * This method self-onboards a merchant
+    */
+       completeMerchantSelfOnboard = (data):Observable<any> => {
+           console.log({data});
+        return this.apiHandler.post('merchant/self-onboard',data);
+    }
 
 
     
