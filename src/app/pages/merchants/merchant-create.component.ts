@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { fadeInRightAnimation } from 'src/@fury/animations/fade-in-right.animation';
@@ -7,6 +7,8 @@ import { fadeInUpAnimation } from 'src/@fury/animations/fade-in-up.animation';
 import { MerchantService } from 'src/services/merchant/merchant.service';
 import { AppService } from 'src/services/app.service';
 import { IMerchantFeeInfo, IMerchantProcessingGatewayAppInfo, IMerchantUser } from "src/interfaces/merchant.interface";
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+
 import { getToday, processErrors } from 'src/utils/helpers';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -171,7 +173,8 @@ export class MerchantCreateComponent implements OnInit {
               private merchantService: MerchantService,
               private appService: AppService,
               private toastr: ToastrService,
-              private router: Router) {
+              private router: Router,
+              @Inject(MAT_DIALOG_DATA) public onBoardedMerchant?: any, private dialogRef?: MatDialogRef<MerchantCreateComponent>,) {
                 this.merchantDetailsForm = this.fb.group(MerchantCreateComponent.merchantDetailsForm())
                 this.merchantContactForm = this.fb.group(MerchantCreateComponent.merchantContactForm())
                 this.OTPForm = this.fb.group(MerchantCreateComponent.OTPForm());
@@ -182,6 +185,16 @@ export class MerchantCreateComponent implements OnInit {
                 this.merchantUserForm = this.fb.group(MerchantCreateComponent.merchantUserForm());
                 this.encryptionForm = this.fb.group(MerchantCreateComponent.encryptionForm());
                 this.previewData = {};
+
+                if(onBoardedMerchant && onBoardedMerchant.isSelfOnboard){
+                  const { name, developerEmail, businessYear, businessCategory , developerMobile} = onBoardedMerchant;
+                  this.merchantDetailsForm.patchValue({...onBoardedMerchant, businessYears:businessYear,
+                     businessCategoryId:businessCategory?.id});
+                  this.merchantContactForm.patchValue({...onBoardedMerchant, 
+                    developerEmailAddress:developerEmail, developerMobileNumber:developerMobile});
+                  this.merchantUserForm.patchValue({...onBoardedMerchant, fullName:name})
+
+                }
   }
 
   ngOnInit() {

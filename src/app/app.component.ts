@@ -99,12 +99,20 @@ export class AppComponent {
         position: 3,
       },
       {
+        name: "Onboard Requests",
+        routeOrFunction: "/onboard-requests",
+        icon: "supervisor_account",
+        // badge: "22",
+        badgeColor: "#2196F3",
+        position: 4,
+      },
+      {
         name: "Uploads",
         routeOrFunction: "/uploads",
         icon: "upload_file",
         // badge: "22",
         badgeColor: "#2196F3",
-        position: 4,
+        position: 5,
       },
       {
         name: "Settlements",
@@ -112,7 +120,7 @@ export class AppComponent {
         icon: "credit_card",
         // badge: "22",
         badgeColor: "#2196F3",
-        position: 5,
+        position: 6,
       },
       {
         name: "Charge Backs",
@@ -120,7 +128,7 @@ export class AppComponent {
         icon: "credit_card_off",
         // badge: "22",
         badgeColor: "#2196F3",
-        position: 6,
+        position: 7,
       },
       {
         name: "Refunds",
@@ -128,12 +136,12 @@ export class AppComponent {
         icon: "credit_card_off",
         // badge: "22",
         badgeColor: "#2196F3",
-        position: 7,
+        position: 8,
       },
       {
         name: "Reports",
         icon: "account_balance",
-        position: 8,
+        position: 9,
         subItems: [
           {
             name: "Platform Cost",

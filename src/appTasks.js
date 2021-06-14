@@ -16,6 +16,11 @@ export const APP_TASKS = [
       actions:["CAN_VIEW_ALL", "CAN_CREATE", "CAN_EDIT","CAN_FILTER"]
     },
     {
+      functionName:"Onboard Requests",
+      functionType:"ADMIN",
+      actions:["CAN_VIEW_ALL","CAN_EDIT","CAN_FILTER"]
+    },
+    {
       functionName:"Uploads",
       functionType:"ADMIN",
       actions:["CAN_VIEW_ALL", "CAN_CREATE", "CAN_VIEW_DETAIL","CAN_FILTER"]
@@ -26,7 +31,7 @@ export const APP_TASKS = [
       actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
     },
     {
-      functionName:"Chargebacks",
+      functionName:"Charge Backs",
       functionType:"BOTH",
       actions:["CAN_VIEW_ALL", "CAN_DOWNLOAD","CAN_FILTER"]
     },

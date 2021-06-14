@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { buildUrlParams } from "src/utils/helpers";
 import { ApiHandlerService } from "../api-handler.service";
 
 
@@ -144,6 +145,16 @@ export class MerchantService{
         return this.apiHandler.post('merchant/self-onboard',data);
     }
 
+
+     /**
+     * @returns 
+     * This method gets the list of self onboarded merchants
+    */
+      getSelfOnboarders = (paramData = {}):Observable<any> => {
+        console.log({paramData});
+        const url = `merchant/search-self-onboard/${buildUrlParams(paramData)}`
+     return this.apiHandler.get(url);
+ }
 
     
 

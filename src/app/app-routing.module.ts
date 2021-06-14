@@ -173,6 +173,13 @@ const routes: Routes = [
           ).then((m) => m.RefundsModule),
       },
       {
+        path: "onboard-requests",
+        loadChildren: () =>
+          import(
+            "./pages/self-onboard-requests/self-onboard-requests.module"
+          ).then((m) => m.SelfOnboardRequestsModule),
+      },
+      {
         path: "roles",
         loadChildren: () =>
           import(
