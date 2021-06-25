@@ -173,8 +173,7 @@ export class MerchantCreateComponent implements OnInit {
               private merchantService: MerchantService,
               private appService: AppService,
               private toastr: ToastrService,
-              private router: Router,
-              @Inject(MAT_DIALOG_DATA) public onBoardedMerchant?: any, private dialogRef?: MatDialogRef<MerchantCreateComponent>,) {
+              private router: Router,) {
                 this.merchantDetailsForm = this.fb.group(MerchantCreateComponent.merchantDetailsForm())
                 this.merchantContactForm = this.fb.group(MerchantCreateComponent.merchantContactForm())
                 this.OTPForm = this.fb.group(MerchantCreateComponent.OTPForm());
@@ -186,15 +185,7 @@ export class MerchantCreateComponent implements OnInit {
                 this.encryptionForm = this.fb.group(MerchantCreateComponent.encryptionForm());
                 this.previewData = {};
 
-                if(onBoardedMerchant && onBoardedMerchant.isSelfOnboard){
-                  const { name, developerEmail, businessYear, businessCategory , developerMobile} = onBoardedMerchant;
-                  this.merchantDetailsForm.patchValue({...onBoardedMerchant, businessYears:businessYear,
-                     businessCategoryId:businessCategory?.id});
-                  this.merchantContactForm.patchValue({...onBoardedMerchant, 
-                    developerEmailAddress:developerEmail, developerMobileNumber:developerMobile});
-                  this.merchantUserForm.patchValue({...onBoardedMerchant, fullName:name})
-
-                }
+              
   }
 
   ngOnInit() {

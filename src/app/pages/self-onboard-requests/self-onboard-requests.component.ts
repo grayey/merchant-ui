@@ -15,6 +15,7 @@ import { filter } from "rxjs/operators";
 import { ListColumn } from "src/@fury/shared/list/list-column.model";
 
 import { MerchantCreateComponent } from "../merchants/merchant-create.component";
+import { MerchantCreateSelfComponent } from "../merchants/merchant-create-self.component";
 import { IMerchant } from "src/interfaces/merchant.interface";
 import { fadeInRightAnimation } from "src/@fury/animations/fade-in-right.animation";
 import { fadeInUpAnimation } from "src/@fury/animations/fade-in-up.animation";
@@ -196,7 +197,7 @@ export class SelfOnboardRequestsComponent extends Permissions implements OnInit 
 
   createMerchant() {
     this.dialog
-      .open(MerchantCreateComponent)
+      .open(MerchantCreateSelfComponent)
       .afterClosed()
       .subscribe((merchant: IMerchant) => {
         /**
@@ -217,7 +218,7 @@ export class SelfOnboardRequestsComponent extends Permissions implements OnInit 
   updateMerchant(merchant) {
 
     this.dialog
-      .open(MerchantCreateComponent, {
+      .open(MerchantCreateSelfComponent, {
         data: {...merchant, isSelfOnboard:true},
       })
       .afterClosed()

@@ -13,12 +13,13 @@ import { MatTableModule } from "@angular/material/table";
 import { MatInputModule } from "@angular/material/input";
 import { RouterModule } from "@angular/router";
 import { MERCHANTS_ROUTES } from './merchants.routing';
+import { MerchantCreateSelfComponent } from './merchant-create-self.component';
 
 
 
 
 @NgModule({
-  declarations: [MerchantComponent, MerchantUpdateComponent, MerchantCreateComponent],
+  declarations: [MerchantComponent, MerchantUpdateComponent, MerchantCreateComponent, MerchantCreateSelfComponent],
   imports: [
     CommonModule,
     FormsModule,
