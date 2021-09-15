@@ -6,9 +6,11 @@
 export const environment = {
   production: false,
   googleMapsApiKey: '',
-  backend: 'http://34.240.160.43:8085',// Put your backend here
+  //backend: 'http://34.240.160.43:8085',// Put your backend here
+  backend:"https://api-portal.cqpaymentgateway.arca-payments.com",
   // API_BASE_URL:"http://52.208.91.202:8085",
-  API_BASE_URL:"http://34.240.160.43:8085/api/v1/",
+  //API_BASE_URL:"http://34.240.160.43:8085/api/v1/",
+  API_BASE_URL:"https://api-portal.cqpaymentgateway.arca-payments.com/api/v1/",
   API_KEY:"",
   BASIC_TOKEN:"Basic Y29kZWlxLXBheW1lbnQtZ2F0ZXdheTpzZWNyZXQ=",
   MAX_INACTIVE_TIME:5*60*1000, //5 X 60 seconds,

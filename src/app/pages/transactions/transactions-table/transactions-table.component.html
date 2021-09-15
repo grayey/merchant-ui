@@ -219,7 +219,7 @@
                 <span>View</span>
               </button>
   
-              <button (click)="refundTransaction(row)" *ngIf="row?.transactionStatus=='SUCCESSFUL' && CAN_REFUND" mat-menu-item>
+              <button (click)="refundTransaction(row)" *ngIf="(row?.transactionStatus=='SUCCESSFUL' || row?.transactionStatus=='FAILED')  && CAN_REFUND" mat-menu-item>
                 <span class="text-success">Refund</span>
               </button>
   
